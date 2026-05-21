@@ -155,7 +155,6 @@ export function Hero({ lang }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", gap: "0.875rem", flexWrap: "wrap" }}
           >
             <a
               href="#reserver"
@@ -180,36 +179,7 @@ export function Hero({ lang }: HeroProps) {
                 (e.currentTarget.style.backgroundColor = "#C4956A")
               }
             >
-              {t.ctaPrimary}
-            </a>
-            <a
-              href="#experience"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "13px 28px",
-                backgroundColor: "transparent",
-                color: "#F5EDE3",
-                fontFamily: "var(--font-dm-sans)",
-                fontWeight: 400,
-                fontSize: "0.9375rem",
-                letterSpacing: "0.02em",
-                textDecoration: "none",
-                borderRadius: "2px",
-                border: "1px solid rgba(245,237,227,0.45)",
-                transition: "border-color 0.2s, background-color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(245,237,227,0.85)";
-                e.currentTarget.style.backgroundColor =
-                  "rgba(245,237,227,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(245,237,227,0.45)";
-                e.currentTarget.style.backgroundColor = "transparent";
-              }}
-            >
-              {t.ctaSecondary}
+              {lang === "fr" ? "Réserver" : "Reserveren"}
             </a>
           </motion.div>
         </div>
