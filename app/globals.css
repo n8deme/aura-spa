@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette Aura Spa */
+  --color-cream: #F5EDE3;
+  --color-cream-warm: #EDE0D4;
+  --color-dark: #2C1810;
+  --color-accent: #C4956A;
+  --color-bordeaux: #8B3A2A;
+  --color-border: #D4BBA8;
+  --color-text: #2C1810;
+  --color-dark-alt: #3D2318;
+
+  /* Polices */
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-dm-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #F5EDE3;
+  color: #2C1810;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Responsive grids */
+@media (max-width: 767px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .md\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .sm\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .lg\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .md\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* Mobile nav */
+@media (min-width: 768px) {
+  .hidden.md\:flex {
+    display: flex !important;
+  }
+  .hidden.md\:block {
+    display: block !important;
+  }
+  .md\:hidden {
+    display: none !important;
+  }
+}
+
+/* Section Lieu — annule l'overlap sur mobile */
+@media (max-width: 767px) {
+  .lieu-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .lieu-grid > *:first-child {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
