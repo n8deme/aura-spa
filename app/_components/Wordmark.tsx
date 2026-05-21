@@ -56,7 +56,7 @@ export function Wordmark({ variant = "dark", className = "" }: WordmarkProps) {
             marginTop: "0.2rem",
           }}
         >
-          Espace Privatif
+          Espace Détente
         </span>
       </div>
     </div>
