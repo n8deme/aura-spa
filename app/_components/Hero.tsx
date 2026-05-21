@@ -214,40 +214,6 @@ export function Hero({ lang }: HeroProps) {
           </motion.div>
         </div>
 
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          style={{ flexShrink: 0, paddingBottom: "4px" }}
-        >
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "var(--font-dm-sans)",
-              fontWeight: 300,
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "rgba(245,237,227,0.55)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                backgroundColor: "#C4956A",
-                display: "inline-block",
-                flexShrink: 0,
-              }}
-            />
-            {t.badge}
-          </span>
-        </motion.div>
       </div>
     </section>
   );

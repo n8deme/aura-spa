@@ -106,10 +106,9 @@ export function SectionHowItWorks({ lang }: SectionHowItWorksProps) {
                   paddingTop: "8px",
                 }}
               >
-                {/* Cercle avec numéro */}
+                {/* Cercle numéroté */}
                 <div
                   style={{
-                    position: "relative",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -126,30 +125,9 @@ export function SectionHowItWorks({ lang }: SectionHowItWorksProps) {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      position: "relative",
-                      zIndex: 1,
+                      flexShrink: 0,
                     }}
                   >
-                    {/* Numéro décoratif derrière */}
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        position: "absolute",
-                        fontFamily: "var(--font-cormorant)",
-                        fontStyle: "italic",
-                        fontSize: "80px",
-                        fontWeight: 500,
-                        color: "rgba(196,149,106,0.15)",
-                        lineHeight: 1,
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        zIndex: 0,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {step.number}
-                    </span>
                     <span
                       style={{
                         fontFamily: "var(--font-cormorant)",
@@ -157,8 +135,7 @@ export function SectionHowItWorks({ lang }: SectionHowItWorksProps) {
                         fontSize: "1.25rem",
                         fontWeight: 600,
                         color: "#C4956A",
-                        position: "relative",
-                        zIndex: 1,
+                        lineHeight: 1,
                       }}
                     >
                       {step.number}
