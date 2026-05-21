@@ -213,24 +213,30 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
 
           {/* Logos paiement */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
-              alt="Visa"
-              style={{ height: "24px", width: "auto" }}
-            />
+            <svg viewBox="0 0 48 16" style={{ height: "24px", width: "auto" }} fill="none" aria-label="Visa">
+              <text x="0" y="13" fontFamily="Arial" fontWeight="bold" fontSize="16" fill="#1A1F71">VISA</text>
+            </svg>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
               alt="Mastercard"
               style={{ height: "32px", width: "auto" }}
             />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/7/73/Bancontact_logo.svg"
-              alt="Bancontact"
-              style={{ height: "32px", width: "auto" }}
-            />
+            <span
+              style={{
+                fontFamily: "var(--font-dm-sans)",
+                fontWeight: 700,
+                fontSize: "0.8125rem",
+                letterSpacing: "0.05em",
+                color: "#005498",
+                border: "1px solid #005498",
+                borderRadius: "4px",
+                padding: "4px 8px",
+                lineHeight: 1,
+              }}
+            >
+              Bancontact
+            </span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg"
