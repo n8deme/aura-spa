@@ -211,26 +211,32 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
             </p>
           </div>
 
-          {/* Icônes paiement SVG */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
-            <svg width="44" height="28" viewBox="0 0 44 28" fill="none" aria-label="Visa">
-              <rect x="0.5" y="0.5" width="43" height="27" rx="3.5" fill="white" stroke="#D4BBA8" />
-              <text x="50%" y="60%" dominantBaseline="middle" textAnchor="middle" fill="#1A1F71" fontFamily="Arial" fontWeight="bold" fontSize="10">VISA</text>
-            </svg>
-            <svg width="44" height="28" viewBox="0 0 44 28" fill="none" aria-label="Mastercard">
-              <rect x="0.5" y="0.5" width="43" height="27" rx="3.5" fill="white" stroke="#D4BBA8" />
-              <circle cx="17" cy="14" r="8" fill="#EB001B" opacity="0.9" />
-              <circle cx="27" cy="14" r="8" fill="#F79E1B" opacity="0.9" />
-              <path d="M22 8.5a8 8 0 0 1 0 11 8 8 0 0 1 0-11z" fill="#FF5F00" />
-            </svg>
-            <svg width="44" height="28" viewBox="0 0 44 28" fill="none" aria-label="Bancontact">
-              <rect x="0.5" y="0.5" width="43" height="27" rx="3.5" fill="white" stroke="#D4BBA8" />
-              <text x="50%" y="60%" dominantBaseline="middle" textAnchor="middle" fill="#005498" fontFamily="Arial" fontWeight="bold" fontSize="7">BANCONTACT</text>
-            </svg>
-            <svg width="44" height="28" viewBox="0 0 44 28" fill="none" aria-label="Apple Pay">
-              <rect x="0.5" y="0.5" width="43" height="27" rx="3.5" fill="white" stroke="#D4BBA8" />
-              <text x="50%" y="60%" dominantBaseline="middle" textAnchor="middle" fill="#000000" fontFamily="Arial" fontWeight="bold" fontSize="7.5">Apple Pay</text>
-            </svg>
+          {/* Logos paiement */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+              alt="Visa"
+              style={{ height: "24px", width: "auto" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              alt="Mastercard"
+              style={{ height: "32px", width: "auto" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/7/73/Bancontact_logo.svg"
+              alt="Bancontact"
+              style={{ height: "32px", width: "auto" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg"
+              alt="Apple Pay"
+              style={{ height: "32px", width: "auto" }}
+            />
           </div>
 
           <p
