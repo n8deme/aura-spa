@@ -62,7 +62,7 @@ export function SectionExperience({ lang }: SectionExperienceProps) {
                 pointerEvents: "none",
               }}
             >
-              200€
+              150€
             </div>
 
             <div style={{ position: "relative", zIndex: 1 }}>

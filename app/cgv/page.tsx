@@ -73,7 +73,7 @@ export default function CGV() {
               Tarifs et paiement
             </h2>
             <p>
-              Le tarif unique est de <strong>200€ pour 2 heures</strong> pour
+              Le tarif unique est de <strong>150€ pour 2 heures</strong> pour
               un groupe de 2 à 4 personnes. Le paiement est effectué en ligne,
               au moment de la réservation, via la plateforme Stripe.
             </p>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -21,11 +22,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aura-spa.be"),
   title: "Aura Spa — Espace Privatif à Bruxelles",
   description:
-    "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 200€ / 2 heures.",
+    "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 150€ / 2 heures.",
   openGraph: {
     title: "Aura Spa — Espace Privatif à Bruxelles",
     description:
-      "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 200€ / 2 heures.",
+      "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 150€ / 2 heures.",
     locale: "fr_BE",
     type: "website",
   },
@@ -62,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", cormorant.variable, dmSans.variable)}
     >
       <head>
         <script

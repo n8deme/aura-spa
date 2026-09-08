@@ -12,7 +12,7 @@ export const content = {
       title: ["Votre bulle", "à deux."],
       subtitle:
         "Un espace privatif pour 2 à 4 personnes.\nBains, chaleur et sérénité au cœur de Bruxelles.",
-      ctaPrimary: "Réserver — 200€",
+      ctaPrimary: "Réserver — 150€",
       ctaSecondary: "Découvrir",
       badge: "Déjà disponible à Bruxelles",
     },
@@ -43,7 +43,7 @@ export const content = {
       sectionTitle: "Comment ça marche",
       steps: [
         { number: "01", title: "Choisissez votre créneau", description: "Consultez le calendrier et sélectionnez la date et l'heure qui vous conviennent." },
-        { number: "02", title: "Payez en ligne", description: "Paiement sécurisé de 200€ via Stripe. Carte, Bancontact ou Apple Pay." },
+        { number: "02", title: "Payez en ligne", description: "Paiement sécurisé de 150€ via Stripe. Carte, Bancontact ou Apple Pay." },
         { number: "03", title: "Recevez votre confirmation", description: "Un email de confirmation avec toutes les informations pratiques vous est envoyé." },
         { number: "04", title: "Profitez de votre espace", description: "Arrivez, entrez dans votre espace privatif et laissez-vous porter." },
       ],
@@ -96,7 +96,7 @@ export const content = {
       },
       infos: {
         title: "Infos pratiques",
-        items: ["Ouvert 7j/7", "Groupes de 2 à 4 personnes", "200€ / 2 heures"],
+        items: ["Ouvert 7j/7", "Groupes de 2 à 4 personnes", "150€ / 2 heures"],
       },
       contact: {
         title: "Contact",
@@ -123,7 +123,7 @@ export const content = {
       title: ["Uw eigen bubbel", "voor twee."],
       subtitle:
         "Een privéruimte voor 2 tot 4 personen.\nBaden, warmte en sereniteit in het hart van Brussel.",
-      ctaPrimary: "Reserveren — 200€",
+      ctaPrimary: "Reserveren — 150€",
       ctaSecondary: "Ontdekken",
       badge: "Nu beschikbaar in Brussel",
     },
@@ -154,7 +154,7 @@ export const content = {
       sectionTitle: "Hoe het werkt",
       steps: [
         { number: "01", title: "Kies uw tijdslot", description: "Bekijk de kalender en selecteer de datum en het tijdstip dat u past." },
-        { number: "02", title: "Betaal online", description: "Beveiligde betaling van 200€ via Stripe. Kaart, Bancontact of Apple Pay." },
+        { number: "02", title: "Betaal online", description: "Beveiligde betaling van 150€ via Stripe. Kaart, Bancontact of Apple Pay." },
         { number: "03", title: "Ontvang uw bevestiging", description: "Een bevestigingsmail met alle praktische informatie wordt naar u verzonden." },
         { number: "04", title: "Geniet van uw ruimte", description: "Kom aan, betreed uw privéruimte en laat u meevoeren." },
       ],
@@ -207,7 +207,7 @@ export const content = {
       },
       infos: {
         title: "Praktische info",
-        items: ["7 dagen op 7 open", "Groepen van 2 tot 4 personen", "200€ / 2 uur"],
+        items: ["7 dagen op 7 open", "Groepen van 2 tot 4 personen", "150€ / 2 uur"],
       },
       contact: {
         title: "Contact",

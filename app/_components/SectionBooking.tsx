@@ -1,9 +1,5 @@
 "use client";
 
-// TODO: remplacer par embed Calendly quand le compte est créé
-// URL Calendly : https://calendly.com/aura-spa/2h
-// Pour activer : remplacer le bloc CTA ci-dessous par <iframe src={CALENDLY_URL} ... />
-
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";
 import type { Lang } from "../_lib/content";
@@ -95,7 +91,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
         >
           {/* Grand CTA */}
           <a
-            href="#"
+            href="/reserver"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -145,8 +141,8 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
               }}
             >
               {lang === "fr"
-                ? "La réservation en ligne sera disponible très prochainement. Contactez-nous par email pour réserver dès maintenant."
-                : "Online reserveren komt binnenkort beschikbaar. Neem contact op per e-mail om nu al te reserveren."}
+                ? "Choisissez votre créneau et payez en ligne en quelques minutes. Une question ? Contactez-nous par email."
+                : "Kies uw tijdslot en betaal online in enkele minuten. Een vraag? Neem contact op per e-mail."}
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
