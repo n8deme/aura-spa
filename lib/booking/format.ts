@@ -1,4 +1,15 @@
 import { SPA_TIMEZONE } from "./timezone";
+import type { PackageType } from "./types";
+
+const PACKAGE_LABELS: Record<PackageType, string> = {
+  base: "Forfait de base",
+  all_in: "Forfait All-in",
+  a_la_carte: "À la carte",
+};
+
+export function packageTypeLabel(packageType: PackageType): string {
+  return PACKAGE_LABELS[packageType];
+}
 
 // Un montant à 0€ signifie "pas encore tarifé" (placeholder en attente de Rob).
 export function isPriced(amount: number): boolean {

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
+import { sendBookingConfirmationEmail } from "@/lib/email/booking-confirmation";
+import type { PackageType } from "@/lib/booking/types";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +19,30 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
     typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
 
   const supabase = getSupabaseAdmin();
-  const { error } = await supabase
+  // Le filtre status="pending" rend l'opération idempotente : si Stripe relivre
+  // le même événement, l'update ne matche plus rien et aucun email n'est renvoyé.
+  const { data, error } = await supabase
     .from("bookings")
     .update({ status: "confirmed", stripe_payment_id: paymentIntentId ?? session.id })
-    .eq("id", bookingId);
+    .eq("id", bookingId)
+    .eq("status", "pending")
+    .select("customer_name, customer_email, start_time, package_type, total_price")
+    .single();
 
   if (error) {
-    console.error("Webhook Stripe : échec de confirmation de la réservation", bookingId, error.message);
+    if (error.code !== "PGRST116") {
+      console.error("Webhook Stripe : échec de confirmation de la réservation", bookingId, error.message);
+    }
+    return;
   }
+
+  await sendBookingConfirmationEmail({
+    customerName: data.customer_name,
+    customerEmail: data.customer_email,
+    startTime: data.start_time,
+    packageType: data.package_type as PackageType,
+    totalPrice: data.total_price,
+  });
 }
 
 async function cancelBooking(session: Stripe.Checkout.Session) {
