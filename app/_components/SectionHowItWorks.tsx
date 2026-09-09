@@ -56,7 +56,7 @@ export function SectionHowItWorks({ lang }: SectionHowItWorksProps) {
               margin: 0,
             }}
           >
-            Simple comme bonjour.
+            {t.title}
           </h2>
         </motion.div>
 

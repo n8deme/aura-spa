@@ -41,6 +41,7 @@ export const content = {
     },
     howItWorks: {
       sectionTitle: "Comment ça marche",
+      title: "Simple comme bonjour.",
       steps: [
         { number: "01", title: "Choisissez votre créneau", description: "Consultez le calendrier et sélectionnez la date et l'heure qui vous conviennent." },
         { number: "02", title: "Payez en ligne", description: "Paiement sécurisé de 150€ via Stripe. Carte, Bancontact ou Apple Pay." },
@@ -101,7 +102,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
-        instagram: "https://instagram.com/auraspa.brussels",
+        instagram: "https://instagram.com/auraspa.brussels",
       },
       legal: "© 2026 Aura Spa",
       links: [
@@ -151,6 +152,7 @@ export const content = {
     },
     howItWorks: {
       sectionTitle: "Hoe het werkt",
+      title: "Kinderspel.",
       steps: [
         { number: "01", title: "Kies uw tijdslot", description: "Bekijk de kalender en selecteer de datum en het tijdstip dat u past." },
         { number: "02", title: "Betaal online", description: "Beveiligde betaling van 150€ via Stripe. Kaart, Bancontact of Apple Pay." },
@@ -211,7 +213,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
-        instagram: "https://instagram.com/auraspa.brussels",
+        instagram: "https://instagram.com/auraspa.brussels",
       },
       legal: "© 2026 Aura Spa",
       links: [
