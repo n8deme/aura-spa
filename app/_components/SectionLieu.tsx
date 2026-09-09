@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import type { Lang } from "../_lib/content";
@@ -95,7 +96,7 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             </p>
           </motion.div>
 
-          {/* Droite — vidéo placeholder, z-index 1 (derrière le texte) */}
+          {/* Droite — photo + vidéo (placeholder), z-index 1 (derrière le texte) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -103,11 +104,32 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             style={{ position: "relative", zIndex: 1 }}
           >
-            {/* Zone vidéo 16:9 */}
+            {/* Photo du lieu, pleine largeur */}
             <div
               style={{
                 position: "relative",
                 aspectRatio: "16 / 9",
+                borderRadius: "8px",
+                overflow: "hidden",
+                border: "1px solid rgba(196,149,106,0.15)",
+              }}
+            >
+              <Image
+                src="/images/Spa.jpeg"
+                alt="Espace privatif Aura Spa"
+                fill
+                sizes="(max-width: 768px) 100vw, 60vw"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+
+            {/* Vidéo (placeholder), plus petite et centrée sous la photo */}
+            <div
+              style={{
+                position: "relative",
+                aspectRatio: "16 / 9",
+                width: "60%",
+                margin: "1.5rem auto 0",
                 backgroundColor: "#3D2318",
                 borderRadius: "8px",
                 overflow: "hidden",
