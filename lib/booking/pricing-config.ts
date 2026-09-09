@@ -37,7 +37,7 @@ export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];
 export const BOOKING_RULES = {
   maxHours: 4, // confirmé : 4h max en tout
   bufferMinutes: 30, // confirmé
-  minAdvanceHours: 2, // placeholder — délai mini AVANT de réserver un créneau, pas encore communiqué (à ne pas confondre avec bufferMinutes, le battement ENTRE deux résas)
+  minAdvanceHours: 24, // confirmé — délai mini AVANT de réserver un créneau (différent de bufferMinutes, le battement ENTRE deux résas)
   openingHours: { start: "10:00", end: "22:00" }, // confirmé
 };
 
