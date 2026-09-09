@@ -106,7 +106,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
-        instagram: "https://instagram.com/auraspa.brussels",
+        instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",
       links: [
@@ -220,7 +220,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
-        instagram: "https://instagram.com/auraspa.brussels",
+        instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",
       links: [
