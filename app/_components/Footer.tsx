@@ -44,7 +44,7 @@ export function Footer({ lang }: FooterProps) {
             paddingBottom: "clamp(40px, 6vw, 64px)",
             borderBottom: "1px solid rgba(245,237,227,0.08)",
           }}
-          className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+          className="footer-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
         >
           {/* Col 1 — Brand */}
           <div>

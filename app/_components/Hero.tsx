@@ -34,6 +34,7 @@ export function Hero({ lang }: HeroProps) {
         fill
         priority
         sizes="100vw"
+        className="hero-photo"
         style={{ objectFit: "cover", objectPosition: "center" }}
       />
 
