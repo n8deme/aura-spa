@@ -102,7 +102,7 @@ export default function CGV() {
               avant le créneau réservé donne droit à un remboursement intégral.
               En deçà de ce délai, la réservation n&apos;est pas remboursable.
               Pour annuler ou pour toute question, contactez-nous à
-              contact@aura-spa.be.
+              Kamanrobert@icloud.com.
             </p>
           </section>
         </div>

@@ -82,10 +82,10 @@ export default function RGPD() {
             <p style={{ marginTop: "1rem" }}>
               Pour exercer ces droits, contactez-nous à :{" "}
               <a
-                href="mailto:contact@aura-spa.be"
+                href="mailto:Kamanrobert@icloud.com"
                 style={{ color: "#C4956A", textDecoration: "none" }}
               >
-                contact@aura-spa.be
+                Kamanrobert@icloud.com
               </a>
             </p>
           </section>

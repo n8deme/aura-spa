@@ -44,10 +44,10 @@ const localBusinessSchema = {
     "Espace bien-être privatif à Bruxelles. Bains à bulles et sérénité pour 2 à 10 personnes.",
   url: "https://aura-spa.be",
   telephone: "",
-  email: "contact@aura-spa.be",
+  email: "Kamanrobert@icloud.com",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bruxelles",
+    addressLocality: "Melsbroek",
     addressCountry: "BE",
   },
   priceRange: "€€",

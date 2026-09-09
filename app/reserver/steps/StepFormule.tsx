@@ -8,47 +8,56 @@ import { formatPrice, isPriced } from "@/lib/booking/format";
 import type { PackageType } from "@/lib/booking/types";
 import { StepNav } from "./StepNav";
 
-const OPTIONS: {
+function getOptions(guestCount: number): {
   value: PackageType;
   title: string;
   description: string;
   price: string;
   disabled: boolean;
-}[] = [
-  {
-    value: "base",
-    title: `Forfait de base — ${BASE_PACKAGE.durationHours}h`,
-    description: "L'essentiel : votre espace privatif, sans extra.",
-    price: formatPrice(BASE_PACKAGE.price),
-    disabled: !isPriced(BASE_PACKAGE.price),
-  },
-  {
-    value: "all_in",
-    title: `All-in — ${ALL_IN_PACKAGE.durationHours}h`,
-    description: "2h + plateau charcuterie & fromage et champagne inclus.",
-    price: formatPrice(ALL_IN_PACKAGE.price),
-    disabled: !isPriced(ALL_IN_PACKAGE.price),
-  },
-  {
-    value: "a_la_carte",
-    title: "À la carte",
-    description: "Prolongez au-delà de 2h et choisissez librement vos extras.",
-    price: `À partir de ${formatPrice(BASE_PACKAGE.price)}`,
-    disabled: false,
-  },
-];
+}[] {
+  const options = [
+    {
+      value: "base" as const,
+      title: `Forfait de base — ${BASE_PACKAGE.durationHours}h`,
+      description: "L'essentiel : votre espace privatif, sans extra.",
+      price: formatPrice(BASE_PACKAGE.price),
+      disabled: !isPriced(BASE_PACKAGE.price),
+    },
+    {
+      value: "all_in" as const,
+      title: `All-in — ${ALL_IN_PACKAGE.durationHours}h`,
+      description: `2h + plateau charcuterie & fromage et champagne inclus. Réservé aux groupes de ${ALL_IN_PACKAGE.maxGuests} personnes.`,
+      price: formatPrice(ALL_IN_PACKAGE.price),
+      disabled: !isPriced(ALL_IN_PACKAGE.price),
+    },
+    {
+      value: "a_la_carte" as const,
+      title: "À la carte",
+      description: "Prolongez au-delà de 2h et choisissez librement vos extras.",
+      price: `À partir de ${formatPrice(BASE_PACKAGE.price)}`,
+      disabled: false,
+    },
+  ];
+
+  // L'All-in disparaît des choix proposés au-delà de sa capacité max.
+  return options.filter((option) => option.value !== "all_in" || guestCount <= ALL_IN_PACKAGE.maxGuests);
+}
 
 export function StepFormule({
   value,
+  guestCount,
   onChange,
   onNext,
   onBack,
 }: {
   value: PackageType;
+  guestCount: number;
   onChange: (value: PackageType) => void;
   onNext: () => void;
   onBack: () => void;
 }) {
+  const options = getOptions(guestCount);
+
   return (
     <div>
       <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">
@@ -61,7 +70,7 @@ export function StepFormule({
         onValueChange={(next) => onChange(next as PackageType)}
         className="mt-8 grid gap-4"
       >
-        {OPTIONS.map((option) => (
+        {options.map((option) => (
           <label
             key={option.value}
             className={`flex cursor-pointer items-start gap-4 rounded-[4px] border p-5 transition-colors ${

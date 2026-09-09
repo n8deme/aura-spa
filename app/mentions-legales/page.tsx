@@ -62,9 +62,9 @@ export default function MentionsLegales() {
               <br />
               Espace Privatif
               <br />
-              Bruxelles, Belgique
+              Melsbroek, Belgique
               <br />
-              Email : contact@aura-spa.be
+              Email : Kamanrobert@icloud.com
             </p>
             {/* TODO: Compléter avec les informations légales de la société (numéro BCE, forme juridique, adresse complète) */}
           </section>

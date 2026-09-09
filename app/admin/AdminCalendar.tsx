@@ -18,6 +18,7 @@ type AdminBooking = {
   start_time: string;
   end_time: string;
   package_type: PackageType;
+  guest_count: number;
   total_price: number;
   customer_name: string;
   customer_email: string;
@@ -181,7 +182,8 @@ export function AdminCalendar() {
                     <Badge variant={STATUS_VARIANT[booking.status]}>{STATUS_LABEL[booking.status]}</Badge>
                   </div>
                   <p className="mt-2 text-sm text-[--color-text]">
-                    {packageTypeLabel(booking.package_type)} — {formatPrice(booking.total_price)}
+                    {packageTypeLabel(booking.package_type)} — {booking.guest_count} pers. —{" "}
+                    {formatPrice(booking.total_price)}
                   </p>
                   <Separator className="my-3 bg-[--color-border]" />
                   <p className="text-sm text-[--color-text]">{booking.customer_name}</p>

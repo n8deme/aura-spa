@@ -4,6 +4,8 @@ import {
   BOOKING_RULES,
   EXTRAS_CATALOG,
   EXTRA_HOUR_PRICE,
+  MAX_CAPACITY,
+  MIN_CAPACITY,
 } from "./pricing-config";
 import type { PriceBreakdown, PricingSelection } from "./types";
 
@@ -31,7 +33,19 @@ export function resolveDurationHours(selection: Pick<PricingSelection, "packageT
 }
 
 export function computePrice(selection: PricingSelection): PriceBreakdown {
-  const { packageType } = selection;
+  const { packageType, guestCount } = selection;
+
+  if (!Number.isInteger(guestCount) || guestCount < MIN_CAPACITY || guestCount > MAX_CAPACITY) {
+    throw new BookingValidationError(
+      `Le nombre de personnes doit être compris entre ${MIN_CAPACITY} et ${MAX_CAPACITY}.`
+    );
+  }
+
+  if (packageType === "all_in" && guestCount > ALL_IN_PACKAGE.maxGuests) {
+    throw new BookingValidationError(
+      `Le forfait All-in est réservé aux groupes de ${ALL_IN_PACKAGE.maxGuests} personnes maximum.`
+    );
+  }
 
   if (packageType === "base") {
     if (selection.extraHours || selection.extras?.length) {

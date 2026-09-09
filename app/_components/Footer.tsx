@@ -12,13 +12,6 @@ function InstagramIcon({ size = 14 }: { size?: number }) {
   );
 }
 
-function FacebookIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-    </svg>
-  );
-}
 import { Wordmark } from "./Wordmark";
 import type { Lang } from "../_lib/content";
 import { content } from "../_lib/content";
@@ -194,27 +187,6 @@ export function Footer({ lang }: FooterProps) {
               >
                 <InstagramIcon size={14} />
                 Instagram
-              </a>
-              <a
-                href={t.contact.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  fontFamily: "var(--font-dm-sans)",
-                  fontWeight: 300,
-                  fontSize: "0.875rem",
-                  color: "rgba(245,237,227,0.65)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#C4956A")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,237,227,0.65)")}
-              >
-                <FacebookIcon size={14} />
-                Facebook
               </a>
             </div>
           </div>

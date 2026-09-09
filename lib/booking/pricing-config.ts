@@ -6,7 +6,8 @@ export const BASE_PACKAGE = {
   price: 150, // flat, quel que soit le nombre de personnes (confirmé par Kev)
 };
 
-// Capacité max du groupe (au-delà de 4, pour grosses soirées/anniversaires).
+// Capacité du groupe (au-delà de 4, pour grosses soirées/anniversaires).
+export const MIN_CAPACITY = 2;
 export const MAX_CAPACITY = 10;
 
 export const EXTRA_HOUR_PRICE = 25;
@@ -14,6 +15,7 @@ export const EXTRA_HOUR_PRICE = 25;
 export const ALL_IN_PACKAGE = {
   durationHours: 2,
   price: 220,
+  maxGuests: 2, // confirmé : réservé aux groupes de 2 personnes
   // Contenu exact du "tout compris" à confirmer avec Rob (voir note ci-dessous).
   includedExtras: ["charcuterie_fromage", "champagne"] as const,
 };

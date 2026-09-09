@@ -8,6 +8,7 @@ const extraIds = EXTRAS_CATALOG.map((extra) => extra.id) as [ExtraId, ...ExtraId
 
 const bodySchema = z.object({
   packageType: z.enum(["base", "all_in", "a_la_carte"]),
+  guestCount: z.number().int().min(1),
   extraHours: z.number().int().min(0).optional(),
   extras: z
     .array(

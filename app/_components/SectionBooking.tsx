@@ -5,7 +5,7 @@ import { ArrowRight, Lock } from "lucide-react";
 import type { Lang } from "../_lib/content";
 import { content } from "../_lib/content";
 
-const CONTACT_EMAIL = "contact@auraspa.be";
+const CONTACT_EMAIL = "Kamanrobert@icloud.com";
 
 export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
   const t = content[lang].booking;

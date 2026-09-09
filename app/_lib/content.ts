@@ -9,9 +9,9 @@ export const content = {
       reserver: "Réserver",
     },
     hero: {
-      title: ["Votre bulle", "à deux."],
+      title: ["Votre bulle", "de sérénité."],
       subtitle:
-        "Un espace privatif pour 2 à 10 personnes.\nBains, chaleur et sérénité au cœur de Bruxelles.",
+        "Un espace privatif pour 2 à 10 personnes.\nBains, chaleur et détente à Bruxelles.",
       ctaPrimary: "Réserver — 150€",
       ctaSecondary: "Découvrir",
       badge: "Déjà disponible à Bruxelles",
@@ -91,7 +91,7 @@ export const content = {
           { label: "L'expérience", href: "#experience" },
           { label: "Le lieu", href: "#lieu" },
           { label: "Réserver", href: "#reserver" },
-          { label: "Contact", href: "mailto:contact@aura-spa.be" },
+          { label: "Contact", href: "mailto:Kamanrobert@icloud.com" },
         ],
       },
       infos: {
@@ -100,9 +100,8 @@ export const content = {
       },
       contact: {
         title: "Contact",
-        email: "contact@aura-spa.be",
-        instagram: "https://instagram.com/auraspa.brussels",
-        facebook: "https://facebook.com/auraspa.brussels",
+        email: "Kamanrobert@icloud.com",
+        instagram: "https://instagram.com/auraspa.brussels",
       },
       legal: "© 2026 Aura Spa",
       links: [
@@ -120,9 +119,9 @@ export const content = {
       reserver: "Reserveren",
     },
     hero: {
-      title: ["Uw eigen bubbel", "voor twee."],
+      title: ["Uw eigen bubbel", "van sereniteit."],
       subtitle:
-        "Een privéruimte voor 2 tot 10 personen.\nBaden, warmte en sereniteit in het hart van Brussel.",
+        "Een privéruimte voor 2 tot 10 personen.\nBaden, warmte en ontspanning in Brussel.",
       ctaPrimary: "Reserveren — 150€",
       ctaSecondary: "Ontdekken",
       badge: "Nu beschikbaar in Brussel",
@@ -202,7 +201,7 @@ export const content = {
           { label: "De ervaring", href: "#experience" },
           { label: "De locatie", href: "#lieu" },
           { label: "Reserveren", href: "#reserver" },
-          { label: "Contact", href: "mailto:contact@aura-spa.be" },
+          { label: "Contact", href: "mailto:Kamanrobert@icloud.com" },
         ],
       },
       infos: {
@@ -211,9 +210,8 @@ export const content = {
       },
       contact: {
         title: "Contact",
-        email: "contact@aura-spa.be",
-        instagram: "https://instagram.com/auraspa.brussels",
-        facebook: "https://facebook.com/auraspa.brussels",
+        email: "Kamanrobert@icloud.com",
+        instagram: "https://instagram.com/auraspa.brussels",
       },
       legal: "© 2026 Aura Spa",
       links: [

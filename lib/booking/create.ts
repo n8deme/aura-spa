@@ -37,6 +37,7 @@ export async function createBookingCheckout(
       start_time: startTime.toISOString(),
       end_time: endTime.toISOString(),
       package_type: selection.packageType,
+      guest_count: selection.guestCount,
       total_price: breakdown.total,
       customer_name: customer.name,
       customer_email: customer.email,

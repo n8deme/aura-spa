@@ -18,6 +18,7 @@ export type CustomerInfo = {
 
 export type PricingSelection = {
   packageType: PackageType;
+  guestCount: number;
   extraHours?: number; // "à la carte" uniquement, heures au-delà des 2h de base
   extras?: ExtraSelection[]; // "à la carte" uniquement
 };
@@ -42,6 +43,7 @@ export type BookingRecord = {
   startTime: string;
   endTime: string;
   packageType: PackageType;
+  guestCount: number;
   totalPrice: number;
   customerName: string;
   customerEmail: string;

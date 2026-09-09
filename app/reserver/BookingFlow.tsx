@@ -1,21 +1,24 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
 import { SPA_TIMEZONE, zonedTimeToUtc } from "@/lib/booking/timezone";
 import { toDateKey } from "@/lib/booking/format";
+import { ALL_IN_PACKAGE, MIN_CAPACITY } from "@/lib/booking/pricing-config";
 import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
 import { StepSlot } from "./steps/StepSlot";
+import { StepGuests } from "./steps/StepGuests";
 import { StepFormule } from "./steps/StepFormule";
 import { StepExtras } from "./steps/StepExtras";
 import { StepRecap } from "./steps/StepRecap";
 
-type Step = "slot" | "formule" | "extras" | "recap";
+type Step = "slot" | "guests" | "formule" | "extras" | "recap";
 
 const STEP_LABELS: Record<Step, string> = {
   slot: "Créneau",
+  guests: "Personnes",
   formule: "Formule",
   extras: "Extras",
   recap: "Récapitulatif",
@@ -25,13 +28,25 @@ export function BookingFlow() {
   const [step, setStep] = useState<Step>("slot");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | null>(null);
+  const [guestCount, setGuestCount] = useState(MIN_CAPACITY);
   const [packageType, setPackageType] = useState<PackageType>("base");
   const [extraHours, setExtraHours] = useState(0);
   const [extras, setExtras] = useState<ExtraSelection[]>([]);
   const [customer, setCustomer] = useState<CustomerInfo>({ name: "", email: "", phone: "", notes: "" });
 
+  // Si le groupe dépasse la capacité de l'All-in, l'option disparaît :
+  // on retombe sur le forfait de base pour ne pas rester bloqué dessus.
+  useEffect(() => {
+    if (packageType === "all_in" && guestCount > ALL_IN_PACKAGE.maxGuests) {
+      setPackageType("base");
+    }
+  }, [guestCount, packageType]);
+
   const stepOrder: Step[] = useMemo(
-    () => (packageType === "a_la_carte" ? ["slot", "formule", "extras", "recap"] : ["slot", "formule", "recap"]),
+    () =>
+      packageType === "a_la_carte"
+        ? ["slot", "guests", "formule", "extras", "recap"]
+        : ["slot", "guests", "formule", "recap"],
     [packageType]
   );
 
@@ -84,12 +99,23 @@ export function BookingFlow() {
           <StepSlot date={date} time={time} onChange={(d, t) => { setDate(d); setTime(t); }} onNext={goNext} />
         )}
 
+        {step === "guests" && (
+          <StepGuests value={guestCount} onChange={setGuestCount} onNext={goNext} onBack={goBack} />
+        )}
+
         {step === "formule" && (
-          <StepFormule value={packageType} onChange={setPackageType} onNext={goNext} onBack={goBack} />
+          <StepFormule
+            value={packageType}
+            guestCount={guestCount}
+            onChange={setPackageType}
+            onNext={goNext}
+            onBack={goBack}
+          />
         )}
 
         {step === "extras" && packageType === "a_la_carte" && (
           <StepExtras
+            guestCount={guestCount}
             extraHours={extraHours}
             onExtraHoursChange={setExtraHours}
             extras={extras}
@@ -103,6 +129,7 @@ export function BookingFlow() {
           <StepRecap
             startTime={startTimeIso}
             packageType={packageType}
+            guestCount={guestCount}
             extraHours={packageType === "a_la_carte" ? extraHours : 0}
             extras={packageType === "a_la_carte" ? extras : []}
             customer={customer}

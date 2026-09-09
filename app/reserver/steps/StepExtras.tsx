@@ -14,6 +14,7 @@ import { StepNav } from "./StepNav";
 const MAX_EXTRA_HOURS = BOOKING_RULES.maxHours - BASE_PACKAGE.durationHours;
 
 export function StepExtras({
+  guestCount,
   extraHours,
   onExtraHoursChange,
   extras,
@@ -21,6 +22,7 @@ export function StepExtras({
   onNext,
   onBack,
 }: {
+  guestCount: number;
   extraHours: number;
   onExtraHoursChange: (value: number) => void;
   extras: ExtraSelection[];
@@ -40,7 +42,7 @@ export function StepExtras({
     onExtrasChange(extras.map((e) => (e.extraId === id ? { ...e, quantity } : e)));
   }
 
-  const breakdown = computePrice({ packageType: "a_la_carte", extraHours, extras });
+  const breakdown = computePrice({ packageType: "a_la_carte", guestCount, extraHours, extras });
 
   return (
     <div>

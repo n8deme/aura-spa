@@ -18,6 +18,7 @@ type Slot = { time: string; startTime: string; available: boolean };
 export function StepRecap({
   startTime,
   packageType,
+  guestCount,
   extraHours,
   extras,
   customer,
@@ -27,6 +28,7 @@ export function StepRecap({
 }: {
   startTime: string;
   packageType: PackageType;
+  guestCount: number;
   extraHours: number;
   extras: ExtraSelection[];
   customer: CustomerInfo;
@@ -39,7 +41,7 @@ export function StepRecap({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const breakdown = computePrice({ packageType, extraHours, extras });
+  const breakdown = computePrice({ packageType, guestCount, extraHours, extras });
   const start = new Date(startTime);
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export function StepRecap({
       const res = await fetch("/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startTime, packageType, extraHours, extras, customer }),
+        body: JSON.stringify({ startTime, packageType, guestCount, extraHours, extras, customer }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -110,6 +112,9 @@ export function StepRecap({
         <p className="text-sm text-[--color-text]/70">Créneau</p>
         <p className="mt-1 font-heading text-lg text-[--color-text]">
           {formatDateLong(start)} à {formatTime(start)}
+        </p>
+        <p className="mt-1 text-sm text-[--color-text]/70">
+          {guestCount} personne{guestCount > 1 ? "s" : ""}
         </p>
 
         <Separator className="my-4 bg-[--color-border]" />
