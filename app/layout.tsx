@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aura-spa.be"),
   title: "Aura Spa — Espace Privatif à Bruxelles",
   description:
-    "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 150€ / 2 heures.",
+    "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
   openGraph: {
     title: "Aura Spa — Espace Privatif à Bruxelles",
     description:
-      "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 4 personnes. 150€ / 2 heures.",
+      "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
     locale: "fr_BE",
     type: "website",
   },
@@ -41,7 +41,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: "Aura Spa",
   description:
-    "Espace bien-être privatif à Bruxelles. Bains à bulles et sérénité pour 2 à 4 personnes.",
+    "Espace bien-être privatif à Bruxelles. Bains à bulles et sérénité pour 2 à 10 personnes.",
   url: "https://aura-spa.be",
   telephone: "",
   email: "contact@aura-spa.be",

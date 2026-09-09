@@ -11,7 +11,7 @@ export const content = {
     hero: {
       title: ["Votre bulle", "à deux."],
       subtitle:
-        "Un espace privatif pour 2 à 4 personnes.\nBains, chaleur et sérénité au cœur de Bruxelles.",
+        "Un espace privatif pour 2 à 10 personnes.\nBains, chaleur et sérénité au cœur de Bruxelles.",
       ctaPrimary: "Réserver — 150€",
       ctaSecondary: "Découvrir",
       badge: "Déjà disponible à Bruxelles",
@@ -28,7 +28,7 @@ export const content = {
             "Jacuzzi et bains nordiques réservés exclusivement pour votre groupe.",
         },
         {
-          title: "Jusqu'à 4 personnes",
+          title: "Jusqu'à 10 personnes",
           description:
             "Couple, amis ou collègues — l'espace s'adapte à votre groupe.",
         },
@@ -54,7 +54,7 @@ export const content = {
       description:
         "Au cœur de Bruxelles, Aura Spa est un espace intimiste pensé dans les moindres détails — lumières tamisées, chaleur maîtrisée, acoustique douce.",
       videoPlaceholder: "Vidéo du lieu — bientôt disponible",
-      stats: ["2–4 personnes", "2 heures", "Bruxelles"],
+      stats: ["2–10 personnes", "2 heures", "Bruxelles"],
     },
     booking: {
       sectionTitle: "Réserver",
@@ -96,7 +96,7 @@ export const content = {
       },
       infos: {
         title: "Infos pratiques",
-        items: ["Ouvert 7j/7", "Groupes de 2 à 4 personnes", "150€ / 2 heures"],
+        items: ["Ouvert 7j/7", "Groupes de 2 à 10 personnes", "150€ / 2 heures"],
       },
       contact: {
         title: "Contact",
@@ -122,7 +122,7 @@ export const content = {
     hero: {
       title: ["Uw eigen bubbel", "voor twee."],
       subtitle:
-        "Een privéruimte voor 2 tot 4 personen.\nBaden, warmte en sereniteit in het hart van Brussel.",
+        "Een privéruimte voor 2 tot 10 personen.\nBaden, warmte en sereniteit in het hart van Brussel.",
       ctaPrimary: "Reserveren — 150€",
       ctaSecondary: "Ontdekken",
       badge: "Nu beschikbaar in Brussel",
@@ -139,7 +139,7 @@ export const content = {
             "Jacuzzi en Scandinavische baden exclusief gereserveerd voor uw groep.",
         },
         {
-          title: "Tot 4 personen",
+          title: "Tot 10 personen",
           description:
             "Koppel, vrienden of collega's — de ruimte past zich aan uw groep aan.",
         },
@@ -165,7 +165,7 @@ export const content = {
       description:
         "In het hart van Brussel is Aura Spa een intieme ruimte tot in de kleinste details ontworpen — gedempte verlichting, gecontroleerde warmte, zachte akoestiek.",
       videoPlaceholder: "Video van de locatie — binnenkort beschikbaar",
-      stats: ["2–4 personen", "2 uur", "Brussel"],
+      stats: ["2–10 personen", "2 uur", "Brussel"],
     },
     booking: {
       sectionTitle: "Reserveren",
@@ -207,7 +207,7 @@ export const content = {
       },
       infos: {
         title: "Praktische info",
-        items: ["7 dagen op 7 open", "Groepen van 2 tot 4 personen", "150€ / 2 uur"],
+        items: ["7 dagen op 7 open", "Groepen van 2 tot 10 personen", "150€ / 2 uur"],
       },
       contact: {
         title: "Contact",

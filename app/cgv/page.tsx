@@ -74,7 +74,7 @@ export default function CGV() {
             </h2>
             <p>
               Le forfait de base est de <strong>150€ pour 2 heures</strong>{" "}
-              pour un groupe de 2 à 4 personnes, avec possibilité de
+              pour un groupe de 2 à 10 personnes, avec possibilité de
               prolonger (25€ par heure supplémentaire, dans la limite de 4h
               au total) et d&apos;ajouter des extras à la carte. Un forfait
               All-in à 220€ tout compris est également disponible. Le

@@ -117,7 +117,7 @@ export default function OGImage() {
                 color: "#F5EDE3",
               }}
             >
-              150€ / 2 heures · 2–4 personnes
+              150€ / 2 heures · 2–10 personnes
             </div>
           </div>
         </div>

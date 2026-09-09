@@ -3,8 +3,11 @@
 
 export const BASE_PACKAGE = {
   durationHours: 2,
-  price: 150, // pour 2 personnes — flou sur le prix à 3-4 pers, voir note ci-dessous
+  price: 150, // flat, quel que soit le nombre de personnes (confirmé par Kev)
 };
+
+// Capacité max du groupe (au-delà de 4, pour grosses soirées/anniversaires).
+export const MAX_CAPACITY = 10;
 
 export const EXTRA_HOUR_PRICE = 25;
 
@@ -24,8 +27,9 @@ export const EXTRAS_CATALOG = [
   { id: "cocktail_mojito", label: "Cocktail — Mojito fraise", price: 10 },
   { id: "soft_drink", label: "Soft drink", price: 3 },
   { id: "shisha", label: "Chicha (goût au choix, à préciser en remarque)", price: 25 },
-  { id: "prosecco", label: "Bouteille de prosecco", price: 0 }, // prix pas encore donné
-  { id: "champagne", label: "Bouteille de champagne", price: 0 }, // prix pas encore donné
+  { id: "prosecco", label: "Bouteille de prosecco", price: 40 },
+  { id: "champagne", label: "Bouteille de champagne", price: 40 },
+  { id: "vin_blanc", label: "Bouteille de vin blanc", price: 25 },
 ] as const;
 
 export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];
@@ -33,8 +37,8 @@ export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];
 export const BOOKING_RULES = {
   maxHours: 4, // confirmé : 4h max en tout
   bufferMinutes: 30, // confirmé
-  minAdvanceHours: 2, // placeholder — pas communiqué
-  openingHours: { start: "10:00", end: "22:00" }, // placeholder — pas communiqué
+  minAdvanceHours: 2, // placeholder — délai mini AVANT de réserver un créneau, pas encore communiqué (à ne pas confondre avec bufferMinutes, le battement ENTRE deux résas)
+  openingHours: { start: "10:00", end: "22:00" }, // confirmé
 };
 
 // Annulation possible avec remboursement si faite au moins ce délai à l'avance.
