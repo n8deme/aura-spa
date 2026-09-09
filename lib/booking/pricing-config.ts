@@ -20,18 +20,20 @@ export const ALL_IN_PACKAGE = {
   includedExtras: ["charcuterie_fromage", "champagne"] as const,
 };
 
+// Les libellés affichés (fr/nl) vivent dans lib/booking/i18n.ts — ici,
+// uniquement les données business indépendantes de la langue.
 export const EXTRAS_CATALOG = [
-  { id: "charcuterie_fromage", label: "Plateau charcuterie & fromage", price: 25 },
-  { id: "sushis", label: "Plateau de sushis", price: 20 },
-  { id: "dessert", label: "Plateau dessert", price: 15 },
-  { id: "cocktail_aperol", label: "Cocktail — Aperol Spritz", price: 10 },
-  { id: "cocktail_passion", label: "Cocktail — Passion Fruit Martini", price: 10 },
-  { id: "cocktail_mojito", label: "Cocktail — Mojito fraise", price: 10 },
-  { id: "soft_drink", label: "Soft drink", price: 3 },
-  { id: "shisha", label: "Chicha (goût au choix, à préciser en remarque)", price: 25 },
-  { id: "prosecco", label: "Bouteille de prosecco", price: 40 },
-  { id: "champagne", label: "Bouteille de champagne", price: 40 },
-  { id: "vin_blanc", label: "Bouteille de vin blanc", price: 25 },
+  { id: "charcuterie_fromage", price: 25 },
+  { id: "sushis", price: 20 },
+  { id: "dessert", price: 15 },
+  { id: "cocktail_aperol", price: 10 },
+  { id: "cocktail_passion", price: 10 },
+  { id: "cocktail_mojito", price: 10 },
+  { id: "soft_drink", price: 3 },
+  { id: "shisha", price: 25 },
+  { id: "prosecco", price: 40 },
+  { id: "champagne", price: 40 },
+  { id: "vin_blanc", price: 25 },
 ] as const;
 
 export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];

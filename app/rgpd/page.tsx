@@ -1,113 +1,43 @@
 import type { Metadata } from "next";
+import type { Lang } from "@/app/_lib/content";
+import { LegalLayout, LegalSection } from "@/app/_components/LegalLayout";
+import { RGPD_I18N } from "@/lib/legal/i18n";
 
-export const metadata: Metadata = {
-  title: "RGPD — Politique de confidentialité — Aura Spa",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}): Promise<Metadata> {
+  const { lang: rawLang } = await searchParams;
+  const lang: Lang = rawLang === "nl" ? "nl" : "fr";
+  return { title: RGPD_I18N[lang].pageTitle };
+}
 
-export default function RGPD() {
+export default async function RGPD({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}) {
+  const { lang: rawLang } = await searchParams;
+  const lang: Lang = rawLang === "nl" ? "nl" : "fr";
+  const t = RGPD_I18N[lang];
+
   return (
-    <div
-      style={{
-        backgroundColor: "#F5EDE3",
-        minHeight: "100vh",
-        paddingTop: "120px",
-        paddingBottom: "80px",
-      }}
-    >
-      <div style={{ maxWidth: "768px", margin: "0 auto", padding: "0 24px" }}>
-        <h1
-          style={{
-            fontFamily: "var(--font-cormorant)",
-            fontStyle: "italic",
-            fontWeight: 500,
-            fontSize: "clamp(36px, 5vw, 52px)",
-            color: "#2C1810",
-            marginBottom: "2rem",
-          }}
-        >
-          Politique de confidentialité (RGPD)
-        </h1>
+    <LegalLayout lang={lang} title={t.heading}>
+      <LegalSection title={t.dataTitle}>
+        <p>{t.dataText}</p>
+        {/* TODO: Compléter avec la politique complète de confidentialité */}
+      </LegalSection>
 
-        <div
-          style={{
-            fontFamily: "var(--font-dm-sans)",
-            fontWeight: 300,
-            fontSize: "1rem",
-            lineHeight: 1.7,
-            color: "#2C1810",
-            opacity: 0.8,
-          }}
-        >
-          <section style={{ marginBottom: "2.5rem" }}>
-            <h2
-              style={{
-                fontFamily: "var(--font-cormorant)",
-                fontWeight: 600,
-                fontSize: "1.375rem",
-                color: "#2C1810",
-                opacity: 1,
-                marginBottom: "1rem",
-              }}
-            >
-              Données collectées
-            </h2>
-            <p>
-              Dans le cadre de la réservation de votre créneau, Aura Spa
-              collecte les données suivantes : nom, prénom, adresse email,
-              numéro de téléphone et informations de paiement (traitées par
-              Stripe).
-            </p>
-            {/* TODO: Compléter avec la politique complète de confidentialité */}
-          </section>
-
-          <section style={{ marginBottom: "2.5rem" }}>
-            <h2
-              style={{
-                fontFamily: "var(--font-cormorant)",
-                fontWeight: 600,
-                fontSize: "1.375rem",
-                color: "#2C1810",
-                opacity: 1,
-                marginBottom: "1rem",
-              }}
-            >
-              Vos droits
-            </h2>
-            <p>
-              Conformément au Règlement Général sur la Protection des Données
-              (RGPD), vous disposez des droits suivants : accès, rectification,
-              suppression, portabilité et opposition au traitement de vos
-              données personnelles.
-            </p>
-            <p style={{ marginTop: "1rem" }}>
-              Pour exercer ces droits, contactez-nous à :{" "}
-              <a
-                href="mailto:Kamanrobert@icloud.com"
-                style={{ color: "#C4956A", textDecoration: "none" }}
-              >
-                Kamanrobert@icloud.com
-              </a>
-            </p>
-          </section>
-        </div>
-
-        <a
-          href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            fontFamily: "var(--font-dm-sans)",
-            fontWeight: 400,
-            fontSize: "0.875rem",
-            color: "#C4956A",
-            textDecoration: "none",
-            marginTop: "1rem",
-          }}
-        >
-          ← Retour à l&apos;accueil
-        </a>
-      </div>
-    </div>
+      <LegalSection title={t.rightsTitle}>
+        <p>{t.rightsText}</p>
+        <p style={{ marginTop: "1rem" }}>
+          {t.contactText}{" "}
+          <a href="mailto:Kamanrobert@icloud.com" style={{ color: "#C4956A", textDecoration: "none" }}>
+            Kamanrobert@icloud.com
+          </a>
+        </p>
+      </LegalSection>
+    </LegalLayout>
   );
 }

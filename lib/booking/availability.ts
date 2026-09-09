@@ -1,6 +1,8 @@
 import "server-only";
+import type { Lang } from "@/app/_lib/content";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { BOOKING_RULES } from "./pricing-config";
+import { ERRORS } from "./i18n";
 import { SPA_TIMEZONE } from "./timezone";
 
 export type AvailabilityResult = { available: true } | { available: false; reason: string };
@@ -66,22 +68,25 @@ export async function fetchBookingsInRange(rangeStart: Date, rangeEnd: Date): Pr
   return data ?? [];
 }
 
-export async function checkAvailability(startTime: Date, endTime: Date): Promise<AvailabilityResult> {
+export async function checkAvailability(
+  startTime: Date,
+  endTime: Date,
+  lang: Lang = "fr"
+): Promise<AvailabilityResult> {
+  const errors = ERRORS[lang];
+
   if (Number.isNaN(startTime.getTime()) || Number.isNaN(endTime.getTime()) || endTime <= startTime) {
-    return { available: false, reason: "Créneau invalide." };
+    return { available: false, reason: errors.invalidSlot };
   }
 
   if (!isPastMinAdvance(startTime)) {
-    return {
-      available: false,
-      reason: `Réservation possible à partir de ${BOOKING_RULES.minAdvanceHours}h à l'avance.`,
-    };
+    return { available: false, reason: errors.minAdvance(BOOKING_RULES.minAdvanceHours) };
   }
 
   if (!isWithinOpeningHours(startTime, endTime)) {
     return {
       available: false,
-      reason: `Le créneau doit se situer entre ${BOOKING_RULES.openingHours.start} et ${BOOKING_RULES.openingHours.end}.`,
+      reason: errors.outsideOpeningHours(BOOKING_RULES.openingHours.start, BOOKING_RULES.openingHours.end),
     };
   }
 
@@ -93,10 +98,7 @@ export async function checkAvailability(startTime: Date, endTime: Date): Promise
 
   const conflict = existingBookings.some((booking) => overlapsWithBuffer(startTime, endTime, booking));
   if (conflict) {
-    return {
-      available: false,
-      reason: "Ce créneau chevauche une réservation existante (temps de battement compris).",
-    };
+    return { available: false, reason: errors.slotConflict };
   }
 
   return { available: true };

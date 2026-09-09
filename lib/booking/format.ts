@@ -1,14 +1,10 @@
+import type { Lang } from "@/app/_lib/content";
+import { PACKAGE_LABELS, PRICING_TEXT } from "./i18n";
 import { SPA_TIMEZONE } from "./timezone";
 import type { PackageType } from "./types";
 
-const PACKAGE_LABELS: Record<PackageType, string> = {
-  base: "Forfait de base",
-  all_in: "Forfait All-in",
-  a_la_carte: "À la carte",
-};
-
-export function packageTypeLabel(packageType: PackageType): string {
-  return PACKAGE_LABELS[packageType];
+export function packageTypeLabel(packageType: PackageType, lang: Lang = "fr"): string {
+  return PACKAGE_LABELS[lang][packageType];
 }
 
 // Un montant à 0€ signifie "pas encore tarifé" (placeholder en attente de Rob).
@@ -16,12 +12,16 @@ export function isPriced(amount: number): boolean {
   return amount > 0;
 }
 
-export function formatPrice(amount: number): string {
-  return isPriced(amount) ? `${amount}€` : "Bientôt disponible";
+export function formatPrice(amount: number, lang: Lang = "fr"): string {
+  return isPriced(amount) ? `${amount}€` : PRICING_TEXT[lang].comingSoon;
 }
 
-export function formatDateLong(date: Date): string {
-  return new Intl.DateTimeFormat("fr-BE", {
+function locale(lang: Lang): string {
+  return lang === "nl" ? "nl-BE" : "fr-BE";
+}
+
+export function formatDateLong(date: Date, lang: Lang = "fr"): string {
+  return new Intl.DateTimeFormat(locale(lang), {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -29,8 +29,8 @@ export function formatDateLong(date: Date): string {
   }).format(date);
 }
 
-export function formatTime(date: Date): string {
-  return new Intl.DateTimeFormat("fr-BE", {
+export function formatTime(date: Date, lang: Lang = "fr"): string {
+  return new Intl.DateTimeFormat(locale(lang), {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: SPA_TIMEZONE,

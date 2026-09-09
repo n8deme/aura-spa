@@ -16,6 +16,7 @@ const querySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   packageType: z.enum(["base", "all_in", "a_la_carte"]).default("base"),
   extraHours: z.coerce.number().int().min(0).optional(),
+  lang: z.enum(["fr", "nl"]).default("fr"),
 });
 
 function formatHHMM(minutes: number): string {
@@ -32,6 +33,7 @@ export async function GET(request: Request) {
     date: searchParams.get("date"),
     packageType: searchParams.get("packageType") ?? undefined,
     extraHours: searchParams.get("extraHours") ?? undefined,
+    lang: searchParams.get("lang") ?? undefined,
   });
 
   if (!parsed.success) {
@@ -40,7 +42,7 @@ export async function GET(request: Request) {
 
   let durationHours: number;
   try {
-    durationHours = resolveDurationHours(parsed.data);
+    durationHours = resolveDurationHours(parsed.data, parsed.data.lang);
   } catch (error) {
     if (error instanceof BookingValidationError) {
       return NextResponse.json({ error: error.message }, { status: 400 });

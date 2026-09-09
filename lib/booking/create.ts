@@ -1,4 +1,5 @@
 import "server-only";
+import type { Lang } from "@/app/_lib/content";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { checkAvailability } from "./availability";
@@ -17,18 +18,19 @@ function randomLetters(length: number): string {
 export async function createBookingCheckout(
   selection: BookingSelection,
   customer: CustomerInfo,
-  origin: string
+  origin: string,
+  lang: Lang = "fr"
 ): Promise<{ checkoutUrl: string; bookingId: string }> {
-  const durationHours = resolveDurationHours(selection);
+  const durationHours = resolveDurationHours(selection, lang);
   const startTime = new Date(selection.startTime);
   const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
 
-  const availability = await checkAvailability(startTime, endTime);
+  const availability = await checkAvailability(startTime, endTime, lang);
   if (!availability.available) {
     throw new BookingValidationError(availability.reason);
   }
 
-  const breakdown = computePrice(selection);
+  const breakdown = computePrice(selection, lang);
 
   const supabase = getSupabaseAdmin();
   const { data: booking, error: insertError } = await supabase
@@ -79,10 +81,11 @@ export async function createBookingCheckout(
         },
         quantity: 1,
       })),
-      success_url: `${origin}/reserver/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/reserver?cancelled=1`,
+      success_url: `${origin}/reserver/success?session_id={CHECKOUT_SESSION_ID}&lang=${lang}`,
+      cancel_url: `${origin}/reserver?cancelled=1&lang=${lang}`,
       metadata: { bookingId: booking.id as string },
       integration_identifier: `aura_spa_booking_${randomLetters(8)}`,
+      locale: lang === "nl" ? "nl" : "fr",
     });
 
     if (!session.url) {

@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
+import type { Lang } from "@/app/_lib/content";
+import { BOOKING_UI } from "@/lib/booking/i18n";
 import { SPA_TIMEZONE, zonedTimeToUtc } from "@/lib/booking/timezone";
 import { toDateKey } from "@/lib/booking/format";
 import { ALL_IN_PACKAGE, MIN_CAPACITY } from "@/lib/booking/pricing-config";
@@ -16,15 +18,8 @@ import { StepRecap } from "./steps/StepRecap";
 
 type Step = "slot" | "guests" | "formule" | "extras" | "recap";
 
-const STEP_LABELS: Record<Step, string> = {
-  slot: "Créneau",
-  guests: "Personnes",
-  formule: "Formule",
-  extras: "Extras",
-  recap: "Récapitulatif",
-};
-
-export function BookingFlow() {
+export function BookingFlow({ lang }: { lang: Lang }) {
+  const stepLabels = BOOKING_UI[lang].stepLabels;
   const [step, setStep] = useState<Step>("slot");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | null>(null);
@@ -87,7 +82,7 @@ export function BookingFlow() {
               >
                 {index < currentIndex ? <Check className="size-3" /> : index + 1}
               </span>
-              <span className={index === currentIndex ? "text-[--color-text]" : ""}>{STEP_LABELS[key]}</span>
+              <span className={index === currentIndex ? "text-[--color-text]" : ""}>{stepLabels[key]}</span>
               {index < stepOrder.length - 1 && <span className="mx-1 text-[--color-border]">—</span>}
             </li>
           ))}
@@ -96,15 +91,25 @@ export function BookingFlow() {
 
       <main className="mx-auto max-w-3xl px-6 py-16 md:py-24">
         {step === "slot" && (
-          <StepSlot date={date} time={time} onChange={(d, t) => { setDate(d); setTime(t); }} onNext={goNext} />
+          <StepSlot
+            lang={lang}
+            date={date}
+            time={time}
+            onChange={(d, t) => {
+              setDate(d);
+              setTime(t);
+            }}
+            onNext={goNext}
+          />
         )}
 
         {step === "guests" && (
-          <StepGuests value={guestCount} onChange={setGuestCount} onNext={goNext} onBack={goBack} />
+          <StepGuests lang={lang} value={guestCount} onChange={setGuestCount} onNext={goNext} onBack={goBack} />
         )}
 
         {step === "formule" && (
           <StepFormule
+            lang={lang}
             value={packageType}
             guestCount={guestCount}
             onChange={setPackageType}
@@ -115,6 +120,7 @@ export function BookingFlow() {
 
         {step === "extras" && packageType === "a_la_carte" && (
           <StepExtras
+            lang={lang}
             guestCount={guestCount}
             extraHours={extraHours}
             onExtraHoursChange={setExtraHours}
@@ -127,6 +133,7 @@ export function BookingFlow() {
 
         {step === "recap" && startTimeIso && (
           <StepRecap
+            lang={lang}
             startTime={startTimeIso}
             packageType={packageType}
             guestCount={guestCount}

@@ -91,7 +91,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
         >
           {/* Grand CTA */}
           <a
-            href="/reserver"
+            href={`/reserver?lang=${lang}`}
             style={{
               display: "inline-flex",
               alignItems: "center",

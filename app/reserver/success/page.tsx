@@ -3,6 +3,8 @@ import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
 import { Button } from "@/components/ui/button";
+import type { Lang } from "@/app/_lib/content";
+import { BOOKING_UI } from "@/lib/booking/i18n";
 import { getStripe } from "@/lib/stripe/client";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { formatDateLong, formatPrice, formatTime } from "@/lib/booking/format";
@@ -30,9 +32,11 @@ async function getBookingFromSession(sessionId: string) {
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string }>;
+  searchParams: Promise<{ session_id?: string; lang?: string }>;
 }) {
-  const { session_id } = await searchParams;
+  const { session_id, lang: rawLang } = await searchParams;
+  const lang: Lang = rawLang === "nl" ? "nl" : "fr";
+  const t = BOOKING_UI[lang].success;
   const booking = session_id ? await getBookingFromSession(session_id).catch(() => null) : null;
 
   return (
@@ -45,21 +49,17 @@ export default async function SuccessPage({
 
       <main className="mx-auto max-w-lg px-6 py-24 text-center">
         <CheckCircle2 className="mx-auto size-12 text-[--color-accent]" />
-        <h1 className="mt-6 font-heading text-3xl italic text-[--color-text] md:text-4xl">
-          Réservation confirmée
-        </h1>
-        <p className="mt-3 text-sm text-[--color-text]/70">
-          Merci ! Un email de confirmation vous sera envoyé avec toutes les informations pratiques.
-        </p>
+        <h1 className="mt-6 font-heading text-3xl italic text-[--color-text] md:text-4xl">{t.title}</h1>
+        <p className="mt-3 text-sm text-[--color-text]/70">{t.thanks}</p>
 
         {booking && (
           <div className="mt-8 rounded-[4px] border border-[--color-border] bg-[--card] p-6 text-left">
-            <p className="text-sm text-[--color-text]/70">Créneau</p>
+            <p className="text-sm text-[--color-text]/70">{t.slotLabel}</p>
             <p className="mt-1 font-heading text-lg text-[--color-text]">
-              {formatDateLong(new Date(booking.start_time))} à {formatTime(new Date(booking.start_time))}
+              {formatDateLong(new Date(booking.start_time), lang)} à {formatTime(new Date(booking.start_time), lang)}
             </p>
-            <p className="mt-4 text-sm text-[--color-text]/70">Total payé</p>
-            <p className="mt-1 font-heading text-lg text-[--color-text]">{formatPrice(booking.total_price)}</p>
+            <p className="mt-4 text-sm text-[--color-text]/70">{t.totalPaid}</p>
+            <p className="mt-1 font-heading text-lg text-[--color-text]">{formatPrice(booking.total_price, lang)}</p>
           </div>
         )}
 
@@ -68,7 +68,7 @@ export default async function SuccessPage({
           size="lg"
           className="mt-10 rounded-[2px] bg-[--color-accent] px-8 text-[--color-cream]"
         >
-          Retour à l&apos;accueil
+          {t.backHome}
         </Button>
       </main>
     </div>

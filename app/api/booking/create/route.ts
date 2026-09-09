@@ -26,6 +26,7 @@ const bodySchema = z.object({
     phone: z.string().trim().min(1).optional(),
     notes: z.string().trim().max(1000).optional(),
   }),
+  lang: z.enum(["fr", "nl"]).default("fr"),
 });
 
 export async function POST(request: Request) {
@@ -34,11 +35,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
 
-  const { customer, ...selection } = parsed.data;
+  const { customer, lang, ...selection } = parsed.data;
   const origin = new URL(request.url).origin;
 
   try {
-    const result = await createBookingCheckout(selection, customer, origin);
+    const result = await createBookingCheckout(selection, customer, origin, lang);
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof BookingValidationError) {

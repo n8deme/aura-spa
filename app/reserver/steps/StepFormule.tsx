@@ -3,38 +3,44 @@
 import { Check } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
+import type { Lang } from "@/app/_lib/content";
+import { BOOKING_UI } from "@/lib/booking/i18n";
 import { ALL_IN_PACKAGE, BASE_PACKAGE } from "@/lib/booking/pricing-config";
 import { formatPrice, isPriced } from "@/lib/booking/format";
 import type { PackageType } from "@/lib/booking/types";
 import { StepNav } from "./StepNav";
 
-function getOptions(guestCount: number): {
+function getOptions(
+  lang: Lang,
+  guestCount: number
+): {
   value: PackageType;
   title: string;
   description: string;
   price: string;
   disabled: boolean;
 }[] {
+  const t = BOOKING_UI[lang].formule;
   const options = [
     {
       value: "base" as const,
-      title: `Forfait de base — ${BASE_PACKAGE.durationHours}h`,
-      description: "L'essentiel : votre espace privatif, sans extra.",
-      price: formatPrice(BASE_PACKAGE.price),
+      title: t.baseTitle(BASE_PACKAGE.durationHours),
+      description: t.baseDescription,
+      price: formatPrice(BASE_PACKAGE.price, lang),
       disabled: !isPriced(BASE_PACKAGE.price),
     },
     {
       value: "all_in" as const,
-      title: `All-in — ${ALL_IN_PACKAGE.durationHours}h`,
-      description: `2h + plateau charcuterie & fromage et champagne inclus. Réservé aux groupes de ${ALL_IN_PACKAGE.maxGuests} personnes.`,
-      price: formatPrice(ALL_IN_PACKAGE.price),
+      title: t.allInTitle(ALL_IN_PACKAGE.durationHours),
+      description: t.allInDescription(ALL_IN_PACKAGE.maxGuests),
+      price: formatPrice(ALL_IN_PACKAGE.price, lang),
       disabled: !isPriced(ALL_IN_PACKAGE.price),
     },
     {
       value: "a_la_carte" as const,
-      title: "À la carte",
-      description: "Prolongez au-delà de 2h et choisissez librement vos extras.",
-      price: `À partir de ${formatPrice(BASE_PACKAGE.price)}`,
+      title: t.alaCarteTitle,
+      description: t.alaCarteDescription,
+      price: t.fromPrice(formatPrice(BASE_PACKAGE.price, lang)),
       disabled: false,
     },
   ];
@@ -44,26 +50,27 @@ function getOptions(guestCount: number): {
 }
 
 export function StepFormule({
+  lang,
   value,
   guestCount,
   onChange,
   onNext,
   onBack,
 }: {
+  lang: Lang;
   value: PackageType;
   guestCount: number;
   onChange: (value: PackageType) => void;
   onNext: () => void;
   onBack: () => void;
 }) {
-  const options = getOptions(guestCount);
+  const t = BOOKING_UI[lang].formule;
+  const options = getOptions(lang, guestCount);
 
   return (
     <div>
-      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">
-        Choisissez votre formule
-      </h1>
-      <p className="mt-2 text-sm text-[--color-text]/70">Votre créneau est réservé le temps de finaliser.</p>
+      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">{t.title}</h1>
+      <p className="mt-2 text-sm text-[--color-text]/70">{t.subtitle}</p>
 
       <RadioGroup
         value={value}
@@ -94,7 +101,7 @@ export function StepFormule({
               <p className="mt-1 text-sm text-[--color-text]/70">{option.description}</p>
               {value === option.value && !option.disabled && (
                 <span className="mt-2 inline-flex items-center gap-1 text-xs text-[--color-accent]">
-                  <Check className="size-3.5" /> Sélectionné
+                  <Check className="size-3.5" /> {t.selected}
                 </span>
               )}
             </div>
@@ -102,7 +109,7 @@ export function StepFormule({
         ))}
       </RadioGroup>
 
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav lang={lang} onBack={onBack} onNext={onNext} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Lang } from "@/app/_lib/content";
 import { BookingFlow } from "./BookingFlow";
 
 export const metadata: Metadata = {
@@ -7,6 +8,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ReserverPage() {
-  return <BookingFlow />;
+export default async function ReserverPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ lang?: string }>;
+}) {
+  const { lang: rawLang } = await searchParams;
+  const lang: Lang = rawLang === "nl" ? "nl" : "fr";
+  return <BookingFlow lang={lang} />;
 }

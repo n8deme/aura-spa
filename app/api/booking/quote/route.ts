@@ -18,6 +18,7 @@ const bodySchema = z.object({
       })
     )
     .optional(),
+  lang: z.enum(["fr", "nl"]).default("fr"),
 });
 
 export async function POST(request: Request) {
@@ -26,8 +27,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
 
+  const { lang, ...selection } = parsed.data;
+
   try {
-    const breakdown = computePrice(parsed.data);
+    const breakdown = computePrice(selection, lang);
     return NextResponse.json(breakdown);
   } catch (error) {
     if (error instanceof BookingValidationError) {

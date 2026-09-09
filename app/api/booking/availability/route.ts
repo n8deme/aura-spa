@@ -7,6 +7,7 @@ const bodySchema = z.object({
   startTime: z.iso.datetime(),
   packageType: z.enum(["base", "all_in", "a_la_carte"]),
   extraHours: z.number().int().min(0).optional(),
+  lang: z.enum(["fr", "nl"]).default("fr"),
 });
 
 export async function POST(request: Request) {
@@ -16,11 +17,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const durationHours = resolveDurationHours(parsed.data);
+    const durationHours = resolveDurationHours(parsed.data, parsed.data.lang);
     const startTime = new Date(parsed.data.startTime);
     const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
 
-    const result = await checkAvailability(startTime, endTime);
+    const result = await checkAvailability(startTime, endTime, parsed.data.lang);
     return NextResponse.json(result);
   } catch (error) {
     if (error instanceof BookingValidationError) {

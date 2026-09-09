@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import type { Lang } from "@/app/_lib/content";
+import { BOOKING_UI } from "@/lib/booking/i18n";
 import { computePrice } from "@/lib/booking/pricing";
 import { formatDateLong, formatPrice, formatTime } from "@/lib/booking/format";
 import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
@@ -16,6 +18,7 @@ import { StepNav } from "./StepNav";
 type Slot = { time: string; startTime: string; available: boolean };
 
 export function StepRecap({
+  lang,
   startTime,
   packageType,
   guestCount,
@@ -26,6 +29,7 @@ export function StepRecap({
   onBack,
   onSlotUnavailable,
 }: {
+  lang: Lang;
   startTime: string;
   packageType: PackageType;
   guestCount: number;
@@ -36,12 +40,13 @@ export function StepRecap({
   onBack: () => void;
   onSlotUnavailable: () => void;
 }) {
+  const t = BOOKING_UI[lang].recap;
   const [checking, setChecking] = useState(true);
   const [conflict, setConflict] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const breakdown = computePrice({ packageType, guestCount, extraHours, extras });
+  const breakdown = computePrice({ packageType, guestCount, extraHours, extras }, lang);
   const start = new Date(startTime);
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export function StepRecap({
     const controller = new AbortController();
     setChecking(true);
     fetch(
-      `/api/booking/slots?date=${dateKey}&packageType=${packageType}${
+      `/api/booking/slots?date=${dateKey}&packageType=${packageType}&lang=${lang}${
         packageType === "a_la_carte" ? `&extraHours=${extraHours}` : ""
       }`,
       { signal: controller.signal }
@@ -82,21 +87,21 @@ export function StepRecap({
       const res = await fetch("/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startTime, packageType, guestCount, extraHours, extras, customer }),
+        body: JSON.stringify({ startTime, packageType, guestCount, extraHours, extras, customer, lang }),
       });
       const data = await res.json();
       if (!res.ok) {
         if (res.status === 409) {
           setConflict(true);
-          setError(data.error ?? "Ce créneau n'est plus disponible.");
+          setError(data.error ?? t.slotGoneError);
         } else {
-          setError(data.error ?? "Une erreur est survenue.");
+          setError(data.error ?? t.genericError);
         }
         return;
       }
       window.location.href = data.checkoutUrl;
     } catch {
-      setError("Une erreur est survenue. Veuillez réessayer.");
+      setError(t.retryError);
     } finally {
       setSubmitting(false);
     }
@@ -104,46 +109,42 @@ export function StepRecap({
 
   return (
     <div>
-      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">
-        Récapitulatif &amp; paiement
-      </h1>
+      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">{t.title}</h1>
 
       <section className="mt-8 rounded-[4px] border border-[--color-border] bg-[--card] p-5">
-        <p className="text-sm text-[--color-text]/70">Créneau</p>
+        <p className="text-sm text-[--color-text]/70">{t.slotLabel}</p>
         <p className="mt-1 font-heading text-lg text-[--color-text]">
-          {formatDateLong(start)} à {formatTime(start)}
+          {formatDateLong(start, lang)} à {formatTime(start, lang)}
         </p>
-        <p className="mt-1 text-sm text-[--color-text]/70">
-          {guestCount} personne{guestCount > 1 ? "s" : ""}
-        </p>
+        <p className="mt-1 text-sm text-[--color-text]/70">{t.guestsLabel(guestCount)}</p>
 
         <Separator className="my-4 bg-[--color-border]" />
 
         {breakdown.lineItems.map((item, index) => (
           <div key={index} className="flex justify-between py-1 text-sm text-[--color-text]">
             <span>{item.label}</span>
-            <span>{formatPrice(item.amount)}</span>
+            <span>{formatPrice(item.amount, lang)}</span>
           </div>
         ))}
         <Separator className="my-3 bg-[--color-border]" />
         <div className="flex justify-between text-lg font-medium text-[--color-text]">
-          <span>Total</span>
-          <span>{formatPrice(breakdown.total)}</span>
+          <span>{t.total}</span>
+          <span>{formatPrice(breakdown.total, lang)}</span>
         </div>
       </section>
 
       {checking && (
         <p className="mt-4 flex items-center gap-2 text-sm text-[--color-text]/60">
-          <Loader2 className="size-4 animate-spin" /> Vérification du créneau…
+          <Loader2 className="size-4 animate-spin" /> {t.checking}
         </p>
       )}
 
       {!checking && conflict && (
         <Alert variant="destructive" className="mt-4 border-[--color-bordeaux]">
           <AlertDescription>
-            Ce créneau vient d&apos;être réservé par quelqu&apos;un d&apos;autre.{" "}
+            {t.conflictText}{" "}
             <button type="button" onClick={onSlotUnavailable} className="underline">
-              Choisir un autre créneau
+              {t.pickAnother}
             </button>
             .
           </AlertDescription>
@@ -152,41 +153,41 @@ export function StepRecap({
 
       <section className="mt-6 grid gap-4">
         <div className="grid gap-1.5">
-          <Label htmlFor="name">Nom complet</Label>
+          <Label htmlFor="name">{t.nameLabel}</Label>
           <Input
             id="name"
             value={customer.name}
             onChange={(e) => onCustomerChange({ ...customer, name: e.target.value })}
-            placeholder="Jeanne Dupont"
+            placeholder={t.namePlaceholder}
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t.emailLabel}</Label>
           <Input
             id="email"
             type="email"
             value={customer.email}
             onChange={(e) => onCustomerChange({ ...customer, email: e.target.value })}
-            placeholder="jeanne@example.com"
+            placeholder={t.emailPlaceholder}
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="phone">Téléphone (optionnel)</Label>
+          <Label htmlFor="phone">{t.phoneLabel}</Label>
           <Input
             id="phone"
             type="tel"
             value={customer.phone ?? ""}
             onChange={(e) => onCustomerChange({ ...customer, phone: e.target.value })}
-            placeholder="+32 4xx xx xx xx"
+            placeholder={t.phonePlaceholder}
           />
         </div>
         <div className="grid gap-1.5">
-          <Label htmlFor="notes">Remarques (optionnel)</Label>
+          <Label htmlFor="notes">{t.notesLabel}</Label>
           <Textarea
             id="notes"
             value={customer.notes ?? ""}
             onChange={(e) => onCustomerChange({ ...customer, notes: e.target.value })}
-            placeholder="Allergies, version halal ou sans alcool, goût de chicha souhaité…"
+            placeholder={t.notesPlaceholder}
             rows={3}
           />
         </div>
@@ -195,12 +196,12 @@ export function StepRecap({
       {error && <p className="mt-4 text-sm text-[--color-bordeaux]">{error}</p>}
 
       <p className="mt-6 flex items-center gap-2 text-xs text-[--color-text]/50">
-        <ShieldCheck className="size-3.5" /> Paiement sécurisé via Stripe. Carte, Bancontact, Apple Pay.
+        <ShieldCheck className="size-3.5" /> {t.secure}
       </p>
 
       <div className="mt-4 flex items-center justify-between gap-4">
         <Button type="button" variant="ghost" size="lg" onClick={onBack} className="text-[--color-text]">
-          Retour
+          {t.back}
         </Button>
         <Button
           type="button"
@@ -209,7 +210,7 @@ export function StepRecap({
           onClick={handleSubmit}
           className="gap-1.5 rounded-[2px] bg-[--color-accent] px-8 text-[--color-cream] hover:bg-[color-mix(in_oklch,var(--color-accent),black_10%)]"
         >
-          {submitting ? <Loader2 className="size-4 animate-spin" /> : `Payer ${formatPrice(breakdown.total)}`}
+          {submitting ? <Loader2 className="size-4 animate-spin" /> : t.pay(formatPrice(breakdown.total, lang))}
         </Button>
       </div>
     </div>

@@ -5,6 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import type { Lang } from "@/app/_lib/content";
+import { BOOKING_UI, EXTRAS_LABELS } from "@/lib/booking/i18n";
 import { BASE_PACKAGE, BOOKING_RULES, EXTRAS_CATALOG, EXTRA_HOUR_PRICE } from "@/lib/booking/pricing-config";
 import { computePrice } from "@/lib/booking/pricing";
 import { formatPrice, isPriced } from "@/lib/booking/format";
@@ -14,6 +16,7 @@ import { StepNav } from "./StepNav";
 const MAX_EXTRA_HOURS = BOOKING_RULES.maxHours - BASE_PACKAGE.durationHours;
 
 export function StepExtras({
+  lang,
   guestCount,
   extraHours,
   onExtraHoursChange,
@@ -22,6 +25,7 @@ export function StepExtras({
   onNext,
   onBack,
 }: {
+  lang: Lang;
   guestCount: number;
   extraHours: number;
   onExtraHoursChange: (value: number) => void;
@@ -30,6 +34,8 @@ export function StepExtras({
   onNext: () => void;
   onBack: () => void;
 }) {
+  const t = BOOKING_UI[lang].extras;
+  const labels = EXTRAS_LABELS[lang];
   const extraHoursPriced = isPriced(EXTRA_HOUR_PRICE);
   const selectedQuantity = (id: ExtraId) => extras.find((e) => e.extraId === id)?.quantity ?? 0;
 
@@ -42,22 +48,18 @@ export function StepExtras({
     onExtrasChange(extras.map((e) => (e.extraId === id ? { ...e, quantity } : e)));
   }
 
-  const breakdown = computePrice({ packageType: "a_la_carte", guestCount, extraHours, extras });
+  const breakdown = computePrice({ packageType: "a_la_carte", guestCount, extraHours, extras }, lang);
 
   return (
     <div>
-      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">
-        Personnalisez votre moment
-      </h1>
-      <p className="mt-2 text-sm text-[--color-text]/70">
-        Ajoutez des heures et des extras. Vous pourrez toujours en ajouter sur place.
-      </p>
+      <h1 className="font-heading text-3xl italic text-[--color-text] md:text-4xl">{t.title}</h1>
+      <p className="mt-2 text-sm text-[--color-text]/70">{t.subtitle}</p>
 
       <section className="mt-8 rounded-[4px] border border-[--color-border] bg-[--card] p-5">
-        <h2 className="font-heading text-lg text-[--color-text]">Heures supplémentaires</h2>
+        <h2 className="font-heading text-lg text-[--color-text]">{t.extraHoursTitle}</h2>
         {!extraHoursPriced && (
           <Badge variant="outline" className="mt-2 border-[--color-border] text-[--color-text]/60">
-            Tarif bientôt disponible
+            {formatPrice(0, lang)}
           </Badge>
         )}
         <div className="mt-3 flex items-center gap-4">
@@ -71,7 +73,7 @@ export function StepExtras({
             <Minus className="size-4" />
           </Button>
           <span className="w-24 text-center text-sm text-[--color-text]">
-            {BASE_PACKAGE.durationHours + extraHours}h au total
+            {t.totalHours(BASE_PACKAGE.durationHours + extraHours)}
           </span>
           <Button
             type="button"
@@ -86,7 +88,7 @@ export function StepExtras({
       </section>
 
       <section className="mt-6 rounded-[4px] border border-[--color-border] bg-[--card] p-5">
-        <h2 className="font-heading text-lg text-[--color-text]">Extras</h2>
+        <h2 className="font-heading text-lg text-[--color-text]">{t.extrasTitle}</h2>
         <div className="mt-3 divide-y divide-[--color-border]">
           {EXTRAS_CATALOG.map((extra) => {
             const priced = isPriced(extra.price);
@@ -100,10 +102,10 @@ export function StepExtras({
                     disabled={!priced}
                     onCheckedChange={(next) => toggleExtra(extra.id, next === true)}
                   />
-                  <span className="text-sm text-[--color-text]">{extra.label}</span>
+                  <span className="text-sm text-[--color-text]">{labels[extra.id]}</span>
                 </label>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-[--color-text]/70">{formatPrice(extra.price)}</span>
+                  <span className="text-sm text-[--color-text]/70">{formatPrice(extra.price, lang)}</span>
                   {checked && priced && (
                     <div className="flex items-center gap-2">
                       <Button
@@ -136,17 +138,17 @@ export function StepExtras({
         {breakdown.lineItems.map((item, index) => (
           <div key={index} className="flex justify-between py-1 text-sm text-[--color-text]">
             <span>{item.label}</span>
-            <span>{formatPrice(item.amount)}</span>
+            <span>{formatPrice(item.amount, lang)}</span>
           </div>
         ))}
         <Separator className="my-3 bg-[--color-border]" />
         <div className="flex justify-between text-base font-medium text-[--color-text]">
-          <span>Total</span>
-          <span>{formatPrice(breakdown.total)}</span>
+          <span>{t.total}</span>
+          <span>{formatPrice(breakdown.total, lang)}</span>
         </div>
       </section>
 
-      <StepNav onBack={onBack} onNext={onNext} />
+      <StepNav lang={lang} onBack={onBack} onNext={onNext} />
     </div>
   );
 }

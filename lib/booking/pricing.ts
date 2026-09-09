@@ -1,3 +1,4 @@
+import type { Lang } from "@/app/_lib/content";
 import {
   ALL_IN_PACKAGE,
   BASE_PACKAGE,
@@ -7,6 +8,7 @@ import {
   MAX_CAPACITY,
   MIN_CAPACITY,
 } from "./pricing-config";
+import { EXTRAS_LABELS, ERRORS, PRICING_TEXT } from "./i18n";
 import type { PriceBreakdown, PricingSelection } from "./types";
 
 export class BookingValidationError extends Error {}
@@ -15,79 +17,69 @@ export const EXTRAS_BY_ID = new Map(EXTRAS_CATALOG.map((extra) => [extra.id, ext
 
 // Durée totale du créneau pour une sélection donnée, sans calculer le prix
 // (utilisé par la vérification de disponibilité, qui n'a pas besoin du prix).
-export function resolveDurationHours(selection: Pick<PricingSelection, "packageType" | "extraHours">): number {
+export function resolveDurationHours(
+  selection: Pick<PricingSelection, "packageType" | "extraHours">,
+  lang: Lang = "fr"
+): number {
   if (selection.packageType === "base") return BASE_PACKAGE.durationHours;
   if (selection.packageType === "all_in") return ALL_IN_PACKAGE.durationHours;
 
   const extraHours = selection.extraHours ?? 0;
   if (extraHours < 0 || !Number.isInteger(extraHours)) {
-    throw new BookingValidationError("Nombre d'heures supplémentaires invalide.");
+    throw new BookingValidationError(ERRORS[lang].invalidExtraHours);
   }
   const totalHours = BASE_PACKAGE.durationHours + extraHours;
   if (totalHours > BOOKING_RULES.maxHours) {
-    throw new BookingValidationError(
-      `La durée totale ne peut pas dépasser ${BOOKING_RULES.maxHours}h.`
-    );
+    throw new BookingValidationError(ERRORS[lang].maxDuration(BOOKING_RULES.maxHours));
   }
   return totalHours;
 }
 
-export function computePrice(selection: PricingSelection): PriceBreakdown {
+export function computePrice(selection: PricingSelection, lang: Lang = "fr"): PriceBreakdown {
   const { packageType, guestCount } = selection;
+  const errors = ERRORS[lang];
+  const pricingText = PRICING_TEXT[lang];
+  const extrasLabels = EXTRAS_LABELS[lang];
 
   if (!Number.isInteger(guestCount) || guestCount < MIN_CAPACITY || guestCount > MAX_CAPACITY) {
-    throw new BookingValidationError(
-      `Le nombre de personnes doit être compris entre ${MIN_CAPACITY} et ${MAX_CAPACITY}.`
-    );
+    throw new BookingValidationError(errors.guestCountRange(MIN_CAPACITY, MAX_CAPACITY));
   }
 
   if (packageType === "all_in" && guestCount > ALL_IN_PACKAGE.maxGuests) {
-    throw new BookingValidationError(
-      `Le forfait All-in est réservé aux groupes de ${ALL_IN_PACKAGE.maxGuests} personnes maximum.`
-    );
+    throw new BookingValidationError(errors.allInMaxGuests(ALL_IN_PACKAGE.maxGuests));
   }
 
   if (packageType === "base") {
     if (selection.extraHours || selection.extras?.length) {
-      throw new BookingValidationError(
-        "Le forfait de base ne peut pas inclure d'heures ou d'extras supplémentaires."
-      );
+      throw new BookingValidationError(errors.baseNoExtras);
     }
     return {
       durationHours: BASE_PACKAGE.durationHours,
-      lineItems: [
-        { label: `Forfait de base (${BASE_PACKAGE.durationHours}h)`, amount: BASE_PACKAGE.price },
-      ],
+      lineItems: [{ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price }],
       total: BASE_PACKAGE.price,
     };
   }
 
   if (packageType === "all_in") {
     if (selection.extraHours || selection.extras?.length) {
-      throw new BookingValidationError(
-        "Le forfait All-in ne peut pas inclure d'heures ou d'extras supplémentaires."
-      );
+      throw new BookingValidationError(errors.allInNoExtras);
     }
     return {
       durationHours: ALL_IN_PACKAGE.durationHours,
-      lineItems: [
-        { label: `Forfait All-in (${ALL_IN_PACKAGE.durationHours}h)`, amount: ALL_IN_PACKAGE.price },
-      ],
+      lineItems: [{ label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price }],
       total: ALL_IN_PACKAGE.price,
     };
   }
 
   // À la carte
   const extraHours = selection.extraHours ?? 0;
-  const totalHours = resolveDurationHours(selection);
+  const totalHours = resolveDurationHours(selection, lang);
 
-  const lineItems = [
-    { label: `Forfait de base (${BASE_PACKAGE.durationHours}h)`, amount: BASE_PACKAGE.price },
-  ];
+  const lineItems = [{ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price }];
 
   if (extraHours > 0) {
     lineItems.push({
-      label: `${extraHours}h supplémentaire(s)`,
+      label: pricingText.extraHours(extraHours),
       amount: extraHours * EXTRA_HOUR_PRICE,
     });
   }
@@ -95,13 +87,14 @@ export function computePrice(selection: PricingSelection): PriceBreakdown {
   for (const { extraId, quantity } of selection.extras ?? []) {
     const extra = EXTRAS_BY_ID.get(extraId);
     if (!extra) {
-      throw new BookingValidationError(`Extra inconnu : ${extraId}`);
+      throw new BookingValidationError(errors.unknownExtra(extraId));
     }
+    const label = extrasLabels[extraId];
     if (quantity < 1 || !Number.isInteger(quantity)) {
-      throw new BookingValidationError(`Quantité invalide pour ${extra.label}.`);
+      throw new BookingValidationError(errors.invalidQuantity(label));
     }
     lineItems.push({
-      label: quantity > 1 ? `${extra.label} x${quantity}` : extra.label,
+      label: pricingText.withQuantity(label, quantity),
       amount: extra.price * quantity,
     });
   }

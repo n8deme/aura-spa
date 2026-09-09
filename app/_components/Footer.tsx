@@ -217,7 +217,7 @@ export function Footer({ lang }: FooterProps) {
             {t.links.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={`${link.href}?lang=${lang}`}
                 style={{
                   fontFamily: "var(--font-dm-sans)",
                   fontWeight: 300,
