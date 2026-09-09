@@ -41,6 +41,7 @@ export async function createBookingCheckout(
       customer_name: customer.name,
       customer_email: customer.email,
       customer_phone: customer.phone ?? null,
+      customer_notes: customer.notes ?? null,
       status: "pending",
     })
     .select("id")

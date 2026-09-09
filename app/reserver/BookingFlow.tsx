@@ -28,7 +28,7 @@ export function BookingFlow() {
   const [packageType, setPackageType] = useState<PackageType>("base");
   const [extraHours, setExtraHours] = useState(0);
   const [extras, setExtras] = useState<ExtraSelection[]>([]);
-  const [customer, setCustomer] = useState<CustomerInfo>({ name: "", email: "", phone: "" });
+  const [customer, setCustomer] = useState<CustomerInfo>({ name: "", email: "", phone: "", notes: "" });
 
   const stepOrder: Step[] = useMemo(
     () => (packageType === "a_la_carte" ? ["slot", "formule", "extras", "recap"] : ["slot", "formule", "recap"]),

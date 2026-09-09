@@ -23,6 +23,7 @@ const bodySchema = z.object({
     name: z.string().trim().min(1),
     email: z.email(),
     phone: z.string().trim().min(1).optional(),
+    notes: z.string().trim().max(1000).optional(),
   }),
 });
 

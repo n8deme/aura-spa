@@ -25,7 +25,7 @@ const OPTIONS: {
   {
     value: "all_in",
     title: `All-in — ${ALL_IN_PACKAGE.durationHours}h`,
-    description: "2h + plateau de fromage, charcuterie et champagne inclus.",
+    description: "2h + plateau charcuterie & fromage et champagne inclus.",
     price: formatPrice(ALL_IN_PACKAGE.price),
     disabled: !isPriced(ALL_IN_PACKAGE.price),
   },

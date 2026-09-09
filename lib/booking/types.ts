@@ -13,6 +13,7 @@ export type CustomerInfo = {
   name: string;
   email: string;
   phone?: string;
+  notes?: string; // allergies, halal, sans alcool, goût de chicha, etc.
 };
 
 export type PricingSelection = {
@@ -45,6 +46,7 @@ export type BookingRecord = {
   customerName: string;
   customerEmail: string;
   customerPhone: string | null;
+  customerNotes: string | null;
   status: "pending" | "confirmed" | "cancelled";
   stripePaymentId: string | null;
   createdAt: string;

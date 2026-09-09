@@ -73,9 +73,14 @@ export default function CGV() {
               Tarifs et paiement
             </h2>
             <p>
-              Le tarif unique est de <strong>150€ pour 2 heures</strong> pour
-              un groupe de 2 à 4 personnes. Le paiement est effectué en ligne,
-              au moment de la réservation, via la plateforme Stripe.
+              Le forfait de base est de <strong>150€ pour 2 heures</strong>{" "}
+              pour un groupe de 2 à 4 personnes, avec possibilité de
+              prolonger (25€ par heure supplémentaire, dans la limite de 4h
+              au total) et d&apos;ajouter des extras à la carte. Un forfait
+              All-in à 220€ tout compris est également disponible. Le
+              paiement est effectué en ligne, au moment de la réservation,
+              via la plateforme Stripe. Un extra ajouté sur place se règle
+              directement sur place.
             </p>
           </section>
 
@@ -93,9 +98,11 @@ export default function CGV() {
               Annulation
             </h2>
             <p>
-              {/* TODO: Préciser la politique d'annulation avec la cliente */}
-              La politique d&apos;annulation sera précisée prochainement. Pour
-              toute question, contactez-nous à contact@aura-spa.be.
+              Toute annulation effectuée au moins <strong>24 heures</strong>{" "}
+              avant le créneau réservé donne droit à un remboursement intégral.
+              En deçà de ce délai, la réservation n&apos;est pas remboursable.
+              Pour annuler ou pour toute question, contactez-nous à
+              contact@aura-spa.be.
             </p>
           </section>
         </div>

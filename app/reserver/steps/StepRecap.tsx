@@ -5,6 +5,7 @@ import { Loader2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { computePrice } from "@/lib/booking/pricing";
@@ -172,6 +173,16 @@ export function StepRecap({
             value={customer.phone ?? ""}
             onChange={(e) => onCustomerChange({ ...customer, phone: e.target.value })}
             placeholder="+32 4xx xx xx xx"
+          />
+        </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="notes">Remarques (optionnel)</Label>
+          <Textarea
+            id="notes"
+            value={customer.notes ?? ""}
+            onChange={(e) => onCustomerChange({ ...customer, notes: e.target.value })}
+            placeholder="Allergies, version halal ou sans alcool, goût de chicha souhaité…"
+            rows={3}
           />
         </div>
       </section>
