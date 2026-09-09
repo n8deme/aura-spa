@@ -170,7 +170,8 @@ export const BOOKING_UI = {
       phoneLabel: "Téléphone (optionnel)",
       phonePlaceholder: "+32 4xx xx xx xx",
       notesLabel: "Remarques (optionnel)",
-      notesPlaceholder: "Allergies, version halal ou sans alcool, goût de chicha souhaité…",
+      notesPlaceholder:
+        "Allergies, version halal ou sans alcool, goût de chicha ou de soft drink souhaité…",
       secure: "Paiement sécurisé via Stripe. Carte, Bancontact, Apple Pay.",
       genericError: "Une erreur est survenue.",
       retryError: "Une erreur est survenue. Veuillez réessayer.",
@@ -245,7 +246,8 @@ export const BOOKING_UI = {
       phoneLabel: "Telefoon (optioneel)",
       phonePlaceholder: "+32 4xx xx xx xx",
       notesLabel: "Opmerkingen (optioneel)",
-      notesPlaceholder: "Allergieën, halal of alcoholvrije versie, gewenste waterpijpsmaak…",
+      notesPlaceholder:
+        "Allergieën, halal of alcoholvrije versie, gewenste waterpijp- of frisdranksmaak…",
       secure: "Beveiligde betaling via Stripe. Kaart, Bancontact, Apple Pay.",
       genericError: "Er is een fout opgetreden.",
       retryError: "Er is een fout opgetreden. Probeer het opnieuw.",

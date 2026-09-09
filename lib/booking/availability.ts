@@ -26,10 +26,14 @@ export function parseHHMM(value: string): number {
   return hour * 60 + minute;
 }
 
-export function isWithinOpeningHours(startTime: Date, endTime: Date): boolean {
+// Seule l'heure de DÉBUT doit tomber dans les horaires d'ouverture — la
+// séance peut se terminer après l'heure de fermeture (dernier créneau
+// sélectionnable : l'heure de fermeture elle-même, ex. 22h).
+export function isWithinOpeningHours(startTime: Date): boolean {
   const openMinutes = parseHHMM(BOOKING_RULES.openingHours.start);
   const closeMinutes = parseHHMM(BOOKING_RULES.openingHours.end);
-  return minutesSinceMidnight(startTime) >= openMinutes && minutesSinceMidnight(endTime) <= closeMinutes;
+  const startMinutes = minutesSinceMidnight(startTime);
+  return startMinutes >= openMinutes && startMinutes <= closeMinutes;
 }
 
 export function isPastMinAdvance(startTime: Date, now = new Date()): boolean {
@@ -83,7 +87,7 @@ export async function checkAvailability(
     return { available: false, reason: errors.minAdvance(BOOKING_RULES.minAdvanceHours) };
   }
 
-  if (!isWithinOpeningHours(startTime, endTime)) {
+  if (!isWithinOpeningHours(startTime)) {
     return {
       available: false,
       reason: errors.outsideOpeningHours(BOOKING_RULES.openingHours.start, BOOKING_RULES.openingHours.end),

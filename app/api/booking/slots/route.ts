@@ -52,8 +52,9 @@ export async function GET(request: Request) {
 
   const { date } = parsed.data;
   const openMinutes = parseHHMM(BOOKING_RULES.openingHours.start);
-  const closeMinutes = parseHHMM(BOOKING_RULES.openingHours.end);
-  const lastStartMinutes = closeMinutes - durationHours * 60;
+  // Dernier créneau sélectionnable : l'heure de fermeture elle-même —
+  // la séance peut se terminer après (voir isWithinOpeningHours).
+  const lastStartMinutes = parseHHMM(BOOKING_RULES.openingHours.end);
 
   const candidates: { time: string; startTime: Date; endTime: Date }[] = [];
   for (let m = openMinutes; m <= lastStartMinutes; m += STEP_MINUTES) {
