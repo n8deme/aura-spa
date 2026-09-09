@@ -104,11 +104,12 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             style={{ position: "relative", zIndex: 1 }}
           >
-            {/* Photo du lieu, pleine largeur */}
+            {/* Photo du lieu, taille rapprochée du bloc texte */}
             <div
               style={{
                 position: "relative",
                 aspectRatio: "16 / 9",
+                maxWidth: "420px",
                 borderRadius: "8px",
                 overflow: "hidden",
                 border: "1px solid rgba(196,149,106,0.15)",
@@ -118,52 +119,10 @@ export function SectionLieu({ lang }: SectionLieuProps) {
                 src="/images/Spa.jpeg"
                 alt="Espace privatif Aura Spa"
                 fill
-                sizes="(max-width: 768px) 100vw, 60vw"
+                sizes="(max-width: 768px) 100vw, 420px"
                 style={{ objectFit: "cover" }}
               />
             </div>
-
-            {/* Stats en bas */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "1.5rem",
-              }}
-            >
-              {t.stats.map((stat, i) => (
-                <span key={i} style={{ display: "flex", alignItems: "center" }}>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-dm-sans)",
-                      fontWeight: 400,
-                      fontSize: "0.6875rem",
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
-                      color: "rgba(245,237,227,0.45)",
-                    }}
-                  >
-                    {stat}
-                  </span>
-                  {i < t.stats.length - 1 && (
-                    <span
-                      style={{
-                        margin: "0 16px",
-                        color: "rgba(196,149,106,0.3)",
-                        fontSize: "0.75rem",
-                      }}
-                    >
-                      ·
-                    </span>
-                  )}
-                </span>
-              ))}
-            </motion.div>
           </motion.div>
         </div>
 
@@ -177,7 +136,7 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             position: "relative",
             zIndex: 1,
             aspectRatio: "16 / 9",
-            width: "min(700px, 100%)",
+            width: "min(880px, 100%)",
             margin: "clamp(48px, 8vw, 96px) auto 0",
             backgroundColor: "#3D2318",
             borderRadius: "8px",
@@ -245,6 +204,48 @@ export function SectionLieu({ lang }: SectionLieuProps) {
               {t.videoPlaceholder}
             </p>
           </div>
+        </motion.div>
+
+        {/* Stats, sous la vidéo */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "1.5rem",
+          }}
+        >
+          {t.stats.map((stat, i) => (
+            <span key={i} style={{ display: "flex", alignItems: "center" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-dm-sans)",
+                  fontWeight: 400,
+                  fontSize: "0.6875rem",
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "rgba(245,237,227,0.45)",
+                }}
+              >
+                {stat}
+              </span>
+              {i < t.stats.length - 1 && (
+                <span
+                  style={{
+                    margin: "0 16px",
+                    color: "rgba(196,149,106,0.3)",
+                    fontSize: "0.75rem",
+                  }}
+                >
+                  ·
+                </span>
+              )}
+            </span>
+          ))}
         </motion.div>
       </div>
     </section>
