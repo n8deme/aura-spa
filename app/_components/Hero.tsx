@@ -157,7 +157,7 @@ export function Hero({ lang }: HeroProps) {
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <a
-              href="#reserver"
+              href={`/reserver?lang=${lang}`}
               style={{
                 display: "inline-flex",
                 alignItems: "center",

@@ -121,7 +121,7 @@ export function Nav({ lang, onLangChange }: NavProps) {
 
           {/* CTA Réserver */}
           <a
-            href="#reserver"
+            href={`/reserver?lang=${lang}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -235,7 +235,7 @@ export function Nav({ lang, onLangChange }: NavProps) {
             </div>
 
             <a
-              href="#reserver"
+              href={`/reserver?lang=${lang}`}
               onClick={() => setMenuOpen(false)}
               style={{
                 display: "inline-flex",
