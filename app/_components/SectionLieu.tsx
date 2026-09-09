@@ -26,7 +26,7 @@ export function SectionLieu({ lang }: SectionLieuProps) {
     >
       <div
         className="px-6 md:px-8 lg:px-16"
-        style={{ maxWidth: "1280px", margin: "0 auto" }}
+        style={{ maxWidth: "880px", margin: "0 auto" }}
       >
         <div
           style={{
@@ -104,12 +104,13 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             style={{ position: "relative", zIndex: 1 }}
           >
-            {/* Photo du lieu, taille rapprochée du bloc texte */}
+            {/* Photo du lieu — bord droit aligné sur celui de la vidéo en dessous */}
             <div
               style={{
                 position: "relative",
                 aspectRatio: "16 / 9",
                 maxWidth: "420px",
+                marginLeft: "auto",
                 borderRadius: "8px",
                 overflow: "hidden",
                 border: "1px solid rgba(196,149,106,0.15)",
@@ -126,7 +127,7 @@ export function SectionLieu({ lang }: SectionLieuProps) {
           </motion.div>
         </div>
 
-        {/* Vidéo (placeholder), centrée sur toute la largeur de la page */}
+        {/* Vidéo (placeholder) — largeur = même conteneur que le texte/photo au-dessus */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -136,8 +137,8 @@ export function SectionLieu({ lang }: SectionLieuProps) {
             position: "relative",
             zIndex: 1,
             aspectRatio: "16 / 9",
-            width: "min(880px, 100%)",
-            margin: "clamp(48px, 8vw, 96px) auto 0",
+            width: "100%",
+            margin: "clamp(48px, 8vw, 96px) 0 0",
             backgroundColor: "#3D2318",
             borderRadius: "8px",
             overflow: "hidden",
