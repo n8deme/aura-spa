@@ -179,7 +179,7 @@ export function Hero({ lang }: HeroProps) {
                 (e.currentTarget.style.backgroundColor = "#C4956A")
               }
             >
-              {lang === "fr" ? "Réserver" : "Reserveren"}
+              {t.ctaBook}
             </a>
           </motion.div>
         </div>

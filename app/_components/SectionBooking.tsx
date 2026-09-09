@@ -114,7 +114,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
               (e.currentTarget.style.backgroundColor = "#C4956A")
             }
           >
-            {lang === "fr" ? "Choisir mon créneau" : "Mijn tijdslot kiezen"}
+            {t.ctaChooseSlot}
             <ArrowRight size={16} />
           </a>
 
@@ -140,9 +140,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
                 margin: "0 0 0.625rem 0",
               }}
             >
-              {lang === "fr"
-                ? "Choisissez votre créneau et payez en ligne en quelques minutes. Une question ? Contactez-nous par email."
-                : "Kies uw tijdslot en betaal online in enkele minuten. Een vraag? Neem contact op per e-mail."}
+              {t.availabilityNote}
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}

@@ -14,6 +14,7 @@ export const content = {
         "Un espace privatif pour 2 à 10 personnes.\nBains, chaleur et détente à Bruxelles.",
       ctaPrimary: "Réserver — 150€",
       ctaSecondary: "Découvrir",
+      ctaBook: "Réserver",
       badge: "Déjà disponible à Bruxelles",
     },
     experience: {
@@ -61,6 +62,9 @@ export const content = {
       sectionTitle: "Réserver",
       title: "Réservez votre moment",
       subtitle: "Choisissez votre créneau, payez en ligne. C'est tout.",
+      ctaChooseSlot: "Choisir mon créneau",
+      availabilityNote:
+        "Choisissez votre créneau et payez en ligne en quelques minutes. Une question ? Contactez-nous par email.",
       payment: "Paiement sécurisé via Stripe",
       paymentMethods: "Carte, Bancontact, Apple Pay acceptés",
     },
@@ -125,6 +129,7 @@ export const content = {
         "Een privéruimte voor 2 tot 10 personen.\nBaden, warmte en ontspanning in Brussel.",
       ctaPrimary: "Reserveren — 150€",
       ctaSecondary: "Ontdekken",
+      ctaBook: "Reserveren",
       badge: "Nu beschikbaar in Brussel",
     },
     experience: {
@@ -172,6 +177,8 @@ export const content = {
       sectionTitle: "Reserveren",
       title: "Reserveer uw moment",
       subtitle: "Kies uw tijdslot, betaal online. Dat is alles.",
+      ctaChooseSlot: "Mijn tijdslot kiezen",
+      availabilityNote: "Kies uw tijdslot en betaal online in enkele minuten. Een vraag? Neem contact op per e-mail.",
       payment: "Beveiligde betaling via Stripe",
       paymentMethods: "Kaart, Bancontact, Apple Pay aanvaard",
     },
