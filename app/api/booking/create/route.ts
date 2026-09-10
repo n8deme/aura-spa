@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EXTRAS_CATALOG } from "@/lib/booking/pricing-config";
 import { createBookingCheckout } from "@/lib/booking/create";
 import { BookingValidationError } from "@/lib/booking/pricing";
+import { isBookingCreateRateLimited } from "@/lib/booking/rate-limit";
 import type { ExtraId } from "@/lib/booking/types";
 
 const extraIds = EXTRAS_CATALOG.map((extra) => extra.id) as [ExtraId, ...ExtraId[]];
@@ -30,6 +31,11 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (isBookingCreateRateLimited(ip)) {
+    return NextResponse.json({ error: "Trop de tentatives, réessayez plus tard." }, { status: 429 });
+  }
+
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
