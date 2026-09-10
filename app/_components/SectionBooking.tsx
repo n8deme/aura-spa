@@ -209,25 +209,25 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg"
+              src="/images/payment/visa.svg"
               alt="Visa"
               style={{ height: "24px", width: "auto" }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              src="/images/payment/mastercard.svg"
               alt="Mastercard"
               style={{ height: "32px", width: "auto" }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Bancontact_logo_2021.svg"
+              src="/images/payment/bancontact.svg"
               alt="Bancontact"
               style={{ height: "32px", width: "auto" }}
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg"
+              src="/images/payment/apple-pay.svg"
               alt="Apple Pay"
               style={{ height: "32px", width: "auto" }}
             />
