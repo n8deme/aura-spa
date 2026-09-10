@@ -72,19 +72,16 @@ export const content = {
       sectionTitle: "Ils en parlent",
       items: [
         {
-          text: "Une bulle hors du temps. Nous avons passé 2 heures de pur bonheur, sans penser à rien. Le lieu est magnifique.",
-          author: "Sophie & Marc",
-          location: "Bruxelles",
+          text: "J'ai vraiment adoré, c'était un 10/10 avec un service au top. Je recommande vivement :)",
+          author: "Marlyse",
         },
         {
-          text: "Idéal pour un anniversaire surprise. Mon amie était sous le choc — c'est rare de trouver un espace aussi intimiste à Bruxelles.",
-          author: "Charlotte V.",
-          location: "Ixelles",
+          text: "Une escapade réussie ! Un service au top, un accueil chaleureux et bienveillant (elle est pépite) mais vraiment ! Tout était top ! Je recommande vivement !",
+          author: "Bajarm",
         },
         {
-          text: "On a emmené nos collègues pour clôturer un projet. L'ambiance est parfaite et le concept est vraiment unique.",
-          author: "Thomas D.",
-          location: "Etterbeek",
+          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Le personnel était incroyablement accueillant, professionnel et attentif à chaque détail. Ce qui m'a vraiment marquée, c'est le service client exceptionnel et le souci du détail. De l'ambiance apaisante à la qualité des soins, tout a dépassé mes attentes. Je suis repartie complètement ressourcée, revitalisée et sans stress. Je recommande vivement ce spa à quiconque cherche une expérience de relaxation haut de gamme. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
+          author: "Bernice",
         },
       ],
     },
@@ -186,19 +183,16 @@ export const content = {
       sectionTitle: "Wat ze zeggen",
       items: [
         {
-          text: "Een tijdloze bubbel. We hebben 2 uur puur geluk doorgebracht, zonder aan iets te denken. De locatie is prachtig.",
-          author: "Sophie & Marc",
-          location: "Brussel",
+          text: "ik heb echt genoten, het was een 10/10 met TOPSERVICE. Zeker een aanrader :)",
+          author: "Marlyse",
         },
         {
-          text: "Perfect voor een verrassingsverjaardag. Mijn vriendin was verbluft — het is zeldzaam om zo'n intieme ruimte in Brussel te vinden.",
-          author: "Charlotte V.",
-          location: "Elsene",
+          text: "Een geslaagd uitje! Een topservice, een warme en zorgzame ontvangst (ze is een pareltje), echt waar! Alles was top! Ik raad het ten zeerste aan!",
+          author: "Bajarm",
         },
         {
-          text: "We namen onze collega's mee om een project af te sluiten. De sfeer is perfect en het concept is echt uniek.",
-          author: "Thomas D.",
-          location: "Etterbeek",
+          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Het personeel was ongelooflijk gastvrij, professioneel en aandachtig voor elk detail. Wat echt opviel was de uitzonderlijke klantenservice en de aandacht voor detail. Van de rustgevende sfeer tot de kwaliteit van de behandelingen, alles overtrof mijn verwachtingen. Ik vertrok volledig verkwikt, fris en stressvrij. Ik raad deze spa ten zeerste aan aan iedereen die op zoek is naar een topervaring op het gebied van ontspanning. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
+          author: "Bernice",
         },
       ],
     },

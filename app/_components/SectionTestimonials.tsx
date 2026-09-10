@@ -1,7 +1,5 @@
 "use client";
 
-// TODO: remplacer par les vrais témoignages clients
-
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import type { Lang } from "../_lib/content";
@@ -104,31 +102,17 @@ export function SectionTestimonials({ lang }: SectionTestimonialsProps) {
                 &ldquo;{item.text}&rdquo;
               </p>
 
-              <div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    fontWeight: 500,
-                    fontSize: "0.875rem",
-                    color: "#2C1810",
-                    margin: "0 0 0.125rem 0",
-                  }}
-                >
-                  {item.author}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    fontWeight: 300,
-                    fontSize: "0.75rem",
-                    color: "#2C1810",
-                    opacity: 0.55,
-                    margin: 0,
-                  }}
-                >
-                  {item.location}
-                </p>
-              </div>
+              <p
+                style={{
+                  fontFamily: "var(--font-dm-sans)",
+                  fontWeight: 500,
+                  fontSize: "0.875rem",
+                  color: "#2C1810",
+                  margin: 0,
+                }}
+              >
+                {item.author}
+              </p>
             </motion.div>
           ))}
         </div>
