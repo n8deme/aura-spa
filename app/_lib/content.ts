@@ -55,7 +55,7 @@ export const content = {
       title: ["Un écrin", "pensé pour vous"],
       description:
         "Au cœur de Bruxelles, Aura Spa est un espace intimiste pensé dans les moindres détails — lumières tamisées, chaleur maîtrisée, acoustique douce.",
-      videoPlaceholder: "Vidéo du lieu — bientôt disponible",
+      videoLabel: "Vidéo du lieu",
       stats: ["2–10 personnes", "2 heures", "Bruxelles"],
     },
     booking: {
@@ -168,7 +168,7 @@ export const content = {
       title: ["Een juweel", "voor u ontworpen"],
       description:
         "In het hart van Brussel is Aura Spa een intieme ruimte tot in de kleinste details ontworpen — gedempte verlichting, gecontroleerde warmte, zachte akoestiek.",
-      videoPlaceholder: "Video van de locatie — binnenkort beschikbaar",
+      videoLabel: "Video van de locatie",
       stats: ["2–10 personen", "2 uur", "Brussel"],
     },
     booking: {

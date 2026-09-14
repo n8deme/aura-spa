@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play } from "lucide-react";
 import type { Lang } from "../_lib/content";
 import { content } from "../_lib/content";
 
@@ -114,71 +113,24 @@ export function SectionLieu({ lang }: SectionLieuProps) {
                 border: "1px solid rgba(196,149,106,0.15)",
               }}
             >
-              {/* Grain */}
-              <svg
+              {/* Vidéo du lieu (832x464, quasi 16:9) */}
+              <video
+                src="/Aura-spa.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                aria-label={t.videoLabel}
                 style={{
                   position: "absolute",
                   inset: 0,
+                  display: "block",
                   width: "100%",
                   height: "100%",
-                  opacity: 0.06,
-                  pointerEvents: "none",
-                }}
-                aria-hidden="true"
-              >
-                <filter id="grain-lieu">
-                  <feTurbulence
-                    type="fractalNoise"
-                    baseFrequency="0.7"
-                    numOctaves="3"
-                    stitchTiles="stitch"
-                  />
-                  <feColorMatrix type="saturate" values="0" />
-                </filter>
-                <rect width="100%" height="100%" filter="url(#grain-lieu)" />
-              </svg>
-
-              {/* Contenu placeholder */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "1rem",
+                  objectFit: "cover",
                 }}
               >
-                <div
-                  style={{
-                    width: "64px",
-                    height: "64px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(196,149,106,0.15)",
-                    border: "1px solid rgba(196,149,106,0.3)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Play size={24} color="#C4956A" fill="#C4956A" />
-                </div>
-                <p
-                  style={{
-                    fontFamily: "var(--font-dm-sans)",
-                    fontWeight: 300,
-                    fontSize: "0.8125rem",
-                    letterSpacing: "0.05em",
-                    color: "rgba(245,237,227,0.4)",
-                    textAlign: "center",
-                    margin: 0,
-                    padding: "0 1rem",
-                  }}
-                >
-                  {t.videoPlaceholder}
-                </p>
-              </div>
+                {t.videoLabel}
+              </video>
             </div>
 
             {/* Stats en bas */}
