@@ -39,13 +39,13 @@ export const EXTRAS_CATALOG = [
 export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];
 
 export const BOOKING_RULES = {
-  maxHours: 4, // confirmé : 4h max en tout
+  maxHours: 8, // 8h max en tout (soit 6h supplémentaires au-delà des 2h de base)
   bufferMinutes: 30, // confirmé
-  minAdvanceHours: 24, // confirmé — délai mini AVANT de réserver un créneau (différent de bufferMinutes, le battement ENTRE deux résas)
+  minAdvanceHours: 2, // délai mini AVANT de réserver un créneau (différent de bufferMinutes, le battement ENTRE deux résas, et de CANCELLATION_MIN_HOURS)
   // Ouvert de 08:00 jusqu'à 04:00 le lendemain matin (fermé 04:00 -> 08:00).
   // `lastEnd` est la vraie contrainte : une séance ne peut jamais se terminer
   // après. Le dernier départ proposé en découle et dépend donc de la durée
-  // choisie — 02:00 pour 2h, 01:00 pour 3h, 00:00 pour 4h.
+  // choisie — 02:00 pour 2h, 00:00 pour 4h, 20:00 pour 8h.
   openingHours: { start: "08:00", lastEnd: "04:00" },
 };
 

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice, packageTypeLabel } from "@/lib/booking/format";
+import { EXTRAS_LABELS } from "@/lib/booking/i18n";
 import { SPA_TIMEZONE } from "@/lib/booking/timezone";
 import type { PackageType } from "@/lib/booking/types";
 
@@ -25,6 +26,13 @@ type AdminBooking = {
   customer_phone: string | null;
   customer_notes: string | null;
   status: BookingStatus;
+  booking_extras: AdminBookingExtra[] | null;
+};
+
+type AdminBookingExtra = {
+  extra_id: string;
+  quantity: number;
+  unit_price: number;
 };
 
 const STATUS_LABEL: Record<BookingStatus, string> = {
@@ -189,6 +197,30 @@ export function AdminCalendar() {
                   <p className="text-sm text-[--color-text]">{booking.customer_name}</p>
                   <p className="text-sm text-[--color-text]/70">{booking.customer_email}</p>
                   {booking.customer_phone && <p className="text-sm text-[--color-text]/70">{booking.customer_phone}</p>}
+                  {booking.booking_extras && booking.booking_extras.length > 0 && (
+                    <>
+                      <Separator className="my-3 bg-[--color-border]" />
+                      <p className="text-xs uppercase tracking-wider text-[--color-text]/50">Extras commandés</p>
+                      <ul className="mt-2 grid gap-1">
+                        {booking.booking_extras.map((extra) => (
+                          <li
+                            key={extra.extra_id}
+                            className="flex items-baseline justify-between gap-3 text-sm text-[--color-text]"
+                          >
+                            <span>
+                              {extra.quantity > 1 && (
+                                <span className="text-[--color-text]/60">{extra.quantity} &times; </span>
+                              )}
+                              {EXTRAS_LABELS.fr[extra.extra_id as keyof typeof EXTRAS_LABELS.fr] ?? extra.extra_id}
+                            </span>
+                            <span className="tabular-nums text-[--color-text]/70">
+                              {formatPrice(extra.unit_price * extra.quantity)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                   {booking.customer_notes && (
                     <p className="mt-2 rounded-[2px] bg-[--color-cream-warm] p-2 text-sm text-[--color-text]">
                       {booking.customer_notes}
