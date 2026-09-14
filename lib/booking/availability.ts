@@ -3,38 +3,16 @@ import type { Lang } from "@/app/_lib/content";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { BOOKING_RULES } from "./pricing-config";
 import { ERRORS } from "./i18n";
-import { SPA_TIMEZONE } from "./timezone";
+import {
+  LAST_START_MINUTES,
+  endsBeforeClosing,
+  formatHHMM,
+  isWithinOpeningHours,
+} from "./opening-hours";
 
 export type AvailabilityResult = { available: true } | { available: false; reason: string };
 
 export type ExistingBooking = { start_time: string; end_time: string };
-
-function minutesSinceMidnight(date: Date): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: SPA_TIMEZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(date);
-  const hour = Number(parts.find((p) => p.type === "hour")?.value ?? "0");
-  const minute = Number(parts.find((p) => p.type === "minute")?.value ?? "0");
-  return hour * 60 + minute;
-}
-
-export function parseHHMM(value: string): number {
-  const [hour, minute] = value.split(":").map(Number);
-  return hour * 60 + minute;
-}
-
-// Seule l'heure de DÉBUT doit tomber dans les horaires d'ouverture — la
-// séance peut se terminer après l'heure de fermeture (dernier créneau
-// sélectionnable : l'heure de fermeture elle-même, ex. 22h).
-export function isWithinOpeningHours(startTime: Date): boolean {
-  const openMinutes = parseHHMM(BOOKING_RULES.openingHours.start);
-  const closeMinutes = parseHHMM(BOOKING_RULES.openingHours.end);
-  const startMinutes = minutesSinceMidnight(startTime);
-  return startMinutes >= openMinutes && startMinutes <= closeMinutes;
-}
 
 export function isPastMinAdvance(startTime: Date, now = new Date()): boolean {
   const minStart = new Date(now.getTime() + BOOKING_RULES.minAdvanceHours * 60 * 60 * 1000);
@@ -90,7 +68,17 @@ export async function checkAvailability(
   if (!isWithinOpeningHours(startTime)) {
     return {
       available: false,
-      reason: errors.outsideOpeningHours(BOOKING_RULES.openingHours.start, BOOKING_RULES.openingHours.end),
+      reason: errors.outsideOpeningHours(
+        BOOKING_RULES.openingHours.start,
+        formatHHMM(LAST_START_MINUTES)
+      ),
+    };
+  }
+
+  if (!endsBeforeClosing(startTime, endTime)) {
+    return {
+      available: false,
+      reason: errors.endsAfterClosing(BOOKING_RULES.openingHours.lastEnd),
     };
   }
 

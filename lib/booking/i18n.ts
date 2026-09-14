@@ -77,6 +77,7 @@ export const ERRORS: Record<
     invalidSlot: string;
     minAdvance: (h: number) => string;
     outsideOpeningHours: (start: string, end: string) => string;
+    endsAfterClosing: (time: string) => string;
     slotConflict: string;
   }
 > = {
@@ -91,7 +92,8 @@ export const ERRORS: Record<
     invalidQuantity: (label) => `Quantité invalide pour ${label}.`,
     invalidSlot: "Créneau invalide.",
     minAdvance: (h) => `Réservation possible à partir de ${h}h à l'avance.`,
-    outsideOpeningHours: (start, end) => `Le créneau doit se situer entre ${start} et ${end}.`,
+    outsideOpeningHours: (start, end) => `Le créneau doit démarrer entre ${start} et ${end}.`,
+    endsAfterClosing: (time) => `La séance doit se terminer au plus tard à ${time}.`,
     slotConflict: "Ce créneau chevauche une réservation existante (temps de battement compris).",
   },
   nl: {
@@ -105,7 +107,8 @@ export const ERRORS: Record<
     invalidQuantity: (label) => `Ongeldig aantal voor ${label}.`,
     invalidSlot: "Ongeldig tijdslot.",
     minAdvance: (h) => `Reserveren kan vanaf ${h}u op voorhand.`,
-    outsideOpeningHours: (start, end) => `Het tijdslot moet tussen ${start} en ${end} vallen.`,
+    outsideOpeningHours: (start, end) => `Het tijdslot moet starten tussen ${start} en ${end}.`,
+    endsAfterClosing: (time) => `De sessie moet uiterlijk om ${time} eindigen.`,
     slotConflict: "Dit tijdslot overlapt met een bestaande reservering (inclusief buffertijd).",
   },
 };

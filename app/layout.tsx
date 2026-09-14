@@ -51,7 +51,7 @@ const localBusinessSchema = {
     addressCountry: "BE",
   },
   priceRange: "€€",
-  openingHours: "Mo-Su 00:00-24:00",
+  openingHours: "Mo-Su 08:00-04:00",
   image: "https://aura-spa.be/og-image.jpg",
 };
 

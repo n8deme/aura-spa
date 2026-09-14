@@ -4,13 +4,14 @@ import {
   fetchBookingsInRange,
   isPastMinAdvance,
   overlapsWithBuffer,
-  parseHHMM,
 } from "@/lib/booking/availability";
-import { BOOKING_RULES } from "@/lib/booking/pricing-config";
+import {
+  candidateStartMinutes,
+  endsBeforeClosing,
+  formatHHMM,
+} from "@/lib/booking/opening-hours";
 import { BookingValidationError, resolveDurationHours } from "@/lib/booking/pricing";
 import { SPA_TIMEZONE, zonedTimeToUtc } from "@/lib/booking/timezone";
-
-const STEP_MINUTES = 30;
 
 const querySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -18,14 +19,6 @@ const querySchema = z.object({
   extraHours: z.coerce.number().int().min(0).optional(),
   lang: z.enum(["fr", "nl"]).default("fr"),
 });
-
-function formatHHMM(minutes: number): string {
-  const hour = Math.floor(minutes / 60)
-    .toString()
-    .padStart(2, "0");
-  const minute = (minutes % 60).toString().padStart(2, "0");
-  return `${hour}:${minute}`;
-}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -51,16 +44,17 @@ export async function GET(request: Request) {
   }
 
   const { date } = parsed.data;
-  const openMinutes = parseHHMM(BOOKING_RULES.openingHours.start);
-  // Dernier créneau sélectionnable : l'heure de fermeture elle-même —
-  // la séance peut se terminer après (voir isWithinOpeningHours).
-  const lastStartMinutes = parseHHMM(BOOKING_RULES.openingHours.end);
 
+  // Les horaires franchissent minuit : chaque créneau reste rattaché à sa vraie
+  // date calendaire (00:00 → 02:00 appartiennent au jour qui commence, pas à la
+  // soirée de la veille). Un créneau n'est proposé que si la séance entière
+  // tient avant l'heure de fermeture — le dernier départ dépend donc de la durée.
   const candidates: { time: string; startTime: Date; endTime: Date }[] = [];
-  for (let m = openMinutes; m <= lastStartMinutes; m += STEP_MINUTES) {
+  for (const m of candidateStartMinutes()) {
     const time = formatHHMM(m);
     const startTime = zonedTimeToUtc(date, time, SPA_TIMEZONE);
     const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
+    if (!endsBeforeClosing(startTime, endTime)) continue;
     candidates.push({ time, startTime, endTime });
   }
 

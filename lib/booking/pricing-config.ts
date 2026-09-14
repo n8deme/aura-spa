@@ -42,7 +42,11 @@ export const BOOKING_RULES = {
   maxHours: 4, // confirmé : 4h max en tout
   bufferMinutes: 30, // confirmé
   minAdvanceHours: 24, // confirmé — délai mini AVANT de réserver un créneau (différent de bufferMinutes, le battement ENTRE deux résas)
-  openingHours: { start: "10:00", end: "22:00" }, // confirmé
+  // Ouvert de 08:00 jusqu'à 04:00 le lendemain matin (fermé 04:00 -> 08:00).
+  // `lastEnd` est la vraie contrainte : une séance ne peut jamais se terminer
+  // après. Le dernier départ proposé en découle et dépend donc de la durée
+  // choisie — 02:00 pour 2h, 01:00 pour 3h, 00:00 pour 4h.
+  openingHours: { start: "08:00", lastEnd: "04:00" },
 };
 
 // Annulation possible avec remboursement si faite au moins ce délai à l'avance.
