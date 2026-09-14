@@ -3,7 +3,7 @@ import { getResend } from "./resend";
 import { formatDateLong, formatPrice, formatTime, packageTypeLabel } from "@/lib/booking/format";
 import type { PackageType } from "@/lib/booking/types";
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "reservations@auraspa.be";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "reservations@aura-spa.be";
 
 export type ConfirmationEmailBooking = {
   customerName: string;
