@@ -80,7 +80,7 @@ export const content = {
           author: "Bajarm",
         },
         {
-          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Le personnel était incroyablement accueillant, professionnel et attentif à chaque détail. Ce qui m'a vraiment marquée, c'est le service client exceptionnel et le souci du détail. De l'ambiance apaisante à la qualité des soins, tout a dépassé mes attentes. Je suis repartie complètement ressourcée, revitalisée et sans stress. Je recommande vivement ce spa à quiconque cherche une expérience de relaxation haut de gamme. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
+          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
           author: "Bernice",
         },
       ],
@@ -192,7 +192,7 @@ export const content = {
           author: "Bajarm",
         },
         {
-          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Het personeel was ongelooflijk gastvrij, professioneel en aandachtig voor elk detail. Wat echt opviel was de uitzonderlijke klantenservice en de aandacht voor detail. Van de rustgevende sfeer tot de kwaliteit van de behandelingen, alles overtrof mijn verwachtingen. Ik vertrok volledig verkwikt, fris en stressvrij. Ik raad deze spa ten zeerste aan aan iedereen die op zoek is naar een topervaring op het gebied van ontspanning. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
+          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
           author: "Bernice",
         },
       ],
