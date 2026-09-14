@@ -4,8 +4,15 @@ import { formatDateLong, formatPrice, formatTime, packageTypeLabel } from "@/lib
 import type { PackageType } from "@/lib/booking/types";
 import type { Lang } from "@/app/_lib/content";
 import { EMAIL_I18N } from "./i18n";
+import { CANCELLATION_MIN_HOURS } from "@/lib/booking/pricing-config";
 
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "reservations@aura-spa.be";
+const CONTACT_EMAIL = "Kamanrobert@icloud.com";
+const CONTACT_PHONE = "+32 494 37 90 99";
+const SITE_URL = "https://aura-spa.be";
+// TODO adresse : les mentions légales ne donnent que "Melsbroek, Belgique".
+// Dès que Rob fournit la rue et le numéro, les ajouter au bloc "Bon à savoir" —
+// un client qui vient pour la première fois n'a aujourd'hui pas de quoi trouver.
 
 export type ConfirmationEmailBooking = {
   customerName: string;
@@ -42,7 +49,8 @@ export async function sendBookingConfirmationEmail(booking: ConfirmationEmailBoo
   }
 }
 
-function renderConfirmationHtml(booking: ConfirmationEmailBooking, start: Date): string {
+// Exporté pour pouvoir rendre le gabarit hors envoi (aperçu, vérification visuelle).
+export function renderConfirmationHtml(booking: ConfirmationEmailBooking, start: Date): string {
   const { lang } = booking;
   const t = EMAIL_I18N[lang];
   return `
@@ -72,8 +80,25 @@ function renderConfirmationHtml(booking: ConfirmationEmailBooking, start: Date):
           <td style="padding: 8px 0; border-top: 1px solid #D4BBA8; text-align: right; font-weight: 600;">${formatPrice(booking.totalPrice, lang)}</td>
         </tr>
       </table>
+      <div style="margin: 28px 0 0; padding: 18px 20px; background-color: #F5EDE3; border-radius: 4px;">
+        <p style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #C4956A; margin: 0 0 10px;">${t.practicalTitle}</p>
+        <p style="font-size: 13px; line-height: 1.6; margin: 0 0 12px; color: #5C4638;">
+          ${t.cancellation(CANCELLATION_MIN_HOURS)}
+        </p>
+        <p style="font-size: 13px; line-height: 1.6; margin: 0; color: #5C4638;">
+          ${t.questionsLabel}
+          <a href="mailto:${CONTACT_EMAIL}" style="color: #8B3A2A; text-decoration: none;">${CONTACT_EMAIL}</a>
+          &nbsp;&middot;&nbsp;
+          <a href="tel:${CONTACT_PHONE.replace(/\s/g, "")}" style="color: #8B3A2A; text-decoration: none;">${CONTACT_PHONE}</a>
+        </p>
+      </div>
+
       <p style="font-size: 13px; line-height: 1.6; margin: 24px 0 0; color: #8C7565;">
         ${t.signoff}<br />${t.team}
+      </p>
+
+      <p style="margin: 20px 0 0; padding-top: 16px; border-top: 1px solid #EDE0D4;">
+        <a href="${SITE_URL}" style="font-size: 12px; letter-spacing: 0.08em; color: #C4956A; text-decoration: none;">${t.siteLabel} &rarr;</a>
       </p>
     </div>
   </div>`;

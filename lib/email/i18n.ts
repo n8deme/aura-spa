@@ -16,6 +16,10 @@ export const EMAIL_I18N: Record<
     totalLabel: string;
     signoff: string;
     team: string;
+    practicalTitle: string;
+    cancellation: (hours: number) => string;
+    questionsLabel: string;
+    siteLabel: string;
   }
 > = {
   fr: {
@@ -29,6 +33,11 @@ export const EMAIL_I18N: Record<
     totalLabel: "Total payé",
     signoff: "À très vite,",
     team: "L'équipe Aura Spa",
+    practicalTitle: "Bon à savoir",
+    cancellation: (hours) =>
+      `Annulation remboursée intégralement jusqu'à ${hours}h avant votre créneau. Passé ce délai, la réservation n'est plus remboursable.`,
+    questionsLabel: "Une question ?",
+    siteLabel: "Voir le site",
   },
   nl: {
     subject: "Uw reservering bij Aura Spa is bevestigd",
@@ -41,5 +50,10 @@ export const EMAIL_I18N: Record<
     totalLabel: "Totaal betaald",
     signoff: "Tot binnenkort,",
     team: "Het team van Aura Spa",
+    practicalTitle: "Goed om te weten",
+    cancellation: (hours) =>
+      `Volledige terugbetaling bij annulering tot ${hours}u voor uw tijdslot. Daarna is de reservering niet meer terugbetaalbaar.`,
+    questionsLabel: "Een vraag?",
+    siteLabel: "Naar de website",
   },
 };
