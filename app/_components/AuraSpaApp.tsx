@@ -7,6 +7,7 @@ import { Hero } from "./Hero";
 import { SectionExperience } from "./SectionExperience";
 import { SectionHowItWorks } from "./SectionHowItWorks";
 import { SectionLieu } from "./SectionLieu";
+import { SectionTarifs } from "./SectionTarifs";
 import { SectionBooking } from "./SectionBooking";
 import { SectionTestimonials } from "./SectionTestimonials";
 import { Footer } from "./Footer";
@@ -22,6 +23,7 @@ export function AuraSpaApp({ initialLang = "fr" }: { initialLang?: Lang }) {
         <SectionExperience lang={lang} />
         <SectionHowItWorks lang={lang} />
         <SectionLieu lang={lang} />
+        <SectionTarifs lang={lang} />
         <SectionBooking lang={lang} />
         <SectionTestimonials lang={lang} />
       </main>

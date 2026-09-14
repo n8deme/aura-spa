@@ -58,6 +58,25 @@ export const content = {
       videoLabel: "Vidéo du lieu",
       stats: ["2–10 personnes", "2 heures", "Bruxelles"],
     },
+    pricing: {
+      sectionTitle: "Tarifs",
+      title: "Nos formules",
+      subtitle:
+        "Le prix est le même que vous soyez deux ou dix. Tout est affiché ici, il n'y a pas de supplément par personne.",
+      baseName: "Formule de base",
+      baseDetail: "2 heures de privatisation, de 2 à 10 personnes.",
+      allInName: "Formule All-in",
+      allInDetail:
+        "2 heures, plateau charcuterie & fromage et champagne inclus. Réservée aux groupes de 2 personnes.",
+      extraHourName: "Heure supplémentaire",
+      extraHourDetail: "Jusqu'à 8 heures au total.",
+      perHour: "/ heure",
+      extrasTitle: "À la carte",
+      extrasSubtitle:
+        "À ajouter au moment de réserver, ou directement sur place le jour même.",
+      categories: { food: "Nos snacks", drink: "Nos boissons", other: "Nos autres extras" },
+      vatNote: "TVA non applicable. Les prix affichés sont les montants définitifs à payer.",
+    },
     booking: {
       sectionTitle: "Réserver",
       title: "Réservez votre moment",
@@ -80,7 +99,7 @@ export const content = {
           author: "Bajarm",
         },
         {
-          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Le personnel était incroyablement accueillant, professionnel et attentif à chaque détail. Ce qui m'a vraiment marquée, c'est le service client exceptionnel et le souci du détail. De l'ambiance apaisante à la qualité des soins, tout a dépassé mes attentes. Je suis repartie complètement ressourcée, revitalisée et sans stress. Je recommande vivement ce spa à quiconque cherche une expérience de relaxation haut de gamme. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
+          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
           author: "Bernice",
         },
       ],
@@ -171,6 +190,25 @@ export const content = {
       videoLabel: "Video van de locatie",
       stats: ["2–10 personen", "2 uur", "Brussel"],
     },
+    pricing: {
+      sectionTitle: "Tarieven",
+      title: "Onze formules",
+      subtitle:
+        "De prijs is dezelfde of u nu met twee of met tien bent. Alles staat hier vermeld, er is geen toeslag per persoon.",
+      baseName: "Basisformule",
+      baseDetail: "2 uur privégebruik, van 2 tot 10 personen.",
+      allInName: "All-in formule",
+      allInDetail:
+        "2 uur, charcuterie- & kaasplank en champagne inbegrepen. Voorbehouden aan groepen van 2 personen.",
+      extraHourName: "Extra uur",
+      extraHourDetail: "Tot maximaal 8 uur in totaal.",
+      perHour: "/ uur",
+      extrasTitle: "À la carte",
+      extrasSubtitle:
+        "Toe te voegen bij het reserveren, of ter plaatse op de dag zelf.",
+      categories: { food: "Onze snacks", drink: "Onze dranken", other: "Onze andere extra's" },
+      vatNote: "Btw niet van toepassing. De vermelde prijzen zijn de definitief te betalen bedragen.",
+    },
     booking: {
       sectionTitle: "Reserveren",
       title: "Reserveer uw moment",
@@ -192,7 +230,7 @@ export const content = {
           author: "Bajarm",
         },
         {
-          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Het personeel was ongelooflijk gastvrij, professioneel en aandachtig voor elk detail. Wat echt opviel was de uitzonderlijke klantenservice en de aandacht voor detail. Van de rustgevende sfeer tot de kwaliteit van de behandelingen, alles overtrof mijn verwachtingen. Ik vertrok volledig verkwikt, fris en stressvrij. Ik raad deze spa ten zeerste aan aan iedereen die op zoek is naar een topervaring op het gebied van ontspanning. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
+          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
           author: "Bernice",
         },
       ],
