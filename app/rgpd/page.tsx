@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Lang } from "@/app/_lib/content";
 import { LegalLayout, LegalSection } from "@/app/_components/LegalLayout";
 import { RGPD_I18N } from "@/lib/legal/i18n";
+import { alternatesFor } from "@/lib/seo/alternates";
 
 export async function generateMetadata({
   searchParams,
@@ -10,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang: rawLang } = await searchParams;
   const lang: Lang = rawLang === "nl" ? "nl" : "fr";
-  return { title: RGPD_I18N[lang].pageTitle };
+  return { title: RGPD_I18N[lang].pageTitle, alternates: alternatesFor("/rgpd") };
 }
 
 export default async function RGPD({

@@ -1,5 +1,11 @@
 import type { Lang } from "./_lib/content";
 import { AuraSpaApp } from "./_components/AuraSpaApp";
+import type { Metadata } from "next";
+import { alternatesFor } from "@/lib/seo/alternates";
+
+export const metadata: Metadata = {
+  alternates: alternatesFor("/"),
+};
 
 export default async function Home({
   searchParams,

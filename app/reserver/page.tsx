@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import type { Lang } from "@/app/_lib/content";
 import { BookingFlow } from "./BookingFlow";
+import { alternatesFor } from "@/lib/seo/alternates";
 
 export const metadata: Metadata = {
+  alternates: alternatesFor("/reserver"),
   title: "Réserver — Aura Spa",
   description: "Réservez votre espace privatif Aura Spa en ligne : créneau, formule et paiement sécurisé.",
   robots: { index: false, follow: false },
