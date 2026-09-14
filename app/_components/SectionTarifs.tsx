@@ -8,8 +8,6 @@ import {
   BASE_PACKAGE,
   EXTRAS_CATALOG,
   EXTRA_HOUR_PRICE,
-  MAX_CAPACITY,
-  MIN_CAPACITY,
   type ExtraCategory,
 } from "@/lib/booking/pricing-config";
 import { EXTRAS_LABELS } from "@/lib/booking/i18n";
@@ -18,7 +16,13 @@ interface SectionTarifsProps {
   lang: Lang;
 }
 
-const CATEGORIES: ExtraCategory[] = ["food", "drink", "other"];
+// Deux colonnes plutôt que trois : "other" ne contient qu'un extra, seul dans
+// sa colonne il passait pour un bug d'affichage. Empilé sous "food", l'équilibre
+// tombe à 4 lignes à gauche contre 7 à droite.
+const COLONNES: ExtraCategory[][] = [
+  ["food", "other"],
+  ["drink"],
+];
 
 export function SectionTarifs({ lang }: SectionTarifsProps) {
   const t = content[lang].pricing;
@@ -233,20 +237,23 @@ export function SectionTarifs({ lang }: SectionTarifsProps) {
         </motion.div>
 
         <div
-          className="grid-cols-1 md:grid-cols-3"
-          style={{ display: "grid", gap: "clamp(32px, 4vw, 48px)" }}
+          className="grid-cols-1 md:grid-cols-2"
+          style={{ display: "grid", gap: "clamp(32px, 4vw, 56px)", alignItems: "start" }}
         >
-          {CATEGORIES.map((categorie, i) => {
-            const items = EXTRAS_CATALOG.filter((extra) => extra.category === categorie);
-            if (items.length === 0) return null;
-            return (
-              <motion.div
-                key={categorie}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
+          {COLONNES.map((colonne, i) => (
+            <motion.div
+              key={colonne.join("-")}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ display: "grid", gap: "clamp(28px, 3vw, 40px)" }}
+            >
+              {colonne.map((categorie) => {
+                const items = EXTRAS_CATALOG.filter((extra) => extra.category === categorie);
+                if (items.length === 0) return null;
+                return (
+                  <div key={categorie}>
                 <h4
                   style={{
                     fontFamily: "var(--font-dm-sans)",
@@ -298,10 +305,12 @@ export function SectionTarifs({ lang }: SectionTarifsProps) {
                       </span>
                     </li>
                   ))}
-                </ul>
-              </motion.div>
-            );
-          })}
+                    </ul>
+                  </div>
+                );
+              })}
+            </motion.div>
+          ))}
         </div>
 
         <motion.p
