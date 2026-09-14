@@ -25,7 +25,7 @@ export function Nav({ lang, onLangChange }: NavProps) {
   const navLinks = [
     { label: t.experience, href: "#experience" },
     { label: t.lieu, href: "#lieu" },
-    { label: t.tarif, href: "#reserver" },
+    { label: t.tarif, href: "#tarifs" },
   ];
 
   const headerStyle: React.CSSProperties = {

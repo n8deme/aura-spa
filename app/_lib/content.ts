@@ -58,6 +58,25 @@ export const content = {
       videoLabel: "Vidéo du lieu",
       stats: ["2–10 personnes", "2 heures", "Bruxelles"],
     },
+    pricing: {
+      sectionTitle: "Tarifs",
+      title: "Nos formules",
+      subtitle:
+        "Le prix est le même que vous soyez deux ou dix. Tout est affiché ici, il n'y a pas de supplément par personne.",
+      baseName: "Formule de base",
+      baseDetail: "2 heures de privatisation, de 2 à 10 personnes.",
+      allInName: "Formule All-in",
+      allInDetail:
+        "2 heures, plateau charcuterie & fromage et champagne inclus. Réservée aux groupes de 2 personnes.",
+      extraHourName: "Heure supplémentaire",
+      extraHourDetail: "Jusqu'à 8 heures au total.",
+      perHour: "/ heure",
+      extrasTitle: "À la carte",
+      extrasSubtitle:
+        "À ajouter au moment de réserver, ou directement sur place le jour même.",
+      categories: { food: "À manger", drink: "À boire", other: "Autre" },
+      vatNote: "TVA non applicable. Les prix affichés sont les montants définitifs à payer.",
+    },
     booking: {
       sectionTitle: "Réserver",
       title: "Réservez votre moment",
@@ -170,6 +189,25 @@ export const content = {
         "In het hart van Brussel is Aura Spa een intieme ruimte tot in de kleinste details ontworpen — gedempte verlichting, gecontroleerde warmte, zachte akoestiek.",
       videoLabel: "Video van de locatie",
       stats: ["2–10 personen", "2 uur", "Brussel"],
+    },
+    pricing: {
+      sectionTitle: "Tarieven",
+      title: "Onze formules",
+      subtitle:
+        "De prijs is dezelfde of u nu met twee of met tien bent. Alles staat hier vermeld, er is geen toeslag per persoon.",
+      baseName: "Basisformule",
+      baseDetail: "2 uur privégebruik, van 2 tot 10 personen.",
+      allInName: "All-in formule",
+      allInDetail:
+        "2 uur, charcuterie- & kaasplank en champagne inbegrepen. Voorbehouden aan groepen van 2 personen.",
+      extraHourName: "Extra uur",
+      extraHourDetail: "Tot maximaal 8 uur in totaal.",
+      perHour: "/ uur",
+      extrasTitle: "À la carte",
+      extrasSubtitle:
+        "Toe te voegen bij het reserveren, of ter plaatse op de dag zelf.",
+      categories: { food: "Om te eten", drink: "Om te drinken", other: "Andere" },
+      vatNote: "Btw niet van toepassing. De vermelde prijzen zijn de definitief te betalen bedragen.",
     },
     booking: {
       sectionTitle: "Reserveren",

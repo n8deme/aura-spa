@@ -22,19 +22,23 @@ export const ALL_IN_PACKAGE = {
 
 // Les libellés affichés (fr/nl) vivent dans lib/booking/i18n.ts — ici,
 // uniquement les données business indépendantes de la langue.
+// `category` ne sert qu'à grouper la carte affichée sur la page d'accueil
+// (SectionTarifs). Le flow de réservation l'ignore.
 export const EXTRAS_CATALOG = [
-  { id: "charcuterie_fromage", price: 25 },
-  { id: "sushis", price: 20 },
-  { id: "dessert", price: 15 },
-  { id: "cocktail_aperol", price: 10 },
-  { id: "cocktail_passion", price: 10 },
-  { id: "cocktail_mojito", price: 10 },
-  { id: "soft_drink", price: 3 },
-  { id: "shisha", price: 25 },
-  { id: "prosecco", price: 40 },
-  { id: "champagne", price: 40 },
-  { id: "vin_blanc", price: 25 },
+  { id: "charcuterie_fromage", price: 25, category: "food" },
+  { id: "sushis", price: 20, category: "food" },
+  { id: "dessert", price: 15, category: "food" },
+  { id: "champagne", price: 40, category: "drink" },
+  { id: "prosecco", price: 40, category: "drink" },
+  { id: "vin_blanc", price: 25, category: "drink" },
+  { id: "cocktail_aperol", price: 10, category: "drink" },
+  { id: "cocktail_passion", price: 10, category: "drink" },
+  { id: "cocktail_mojito", price: 10, category: "drink" },
+  { id: "soft_drink", price: 3, category: "drink" },
+  { id: "shisha", price: 25, category: "other" },
 ] as const;
+
+export type ExtraCategory = (typeof EXTRAS_CATALOG)[number]["category"];
 
 export type ExtraId = (typeof EXTRAS_CATALOG)[number]["id"];
 
