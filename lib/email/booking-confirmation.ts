@@ -10,9 +10,8 @@ const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "reservations@aura-spa.be";
 const CONTACT_EMAIL = "Kamanrobert@icloud.com";
 const CONTACT_PHONE = "+32 494 37 90 99";
 const SITE_URL = "https://aura-spa.be";
-// TODO adresse : les mentions légales ne donnent que "Melsbroek, Belgique".
-// Dès que Rob fournit la rue et le numéro, les ajouter au bloc "Bon à savoir" —
-// un client qui vient pour la première fois n'a aujourd'hui pas de quoi trouver.
+const MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=Steenwagenstraat+121+1820+Melsbroek";
 
 export type ConfirmationEmailBooking = {
   customerName: string;
@@ -82,6 +81,11 @@ export function renderConfirmationHtml(booking: ConfirmationEmailBooking, start:
       </table>
       <div style="margin: 28px 0 0; padding: 18px 20px; background-color: #F5EDE3; border-radius: 4px;">
         <p style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #C4956A; margin: 0 0 10px;">${t.practicalTitle}</p>
+        <p style="font-size: 13px; line-height: 1.6; margin: 0 0 12px; color: #5C4638;">
+          <strong style="font-weight: 600; color: #2C1810;">${t.addressLabel}</strong><br />
+          ${t.address}<br />
+          <a href="${MAP_URL}" style="color: #8B3A2A; text-decoration: none;">${t.mapLabel} &rarr;</a>
+        </p>
         <p style="font-size: 13px; line-height: 1.6; margin: 0 0 12px; color: #5C4638;">
           ${t.cancellation(CANCELLATION_MIN_HOURS)}
         </p>

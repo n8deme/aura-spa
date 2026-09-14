@@ -20,6 +20,9 @@ export const EMAIL_I18N: Record<
     cancellation: (hours: number) => string;
     questionsLabel: string;
     siteLabel: string;
+    addressLabel: string;
+    address: string;
+    mapLabel: string;
   }
 > = {
   fr: {
@@ -38,6 +41,9 @@ export const EMAIL_I18N: Record<
       `Annulation remboursée intégralement jusqu'à ${hours}h avant votre créneau. Passé ce délai, la réservation n'est plus remboursable.`,
     questionsLabel: "Une question ?",
     siteLabel: "Voir le site",
+    addressLabel: "Adresse",
+    address: "Steenwagenstraat 121, 1820 Melsbroek (Steenokkerzeel), Belgique",
+    mapLabel: "Ouvrir dans Maps",
   },
   nl: {
     subject: "Uw reservering bij Aura Spa is bevestigd",
@@ -55,5 +61,8 @@ export const EMAIL_I18N: Record<
       `Volledige terugbetaling bij annulering tot ${hours}u voor uw tijdslot. Daarna is de reservering niet meer terugbetaalbaar.`,
     questionsLabel: "Een vraag?",
     siteLabel: "Naar de website",
+    addressLabel: "Adres",
+    address: "Steenwagenstraat 121, 1820 Melsbroek (Steenokkerzeel), België",
+    mapLabel: "Openen in Maps",
   },
 };
