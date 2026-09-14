@@ -30,15 +30,6 @@ export const metadata: Metadata = {
     locale: "fr_BE",
     type: "website",
   },
-  // Sans hreflang, Google n'indexe que la version française : la néerlandaise
-  // vit sur la même URL avec ?lang=nl et lui reste invisible.
-  alternates: {
-    canonical: "/",
-    languages: {
-      "fr-BE": "/",
-      "nl-BE": "/?lang=nl",
-    },
-  },
   robots: {
     index: true,
     follow: true,
