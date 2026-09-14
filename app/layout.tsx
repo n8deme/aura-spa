@@ -47,7 +47,10 @@ const localBusinessSchema = {
   email: "Kamanrobert@icloud.com",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "Steenwagenstraat 121",
+    postalCode: "1820",
     addressLocality: "Melsbroek",
+    addressRegion: "Steenokkerzeel",
     addressCountry: "BE",
   },
   priceRange: "€€",
