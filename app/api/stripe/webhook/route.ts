@@ -4,8 +4,15 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { sendBookingConfirmationEmail } from "@/lib/email/booking-confirmation";
 import type { PackageType } from "@/lib/booking/types";
+import type { Lang } from "@/app/_lib/content";
 
 export const dynamic = "force-dynamic";
+
+// La langue vient des métadonnées de la session Stripe. Une résa antérieure à
+// cette mise en place n'en a pas : on retombe sur le français.
+function resolveLang(value: string | undefined): Lang {
+  return value === "nl" ? "nl" : "fr";
+}
 
 async function fulfillBooking(session: Stripe.Checkout.Session) {
   const bookingId = session.metadata?.bookingId;
@@ -42,6 +49,7 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
     startTime: data.start_time,
     packageType: data.package_type as PackageType,
     totalPrice: data.total_price,
+    lang: resolveLang(session.metadata?.lang),
   });
 }
 

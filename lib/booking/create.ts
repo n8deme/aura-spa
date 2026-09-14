@@ -89,7 +89,10 @@ export async function createBookingCheckout(
       })),
       success_url: `${origin}/reserver/success?session_id={CHECKOUT_SESSION_ID}&lang=${lang}`,
       cancel_url: `${origin}/reserver?cancelled=1&lang=${lang}`,
-      metadata: { bookingId: booking.id as string },
+      // `lang` sert au webhook à envoyer l'email de confirmation dans la langue
+      // choisie par le client. La table bookings ne stocke pas la langue, les
+      // métadonnées Stripe la transportent sans migration.
+      metadata: { bookingId: booking.id as string, lang },
       // 30 min, le minimum autorisé par Stripe (défaut : 24h). Tant que la
       // session n'a pas expiré, la résa reste "pending" et bloque le créneau —
       // avec 24h, un panier abandonné le bloquait bien après l'heure du rendez-vous.
