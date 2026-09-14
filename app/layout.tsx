@@ -30,6 +30,15 @@ export const metadata: Metadata = {
     locale: "fr_BE",
     type: "website",
   },
+  // Sans hreflang, Google n'indexe que la version française : la néerlandaise
+  // vit sur la même URL avec ?lang=nl et lui reste invisible.
+  alternates: {
+    canonical: "/",
+    languages: {
+      "fr-BE": "/",
+      "nl-BE": "/?lang=nl",
+    },
+  },
   robots: {
     index: true,
     follow: true,
@@ -53,9 +62,26 @@ const localBusinessSchema = {
     addressRegion: "Steenokkerzeel",
     addressCountry: "BE",
   },
-  priceRange: "€€",
-  openingHours: "Mo-Su 08:00-04:00",
-  image: "https://aura-spa.be/og-image.jpg",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 50.91327,
+    longitude: 4.47090,
+  },
+  hasMap: "https://www.google.com/maps/search/?api=1&query=Steenwagenstraat+121+1820+Melsbroek",
+  priceRange: "150€ - 220€",
+  // Les horaires franchissent minuit : la forme structurée lève l'ambiguïté que
+  // la chaîne "08:00-04:00" laissait planer.
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "08:00",
+    closes: "04:00",
+  },
+  // Était "og-image.jpg", qui renvoyait 404 : l'image est générée par la route
+  // app/opengraph-image.tsx, pas servie depuis public/.
+  image: "https://aura-spa.be/opengraph-image",
+  sameAs: ["https://www.instagram.com/espace.privatif"],
+  areaServed: ["Bruxelles", "Steenokkerzeel", "Zaventem", "Vilvoorde", "Brabant flamand"],
 };
 
 export default function RootLayout({
