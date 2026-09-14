@@ -74,7 +74,7 @@ export const content = {
       extrasTitle: "À la carte",
       extrasSubtitle:
         "À ajouter au moment de réserver, ou directement sur place le jour même.",
-      categories: { food: "À manger", drink: "À boire", other: "Autre" },
+      categories: { food: "Nos snacks", drink: "Nos boissons", other: "Nos autres extras" },
       vatNote: "TVA non applicable. Les prix affichés sont les montants définitifs à payer.",
     },
     booking: {
@@ -206,7 +206,7 @@ export const content = {
       extrasTitle: "À la carte",
       extrasSubtitle:
         "Toe te voegen bij het reserveren, of ter plaatse op de dag zelf.",
-      categories: { food: "Om te eten", drink: "Om te drinken", other: "Andere" },
+      categories: { food: "Onze snacks", drink: "Onze dranken", other: "Onze andere extra's" },
       vatNote: "Btw niet van toepassing. De vermelde prijzen zijn de definitief te betalen bedragen.",
     },
     booking: {
