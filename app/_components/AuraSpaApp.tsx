@@ -11,8 +11,8 @@ import { SectionBooking } from "./SectionBooking";
 import { SectionTestimonials } from "./SectionTestimonials";
 import { Footer } from "./Footer";
 
-export function AuraSpaApp() {
-  const [lang, setLang] = useState<Lang>("fr");
+export function AuraSpaApp({ initialLang = "fr" }: { initialLang?: Lang }) {
+  const [lang, setLang] = useState<Lang>(initialLang);
 
   return (
     <>

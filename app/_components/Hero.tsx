@@ -34,6 +34,7 @@ export function Hero({ lang }: HeroProps) {
         fill
         priority
         sizes="100vw"
+        className="hero-photo"
         style={{ objectFit: "cover", objectPosition: "center" }}
       />
 
@@ -157,7 +158,7 @@ export function Hero({ lang }: HeroProps) {
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <a
-              href="#reserver"
+              href={`/reserver?lang=${lang}`}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -179,7 +180,7 @@ export function Hero({ lang }: HeroProps) {
                 (e.currentTarget.style.backgroundColor = "#C4956A")
               }
             >
-              {lang === "fr" ? "Réserver" : "Reserveren"}
+              {t.ctaBook}
             </a>
           </motion.div>
         </div>

@@ -1,15 +1,11 @@
 "use client";
 
-// TODO: remplacer par embed Calendly quand le compte est créé
-// URL Calendly : https://calendly.com/aura-spa/2h
-// Pour activer : remplacer le bloc CTA ci-dessous par <iframe src={CALENDLY_URL} ... />
-
 import { motion } from "framer-motion";
 import { ArrowRight, Lock } from "lucide-react";
 import type { Lang } from "../_lib/content";
 import { content } from "../_lib/content";
 
-const CONTACT_EMAIL = "contact@auraspa.be";
+const CONTACT_EMAIL = "Kamanrobert@icloud.com";
 
 export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
   const t = content[lang].booking;
@@ -95,7 +91,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
         >
           {/* Grand CTA */}
           <a
-            href="#"
+            href={`/reserver?lang=${lang}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -118,7 +114,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
               (e.currentTarget.style.backgroundColor = "#C4956A")
             }
           >
-            {lang === "fr" ? "Choisir mon créneau" : "Mijn tijdslot kiezen"}
+            {t.ctaChooseSlot}
             <ArrowRight size={16} />
           </a>
 
@@ -144,9 +140,7 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
                 margin: "0 0 0.625rem 0",
               }}
             >
-              {lang === "fr"
-                ? "La réservation en ligne sera disponible très prochainement. Contactez-nous par email pour réserver dès maintenant."
-                : "Online reserveren komt binnenkort beschikbaar. Neem contact op per e-mail om nu al te reserveren."}
+              {t.availabilityNote}
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
@@ -213,33 +207,27 @@ export function SectionBooking({ lang }: { lang: "fr" | "nl" }) {
 
           {/* Logos paiement */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
-            <svg viewBox="0 0 48 16" style={{ height: "24px", width: "auto" }} fill="none" aria-label="Visa">
-              <text x="0" y="13" fontFamily="Arial" fontWeight="bold" fontSize="16" fill="#1A1F71">VISA</text>
-            </svg>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              src="/images/payment/visa.svg"
+              alt="Visa"
+              style={{ height: "24px", width: "auto" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/payment/mastercard.svg"
               alt="Mastercard"
               style={{ height: "32px", width: "auto" }}
             />
-            <span
-              style={{
-                fontFamily: "var(--font-dm-sans)",
-                fontWeight: 700,
-                fontSize: "0.8125rem",
-                letterSpacing: "0.05em",
-                color: "#005498",
-                border: "1px solid #005498",
-                borderRadius: "4px",
-                padding: "4px 8px",
-                lineHeight: 1,
-              }}
-            >
-              Bancontact
-            </span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg"
+              src="/images/payment/bancontact.svg"
+              alt="Bancontact"
+              style={{ height: "32px", width: "auto" }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/payment/apple-pay.svg"
               alt="Apple Pay"
               style={{ height: "32px", width: "auto" }}
             />

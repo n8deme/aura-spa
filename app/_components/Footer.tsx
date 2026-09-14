@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 function InstagramIcon({ size = 14 }: { size?: number }) {
   return (
@@ -12,13 +12,6 @@ function InstagramIcon({ size = 14 }: { size?: number }) {
   );
 }
 
-function FacebookIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-    </svg>
-  );
-}
 import { Wordmark } from "./Wordmark";
 import type { Lang } from "../_lib/content";
 import { content } from "../_lib/content";
@@ -51,7 +44,7 @@ export function Footer({ lang }: FooterProps) {
             paddingBottom: "clamp(40px, 6vw, 64px)",
             borderBottom: "1px solid rgba(245,237,227,0.08)",
           }}
-          className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+          className="footer-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
         >
           {/* Col 1 — Brand */}
           <div>
@@ -175,6 +168,25 @@ export function Footer({ lang }: FooterProps) {
                 {t.contact.email}
               </a>
               <a
+                href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-dm-sans)",
+                  fontWeight: 300,
+                  fontSize: "0.875rem",
+                  color: "rgba(245,237,227,0.65)",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#C4956A")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,237,227,0.65)")}
+              >
+                <Phone size={14} />
+                {t.contact.phone}
+              </a>
+              <a
                 href={t.contact.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -194,27 +206,6 @@ export function Footer({ lang }: FooterProps) {
               >
                 <InstagramIcon size={14} />
                 Instagram
-              </a>
-              <a
-                href={t.contact.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  fontFamily: "var(--font-dm-sans)",
-                  fontWeight: 300,
-                  fontSize: "0.875rem",
-                  color: "rgba(245,237,227,0.65)",
-                  textDecoration: "none",
-                  transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#C4956A")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,237,227,0.65)")}
-              >
-                <FacebookIcon size={14} />
-                Facebook
               </a>
             </div>
           </div>
@@ -245,7 +236,7 @@ export function Footer({ lang }: FooterProps) {
             {t.links.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={`${link.href}?lang=${lang}`}
                 style={{
                   fontFamily: "var(--font-dm-sans)",
                   fontWeight: 300,

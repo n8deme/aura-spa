@@ -9,11 +9,12 @@ export const content = {
       reserver: "Réserver",
     },
     hero: {
-      title: ["Votre bulle", "à deux."],
+      title: ["Votre bulle", "de sérénité."],
       subtitle:
-        "Un espace privatif pour 2 à 4 personnes.\nBains, chaleur et sérénité au cœur de Bruxelles.",
-      ctaPrimary: "Réserver — 200€",
+        "Un espace privatif pour 2 à 10 personnes.\nBains, chaleur et détente à Bruxelles.",
+      ctaPrimary: "Réserver — 150€",
       ctaSecondary: "Découvrir",
+      ctaBook: "Réserver",
       badge: "Déjà disponible à Bruxelles",
     },
     experience: {
@@ -28,7 +29,7 @@ export const content = {
             "Jacuzzi et bains nordiques réservés exclusivement pour votre groupe.",
         },
         {
-          title: "Jusqu'à 4 personnes",
+          title: "Jusqu'à 10 personnes",
           description:
             "Couple, amis ou collègues — l'espace s'adapte à votre groupe.",
         },
@@ -41,9 +42,10 @@ export const content = {
     },
     howItWorks: {
       sectionTitle: "Comment ça marche",
+      title: "Simple comme bonjour.",
       steps: [
         { number: "01", title: "Choisissez votre créneau", description: "Consultez le calendrier et sélectionnez la date et l'heure qui vous conviennent." },
-        { number: "02", title: "Payez en ligne", description: "Paiement sécurisé de 200€ via Stripe. Carte, Bancontact ou Apple Pay." },
+        { number: "02", title: "Payez en ligne", description: "Paiement sécurisé de 150€ via Stripe. Carte, Bancontact ou Apple Pay." },
         { number: "03", title: "Recevez votre confirmation", description: "Un email de confirmation avec toutes les informations pratiques vous est envoyé." },
         { number: "04", title: "Profitez de votre espace", description: "Arrivez, entrez dans votre espace privatif et laissez-vous porter." },
       ],
@@ -53,13 +55,16 @@ export const content = {
       title: ["Un écrin", "pensé pour vous"],
       description:
         "Au cœur de Bruxelles, Aura Spa est un espace intimiste pensé dans les moindres détails — lumières tamisées, chaleur maîtrisée, acoustique douce.",
-      videoPlaceholder: "Vidéo du lieu — bientôt disponible",
-      stats: ["2–4 personnes", "2 heures", "Bruxelles"],
+      videoLabel: "Vidéo du lieu",
+      stats: ["2–10 personnes", "2 heures", "Bruxelles"],
     },
     booking: {
       sectionTitle: "Réserver",
       title: "Réservez votre moment",
       subtitle: "Choisissez votre créneau, payez en ligne. C'est tout.",
+      ctaChooseSlot: "Choisir mon créneau",
+      availabilityNote:
+        "Choisissez votre créneau et payez en ligne en quelques minutes. Une question ? Contactez-nous par email.",
       payment: "Paiement sécurisé via Stripe",
       paymentMethods: "Carte, Bancontact, Apple Pay acceptés",
     },
@@ -67,19 +72,16 @@ export const content = {
       sectionTitle: "Ils en parlent",
       items: [
         {
-          text: "Une bulle hors du temps. Nous avons passé 2 heures de pur bonheur, sans penser à rien. Le lieu est magnifique.",
-          author: "Sophie & Marc",
-          location: "Bruxelles",
+          text: "J'ai vraiment adoré, c'était un 10/10 avec un service au top. Je recommande vivement :)",
+          author: "Marlyse",
         },
         {
-          text: "Idéal pour un anniversaire surprise. Mon amie était sous le choc — c'est rare de trouver un espace aussi intimiste à Bruxelles.",
-          author: "Charlotte V.",
-          location: "Ixelles",
+          text: "Une escapade réussie ! Un service au top, un accueil chaleureux et bienveillant (elle est pépite) mais vraiment ! Tout était top ! Je recommande vivement !",
+          author: "Bajarm",
         },
         {
-          text: "On a emmené nos collègues pour clôturer un projet. L'ambiance est parfaite et le concept est vraiment unique.",
-          author: "Thomas D.",
-          location: "Etterbeek",
+          text: "J'ai vécu une expérience absolument incroyable au spa, du début à la fin. L'ambiance était paisible, propre et magnifiquement pensée — l'endroit parfait pour se détendre. Le personnel était incroyablement accueillant, professionnel et attentif à chaque détail. Ce qui m'a vraiment marquée, c'est le service client exceptionnel et le souci du détail. De l'ambiance apaisante à la qualité des soins, tout a dépassé mes attentes. Je suis repartie complètement ressourcée, revitalisée et sans stress. Je recommande vivement ce spa à quiconque cherche une expérience de relaxation haut de gamme. Facilement un 10/10. J'ai hâte de revenir en Belgique pour retourner dans ce spa !!",
+          author: "Bernice",
         },
       ],
     },
@@ -91,18 +93,18 @@ export const content = {
           { label: "L'expérience", href: "#experience" },
           { label: "Le lieu", href: "#lieu" },
           { label: "Réserver", href: "#reserver" },
-          { label: "Contact", href: "mailto:contact@aura-spa.be" },
+          { label: "Contact", href: "mailto:Kamanrobert@icloud.com" },
         ],
       },
       infos: {
         title: "Infos pratiques",
-        items: ["Ouvert 7j/7", "Groupes de 2 à 4 personnes", "200€ / 2 heures"],
+        items: ["Ouvert 7j/7", "Groupes de 2 à 10 personnes", "150€ / 2 heures"],
       },
       contact: {
         title: "Contact",
-        email: "contact@aura-spa.be",
-        instagram: "https://instagram.com/auraspa.brussels",
-        facebook: "https://facebook.com/auraspa.brussels",
+        email: "Kamanrobert@icloud.com",
+        phone: "+32 494 37 90 99",
+        instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",
       links: [
@@ -120,11 +122,12 @@ export const content = {
       reserver: "Reserveren",
     },
     hero: {
-      title: ["Uw eigen bubbel", "voor twee."],
+      title: ["Uw eigen bubbel", "van sereniteit."],
       subtitle:
-        "Een privéruimte voor 2 tot 4 personen.\nBaden, warmte en sereniteit in het hart van Brussel.",
-      ctaPrimary: "Reserveren — 200€",
+        "Een privéruimte voor 2 tot 10 personen.\nBaden, warmte en ontspanning in Brussel.",
+      ctaPrimary: "Reserveren — 150€",
       ctaSecondary: "Ontdekken",
+      ctaBook: "Reserveren",
       badge: "Nu beschikbaar in Brussel",
     },
     experience: {
@@ -139,7 +142,7 @@ export const content = {
             "Jacuzzi en Scandinavische baden exclusief gereserveerd voor uw groep.",
         },
         {
-          title: "Tot 4 personen",
+          title: "Tot 10 personen",
           description:
             "Koppel, vrienden of collega's — de ruimte past zich aan uw groep aan.",
         },
@@ -152,9 +155,10 @@ export const content = {
     },
     howItWorks: {
       sectionTitle: "Hoe het werkt",
+      title: "Kinderspel.",
       steps: [
         { number: "01", title: "Kies uw tijdslot", description: "Bekijk de kalender en selecteer de datum en het tijdstip dat u past." },
-        { number: "02", title: "Betaal online", description: "Beveiligde betaling van 200€ via Stripe. Kaart, Bancontact of Apple Pay." },
+        { number: "02", title: "Betaal online", description: "Beveiligde betaling van 150€ via Stripe. Kaart, Bancontact of Apple Pay." },
         { number: "03", title: "Ontvang uw bevestiging", description: "Een bevestigingsmail met alle praktische informatie wordt naar u verzonden." },
         { number: "04", title: "Geniet van uw ruimte", description: "Kom aan, betreed uw privéruimte en laat u meevoeren." },
       ],
@@ -164,13 +168,15 @@ export const content = {
       title: ["Een juweel", "voor u ontworpen"],
       description:
         "In het hart van Brussel is Aura Spa een intieme ruimte tot in de kleinste details ontworpen — gedempte verlichting, gecontroleerde warmte, zachte akoestiek.",
-      videoPlaceholder: "Video van de locatie — binnenkort beschikbaar",
-      stats: ["2–4 personen", "2 uur", "Brussel"],
+      videoLabel: "Video van de locatie",
+      stats: ["2–10 personen", "2 uur", "Brussel"],
     },
     booking: {
       sectionTitle: "Reserveren",
       title: "Reserveer uw moment",
       subtitle: "Kies uw tijdslot, betaal online. Dat is alles.",
+      ctaChooseSlot: "Mijn tijdslot kiezen",
+      availabilityNote: "Kies uw tijdslot en betaal online in enkele minuten. Een vraag? Neem contact op per e-mail.",
       payment: "Beveiligde betaling via Stripe",
       paymentMethods: "Kaart, Bancontact, Apple Pay aanvaard",
     },
@@ -178,19 +184,16 @@ export const content = {
       sectionTitle: "Wat ze zeggen",
       items: [
         {
-          text: "Een tijdloze bubbel. We hebben 2 uur puur geluk doorgebracht, zonder aan iets te denken. De locatie is prachtig.",
-          author: "Sophie & Marc",
-          location: "Brussel",
+          text: "ik heb echt genoten, het was een 10/10 met TOPSERVICE. Zeker een aanrader :)",
+          author: "Marlyse",
         },
         {
-          text: "Perfect voor een verrassingsverjaardag. Mijn vriendin was verbluft — het is zeldzaam om zo'n intieme ruimte in Brussel te vinden.",
-          author: "Charlotte V.",
-          location: "Elsene",
+          text: "Een geslaagd uitje! Een topservice, een warme en zorgzame ontvangst (ze is een pareltje), echt waar! Alles was top! Ik raad het ten zeerste aan!",
+          author: "Bajarm",
         },
         {
-          text: "We namen onze collega's mee om een project af te sluiten. De sfeer is perfect en het concept is echt uniek.",
-          author: "Thomas D.",
-          location: "Etterbeek",
+          text: "Ik heb een absoluut geweldige ervaring gehad in de spa, van begin tot eind. De sfeer was rustgevend, netjes en prachtig ingericht — de perfecte plek om te ontspannen. Het personeel was ongelooflijk gastvrij, professioneel en aandachtig voor elk detail. Wat echt opviel was de uitzonderlijke klantenservice en de aandacht voor detail. Van de rustgevende sfeer tot de kwaliteit van de behandelingen, alles overtrof mijn verwachtingen. Ik vertrok volledig verkwikt, fris en stressvrij. Ik raad deze spa ten zeerste aan aan iedereen die op zoek is naar een topervaring op het gebied van ontspanning. Makkelijk een 10/10. Ik kan niet wachten om terug te komen naar België om terug naar deze spa te gaan!!",
+          author: "Bernice",
         },
       ],
     },
@@ -202,18 +205,18 @@ export const content = {
           { label: "De ervaring", href: "#experience" },
           { label: "De locatie", href: "#lieu" },
           { label: "Reserveren", href: "#reserver" },
-          { label: "Contact", href: "mailto:contact@aura-spa.be" },
+          { label: "Contact", href: "mailto:Kamanrobert@icloud.com" },
         ],
       },
       infos: {
         title: "Praktische info",
-        items: ["7 dagen op 7 open", "Groepen van 2 tot 4 personen", "200€ / 2 uur"],
+        items: ["7 dagen op 7 open", "Groepen van 2 tot 10 personen", "150€ / 2 uur"],
       },
       contact: {
         title: "Contact",
-        email: "contact@aura-spa.be",
-        instagram: "https://instagram.com/auraspa.brussels",
-        facebook: "https://facebook.com/auraspa.brussels",
+        email: "Kamanrobert@icloud.com",
+        phone: "+32 494 37 90 99",
+        instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",
       links: [
