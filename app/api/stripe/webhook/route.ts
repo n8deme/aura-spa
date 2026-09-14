@@ -50,7 +50,13 @@ async function cancelBooking(session: Stripe.Checkout.Session) {
   if (!bookingId) return;
 
   const supabase = getSupabaseAdmin();
-  const { error } = await supabase.from("bookings").update({ status: "cancelled" }).eq("id", bookingId);
+  // Le filtre status="pending" protège une résa déjà payée : un événement
+  // d'expiration en retard ne doit jamais annuler une réservation confirmée.
+  const { error } = await supabase
+    .from("bookings")
+    .update({ status: "cancelled" })
+    .eq("id", bookingId)
+    .eq("status", "pending");
   if (error) {
     console.error("Webhook Stripe : échec d'annulation de la réservation", bookingId, error.message);
   }
@@ -82,6 +88,9 @@ export async function POST(request: Request) {
       await fulfillBooking(event.data.object as Stripe.Checkout.Session);
       break;
     case "checkout.session.async_payment_failed":
+    // Paiement abandonné : sans ça, la résa restait "pending" pour toujours
+    // et bloquait le créneau alors que personne n'a payé.
+    case "checkout.session.expired":
       await cancelBooking(event.data.object as Stripe.Checkout.Session);
       break;
     default:

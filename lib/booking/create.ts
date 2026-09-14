@@ -6,6 +6,12 @@ import { checkAvailability } from "./availability";
 import { BookingValidationError, EXTRAS_BY_ID, computePrice, resolveDurationHours } from "./pricing";
 import type { BookingSelection, CustomerInfo } from "./types";
 
+// Stripe impose un minimum de 30 min. On met 31 : l'arrondi à la seconde
+// inférieure plus la latence réseau font arriver la valeur légèrement sous le
+// seuil, et la tolérance de Stripe là-dessus n'est pas documentée.
+// Voir l'usage plus bas pour le choix d'un délai aussi court.
+const CHECKOUT_EXPIRY_MINUTES = 31;
+
 function randomLetters(length: number): string {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   let result = "";
@@ -84,6 +90,10 @@ export async function createBookingCheckout(
       success_url: `${origin}/reserver/success?session_id={CHECKOUT_SESSION_ID}&lang=${lang}`,
       cancel_url: `${origin}/reserver?cancelled=1&lang=${lang}`,
       metadata: { bookingId: booking.id as string },
+      // 30 min, le minimum autorisé par Stripe (défaut : 24h). Tant que la
+      // session n'a pas expiré, la résa reste "pending" et bloque le créneau —
+      // avec 24h, un panier abandonné le bloquait bien après l'heure du rendez-vous.
+      expires_at: Math.floor(Date.now() / 1000) + CHECKOUT_EXPIRY_MINUTES * 60,
       integration_identifier: `aura_spa_booking_${randomLetters(8)}`,
       locale: lang === "nl" ? "nl" : "fr",
     });
