@@ -7,10 +7,10 @@ import { Calendar } from "@/components/ui/calendar";
 import { fr, nlBE } from "date-fns/locale";
 import type { Lang } from "@/app/_lib/content";
 import { BOOKING_UI } from "@/lib/booking/i18n";
-import { formatDateLong, toDateKey } from "@/lib/booking/format";
+import { formatDateLong, formatWeekday, toDateKey } from "@/lib/booking/format";
 import { StepNav } from "./StepNav";
 
-type Slot = { time: string; startTime: string; available: boolean };
+type Slot = { time: string; startTime: string; available: boolean; nextDay: boolean };
 
 export function StepSlot({
   lang,
@@ -22,7 +22,7 @@ export function StepSlot({
   lang: Lang;
   date: Date | undefined;
   time: string | null;
-  onChange: (date: Date | undefined, time: string | null) => void;
+  onChange: (date: Date | undefined, time: string | null, startTime: string | null) => void;
   onNext: () => void;
 }) {
   const t = BOOKING_UI[lang].slot;
@@ -67,7 +67,7 @@ export function StepSlot({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={(value) => onChange(value, null)}
+          onSelect={(value) => onChange(value, null, null)}
           disabled={{ before: today }}
           locale={lang === "nl" ? nlBE : fr}
           className="rounded-[4px] border border-[--color-border] bg-[--card] p-3"
@@ -94,23 +94,43 @@ export function StepSlot({
               )}
 
               {!loading && !error && slots.length > 0 && (
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                  {slots.map((slot) => (
-                    <Button
-                      key={slot.time}
-                      type="button"
-                      variant={time === slot.time ? "default" : "outline"}
-                      disabled={!slot.available}
-                      onClick={() => onChange(date, slot.time)}
-                      className={
-                        time === slot.time
-                          ? "rounded-[2px] bg-[--color-accent] text-[--color-cream] hover:bg-[--color-accent]"
-                          : "rounded-[2px] border-[--color-border]"
-                      }
-                    >
-                      {slot.time}
-                    </Button>
-                  ))}
+                <div className="grid gap-5">
+                  {/* Deux blocs : la journée choisie, puis la nuit qui la suit.
+                      Sans ce découpage, le saut de 23:30 à 00:00 ne dit pas au
+                      client qu'il réserve au petit matin du lendemain. */}
+                  {([false, true] as const).map((isNight) => {
+                    const groupe = slots.filter((slot) => slot.nextDay === isNight);
+                    if (groupe.length === 0) return null;
+                    const lendemain = new Date(date);
+                    lendemain.setDate(lendemain.getDate() + 1);
+                    return (
+                      <div key={String(isNight)}>
+                        <p className="mb-2 text-xs uppercase tracking-wider text-[--color-text]/50">
+                          {isNight
+                            ? t.nightPart(formatWeekday(date, lang), formatWeekday(lendemain, lang))
+                            : t.dayPart}
+                        </p>
+                        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                          {groupe.map((slot) => (
+                            <Button
+                              key={slot.startTime}
+                              type="button"
+                              variant={time === slot.time ? "default" : "outline"}
+                              disabled={!slot.available}
+                              onClick={() => onChange(date, slot.time, slot.startTime)}
+                              className={
+                                time === slot.time
+                                  ? "rounded-[2px] bg-[--color-accent] text-[--color-cream] hover:bg-[--color-accent]"
+                                  : "rounded-[2px] border-[--color-border]"
+                              }
+                            >
+                              {slot.time}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </>

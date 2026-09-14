@@ -56,7 +56,7 @@ function zonedDateKey(date: Date): string {
 
 // Arithmétique de calendrier pure : ajouter 24h à un instant ne donne pas
 // toujours le lendemain (les jours de changement d'heure font 23h ou 25h).
-function nextDateKey(key: string): string {
+export function nextDateKey(key: string): string {
   const [year, month, day] = key.split("-").map(Number);
   return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
 }
@@ -88,14 +88,32 @@ export function endsBeforeClosing(startTime: Date, endTime: Date): boolean {
 }
 
 /**
- * Départs proposés pour une date calendaire donnée, dans l'ordre chronologique
- * de cette journée : 00:00 → 02:00 (fin de la nuit précédente), puis
- * 08:00 → 23:30.
+ * Une "nuit de réservation" va de 08:00 au lendemain 08:00 : les créneaux
+ * d'après minuit appartiennent à la soirée qui les a commencés, pas à leur
+ * date calendaire. Réserver le samedi à 01:00 se fait donc en choisissant le
+ * vendredi.
+ *
+ * Départs proposés pour une nuit, dans l'ordre chronologique réel :
+ * 08:00 → 23:30 le jour choisi, puis 00:00 → 02:00 le lendemain.
  */
-export function candidateStartMinutes(): number[] {
-  const minutes: number[] = [];
-  for (let m = 0; m < MINUTES_PER_DAY; m += SLOT_STEP_MINUTES) {
-    if (isOpenStartMinutes(m)) minutes.push(m);
+export function candidateStarts(): { minutes: number; nextDay: boolean }[] {
+  const starts: { minutes: number; nextDay: boolean }[] = [];
+  for (let m = OPENING_MINUTES; m < MINUTES_PER_DAY; m += SLOT_STEP_MINUTES) {
+    starts.push({ minutes: m, nextDay: false });
   }
-  return minutes;
+  for (let m = 0; m <= LAST_START_MINUTES; m += SLOT_STEP_MINUTES) {
+    starts.push({ minutes: m, nextDay: true });
+  }
+  return starts;
+}
+
+/**
+ * Nuit à laquelle appartient une réservation, au format YYYY-MM-DD. Reculer de
+ * l'heure d'ouverture suffit à retomber dessus : un départ à 01:00 le samedi
+ * donne le vendredi, un départ à 08:00 ou 23:30 donne le jour même. L'écart de
+ * 6h entre le dernier départ (02:00) et l'ouverture (08:00) absorbe largement
+ * le décalage des jours de changement d'heure.
+ */
+export function bookingNightKey(startTime: Date): string {
+  return zonedDateKey(new Date(startTime.getTime() - OPENING_MINUTES * 60 * 1000));
 }

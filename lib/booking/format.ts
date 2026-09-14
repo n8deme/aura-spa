@@ -29,6 +29,13 @@ export function formatDateLong(date: Date, lang: Lang = "fr"): string {
   }).format(date);
 }
 
+export function formatWeekday(date: Date, lang: Lang = "fr"): string {
+  return new Intl.DateTimeFormat(locale(lang), {
+    weekday: "long",
+    timeZone: SPA_TIMEZONE,
+  }).format(date);
+}
+
 export function formatTime(date: Date, lang: Lang = "fr"): string {
   return new Intl.DateTimeFormat(locale(lang), {
     hour: "2-digit",

@@ -6,9 +6,10 @@ import {
   overlapsWithBuffer,
 } from "@/lib/booking/availability";
 import {
-  candidateStartMinutes,
+  candidateStarts,
   endsBeforeClosing,
   formatHHMM,
+  nextDateKey,
 } from "@/lib/booking/opening-hours";
 import { BookingValidationError, resolveDurationHours } from "@/lib/booking/pricing";
 import { SPA_TIMEZONE, zonedTimeToUtc } from "@/lib/booking/timezone";
@@ -45,17 +46,18 @@ export async function GET(request: Request) {
 
   const { date } = parsed.data;
 
-  // Les horaires franchissent minuit : chaque créneau reste rattaché à sa vraie
-  // date calendaire (00:00 → 02:00 appartiennent au jour qui commence, pas à la
-  // soirée de la veille). Un créneau n'est proposé que si la séance entière
-  // tient avant l'heure de fermeture — le dernier départ dépend donc de la durée.
-  const candidates: { time: string; startTime: Date; endTime: Date }[] = [];
-  for (const m of candidateStartMinutes()) {
-    const time = formatHHMM(m);
-    const startTime = zonedTimeToUtc(date, time, SPA_TIMEZONE);
+  // `date` désigne une NUIT de réservation (08:00 → lendemain 08:00), pas une
+  // journée calendaire : les créneaux de 00:00 à 02:00 tombent le lendemain et
+  // sont proposés ici, sous la soirée qui les a commencés. Un créneau n'est
+  // retenu que si la séance entière tient avant l'heure de fermeture — le
+  // dernier départ dépend donc de la durée choisie.
+  const candidates: { time: string; startTime: Date; endTime: Date; nextDay: boolean }[] = [];
+  for (const { minutes, nextDay } of candidateStarts()) {
+    const time = formatHHMM(minutes);
+    const startTime = zonedTimeToUtc(nextDay ? nextDateKey(date) : date, time, SPA_TIMEZONE);
     const endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
     if (!endsBeforeClosing(startTime, endTime)) continue;
-    candidates.push({ time, startTime, endTime });
+    candidates.push({ time, startTime, endTime, nextDay });
   }
 
   if (candidates.length === 0) {
@@ -67,8 +69,9 @@ export async function GET(request: Request) {
   const rangeEnd = new Date(candidates[candidates.length - 1].endTime.getTime() + marginMs);
   const existingBookings = await fetchBookingsInRange(rangeStart, rangeEnd);
 
-  const slots = candidates.map(({ time, startTime, endTime }) => ({
+  const slots = candidates.map(({ time, startTime, endTime, nextDay }) => ({
     time,
+    nextDay,
     startTime: startTime.toISOString(),
     available:
       isPastMinAdvance(startTime) &&

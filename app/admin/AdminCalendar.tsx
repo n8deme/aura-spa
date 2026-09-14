@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatPrice, packageTypeLabel } from "@/lib/booking/format";
 import { EXTRAS_LABELS } from "@/lib/booking/i18n";
 import { SPA_TIMEZONE } from "@/lib/booking/timezone";
+import { OPENING_MINUTES, bookingNightKey, minutesSinceMidnight } from "@/lib/booking/opening-hours";
 import type { PackageType } from "@/lib/booking/types";
 
 type BookingStatus = "pending" | "confirmed" | "cancelled";
@@ -61,6 +62,21 @@ function monthKey(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
+// Une résa démarrée après minuit appartient à la nuit de la veille : elle
+// s'affiche sous ce jour-là, mais sa vraie date est rappelée à côté de l'heure.
+function isApresMinuit(iso: string): boolean {
+  return minutesSinceMidnight(new Date(iso)) < OPENING_MINUTES;
+}
+
+function formatJourCourt(iso: string): string {
+  return new Intl.DateTimeFormat("fr-BE", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    timeZone: SPA_TIMEZONE,
+  }).format(new Date(iso));
+}
+
 function formatHour(iso: string): string {
   return new Intl.DateTimeFormat("fr-BE", { hour: "2-digit", minute: "2-digit", timeZone: SPA_TIMEZONE }).format(
     new Date(iso)
@@ -102,7 +118,7 @@ export function AdminCalendar() {
   const bookingsByDay = useMemo(() => {
     const map = new Map<string, AdminBooking[]>();
     for (const booking of bookings) {
-      const key = dayKey(new Date(booking.start_time));
+      const key = bookingNightKey(new Date(booking.start_time));
       const list = map.get(key) ?? [];
       list.push(booking);
       map.set(key, list);
@@ -188,6 +204,11 @@ export function AdminCalendar() {
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-heading text-lg text-[--color-text]">
                       {formatHour(booking.start_time)} – {formatHour(booking.end_time)}
+                      {isApresMinuit(booking.start_time) && (
+                        <span className="ml-2 font-sans text-xs text-[--color-text]/60">
+                          {formatJourCourt(booking.start_time)}
+                        </span>
+                      )}
                     </span>
                     <Badge variant={STATUS_VARIANT[booking.status]}>{STATUS_LABEL[booking.status]}</Badge>
                   </div>

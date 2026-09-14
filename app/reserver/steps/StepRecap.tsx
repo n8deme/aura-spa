@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Lang } from "@/app/_lib/content";
 import { BOOKING_UI } from "@/lib/booking/i18n";
+import { bookingNightKey } from "@/lib/booking/opening-hours";
 import { computePrice } from "@/lib/booking/pricing";
 import { formatDateLong, formatPrice, formatTime } from "@/lib/booking/format";
 import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
@@ -50,7 +51,9 @@ export function StepRecap({
   const start = new Date(startTime);
 
   useEffect(() => {
-    const dateKey = startTime.slice(0, 10);
+    // La nuit à laquelle appartient le créneau, pas sa date UTC : à 02:00 heure
+    // belge, l'ISO bascule déjà sur le jour suivant et la vérification ratait.
+    const dateKey = bookingNightKey(new Date(startTime));
     const controller = new AbortController();
     setChecking(true);
     fetch(

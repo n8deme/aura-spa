@@ -6,8 +6,6 @@ import { Check } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
 import type { Lang } from "@/app/_lib/content";
 import { BOOKING_UI } from "@/lib/booking/i18n";
-import { SPA_TIMEZONE, zonedTimeToUtc } from "@/lib/booking/timezone";
-import { toDateKey } from "@/lib/booking/format";
 import { ALL_IN_PACKAGE, MIN_CAPACITY } from "@/lib/booking/pricing-config";
 import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
 import { StepSlot } from "./steps/StepSlot";
@@ -23,6 +21,10 @@ export function BookingFlow({ lang }: { lang: Lang }) {
   const [step, setStep] = useState<Step>("slot");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | null>(null);
+  // Instant exact renvoyé par l'API pour le créneau choisi. On le garde tel quel
+  // au lieu de le recalculer : un créneau d'après minuit tombe le LENDEMAIN de la
+  // date cliquée, et le reconstruire à partir de (date + heure) donnait le mauvais jour.
+  const [slotStartIso, setSlotStartIso] = useState<string | null>(null);
   const [guestCount, setGuestCount] = useState(MIN_CAPACITY);
   const [packageType, setPackageType] = useState<PackageType>("base");
   const [extraHours, setExtraHours] = useState(0);
@@ -57,10 +59,7 @@ export function BookingFlow({ lang }: { lang: Lang }) {
     if (prev) setStep(prev);
   }
 
-  const startTimeIso = useMemo(() => {
-    if (!date || !time) return null;
-    return zonedTimeToUtc(toDateKey(date), time, SPA_TIMEZONE).toISOString();
-  }, [date, time]);
+  const startTimeIso = date && time ? slotStartIso : null;
 
   return (
     <div className="min-h-screen bg-[--color-cream]">
@@ -95,9 +94,10 @@ export function BookingFlow({ lang }: { lang: Lang }) {
             lang={lang}
             date={date}
             time={time}
-            onChange={(d, t) => {
+            onChange={(d, t, iso) => {
               setDate(d);
               setTime(t);
+              setSlotStartIso(iso);
             }}
             onNext={goNext}
           />

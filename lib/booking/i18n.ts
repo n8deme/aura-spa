@@ -131,6 +131,8 @@ export const BOOKING_UI = {
       loading: "Chargement des créneaux…",
       loadError: "Impossible de charger les créneaux.",
       noSlots: "Aucun créneau ce jour-là.",
+      dayPart: "Journée et soirée",
+      nightPart: (from: string, to: string) => `Nuit de ${from} à ${to}`,
     },
     guests: {
       title: "Combien serez-vous ?",
@@ -207,6 +209,8 @@ export const BOOKING_UI = {
       loading: "Tijdsloten laden…",
       loadError: "Kan de tijdsloten niet laden.",
       noSlots: "Geen beschikbare tijdsloten op deze dag.",
+      dayPart: "Dag en avond",
+      nightPart: (from: string, to: string) => `Nacht van ${from} op ${to}`,
     },
     guests: {
       title: "Met hoeveel bent u?",
