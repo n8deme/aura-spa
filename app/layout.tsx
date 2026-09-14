@@ -20,13 +20,13 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aura-spa.be"),
-  title: "Aura Spa — Espace Privatif à Bruxelles",
+  title: "Aura Spa — Espace Privatif près de Bruxelles",
   description:
-    "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
+    "Réservez votre espace bien-être privatif à 15 minutes de Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
   openGraph: {
-    title: "Aura Spa — Espace Privatif à Bruxelles",
+    title: "Aura Spa — Espace Privatif près de Bruxelles",
     description:
-      "Réservez votre espace bien-être privatif à Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
+      "Réservez votre espace bien-être privatif à 15 minutes de Bruxelles. Bains à bulles, chaleur et sérénité pour 2 à 10 personnes. 150€ / 2 heures.",
     locale: "fr_BE",
     type: "website",
   },
@@ -50,7 +50,7 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: "Aura Spa",
   description:
-    "Espace bien-être privatif à Bruxelles. Bains à bulles et sérénité pour 2 à 10 personnes.",
+    "Espace bien-être privatif à 15 minutes de Bruxelles et à deux pas de Brussels Airport. Bains à bulles et sérénité pour 2 à 10 personnes.",
   url: "https://aura-spa.be",
   telephone: "+32494379099",
   email: "Kamanrobert@icloud.com",
