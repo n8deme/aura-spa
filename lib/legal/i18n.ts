@@ -27,6 +27,7 @@ export const MENTIONS_LEGALES_I18N: Record<
       "Espace Privatif",
       "Entreprise personne physique",
       "Numéro d'entreprise (BCE) : 1042.146.917",
+      "Régime particulier de franchise des petites entreprises — TVA non applicable, article 56bis du Code de la TVA",
       "Melsbroek, Belgique",
       "Email : Kamanrobert@icloud.com",
       "Téléphone : +32 494 37 90 99",
@@ -47,6 +48,7 @@ export const MENTIONS_LEGALES_I18N: Record<
       "Privéruimte",
       "Eenmanszaak",
       "Ondernemingsnummer (KBO): 1042.146.917",
+      "Bijzondere vrijstellingsregeling voor kleine ondernemingen — btw niet van toepassing, artikel 56bis van het Btw-Wetboek",
       "Melsbroek, België",
       "E-mail: Kamanrobert@icloud.com",
       "Telefoon: +32 494 37 90 99",
@@ -117,7 +119,7 @@ export const CGV_I18N: Record<
       "Les présentes conditions générales de vente régissent la location de l'espace privatif Aura Spa à Bruxelles. Toute réservation implique l'acceptation pleine et entière des présentes CGV.",
     pricingTitle: "Tarifs et paiement",
     pricingText:
-      "Le forfait de base est de 150€ pour 2 heures pour un groupe de 2 à 10 personnes, avec possibilité de prolonger (25€ par heure supplémentaire, dans la limite de 8h au total) et d'ajouter des extras à la carte. Un forfait All-in à 220€ tout compris est également disponible, exclusivement réservé aux groupes de 2 personnes. Le paiement est effectué en ligne, au moment de la réservation, via la plateforme Stripe. Un extra ajouté sur place se règle directement sur place.",
+      "Le forfait de base est de 150€ pour 2 heures pour un groupe de 2 à 10 personnes, avec possibilité de prolonger (25€ par heure supplémentaire, dans la limite de 8h au total) et d'ajouter des extras à la carte. Un forfait All-in à 220€ tout compris est également disponible, exclusivement réservé aux groupes de 2 personnes. Les prix indiqués sont les montants définitifs à payer : Aura Spa relève du régime particulier de franchise des petites entreprises, la TVA n'est pas applicable (article 56bis du Code de la TVA). Le paiement est effectué en ligne, au moment de la réservation, via la plateforme Stripe. Un extra ajouté sur place se règle directement sur place.",
     cancellationTitle: "Annulation",
     cancellationText:
       "Toute annulation effectuée au moins 24 heures avant le créneau réservé donne droit à un remboursement intégral. En deçà de ce délai, la réservation n'est pas remboursable. Pour annuler ou pour toute question, contactez-nous à Kamanrobert@icloud.com.",
@@ -130,7 +132,7 @@ export const CGV_I18N: Record<
       "Deze algemene verkoopsvoorwaarden regelen de verhuur van de privéruimte Aura Spa in Brussel. Elke reservering impliceert de volledige aanvaarding van deze voorwaarden.",
     pricingTitle: "Tarieven en betaling",
     pricingText:
-      "De basisformule bedraagt 150€ voor 2 uur voor een groep van 2 tot 10 personen, met de mogelijkheid om te verlengen (25€ per extra uur, tot maximaal 8u in totaal) en extra's à la carte toe te voegen. Een All-in formule van 220€ is ook beschikbaar, uitsluitend voorbehouden aan groepen van 2 personen. De betaling gebeurt online, op het moment van reservering, via het Stripe-platform. Een extra die ter plaatse wordt toegevoegd, wordt ook ter plaatse afgerekend.",
+      "De basisformule bedraagt 150€ voor 2 uur voor een groep van 2 tot 10 personen, met de mogelijkheid om te verlengen (25€ per extra uur, tot maximaal 8u in totaal) en extra's à la carte toe te voegen. Een All-in formule van 220€ is ook beschikbaar, uitsluitend voorbehouden aan groepen van 2 personen. De vermelde prijzen zijn de definitief te betalen bedragen: Aura Spa valt onder de bijzondere vrijstellingsregeling voor kleine ondernemingen, btw is niet van toepassing (artikel 56bis van het Btw-Wetboek). De betaling gebeurt online, op het moment van reservering, via het Stripe-platform. Een extra die ter plaatse wordt toegevoegd, wordt ook ter plaatse afgerekend.",
     cancellationTitle: "Annulering",
     cancellationText:
       "Elke annulering ten minste 24 uur voor het gereserveerde tijdslot geeft recht op een volledige terugbetaling. Binnen deze termijn is de reservering niet terugbetaalbaar. Om te annuleren of voor vragen, contacteer ons via Kamanrobert@icloud.com.",
