@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 function InstagramIcon({ size = 14 }: { size?: number }) {
   return (
@@ -166,6 +166,25 @@ export function Footer({ lang }: FooterProps) {
               >
                 <Mail size={14} />
                 {t.contact.email}
+              </a>
+              <a
+                href={`tel:${t.contact.phone.replace(/\s/g, "")}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-dm-sans)",
+                  fontWeight: 300,
+                  fontSize: "0.875rem",
+                  color: "rgba(245,237,227,0.65)",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#C4956A")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245,237,227,0.65)")}
+              >
+                <Phone size={14} />
+                {t.contact.phone}
               </a>
               <a
                 href={t.contact.instagram}

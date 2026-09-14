@@ -22,7 +22,7 @@ export const MENTIONS_LEGALES_I18N: Record<
     pageTitle: "Mentions légales — Aura Spa",
     heading: "Mentions légales",
     editorTitle: "Éditeur du site",
-    editorLines: ["Aura Spa", "Espace Privatif", "Melsbroek, Belgique", "Email : Kamanrobert@icloud.com"],
+    editorLines: ["Aura Spa", "Espace Privatif", "Melsbroek, Belgique", "Email : Kamanrobert@icloud.com", "Téléphone : +32 494 37 90 99"],
     hostingTitle: "Hébergement",
     hostingText:
       "Ce site est hébergé par Vercel Inc., 340 Pine Street, Suite 701, San Francisco, California 94104, États-Unis.",
@@ -34,7 +34,7 @@ export const MENTIONS_LEGALES_I18N: Record<
     pageTitle: "Juridische vermeldingen — Aura Spa",
     heading: "Juridische vermeldingen",
     editorTitle: "Uitgever van de site",
-    editorLines: ["Aura Spa", "Privéruimte", "Melsbroek, België", "E-mail: Kamanrobert@icloud.com"],
+    editorLines: ["Aura Spa", "Privéruimte", "Melsbroek, België", "E-mail: Kamanrobert@icloud.com", "Telefoon: +32 494 37 90 99"],
     hostingTitle: "Hosting",
     hostingText:
       "Deze site wordt gehost door Vercel Inc., 340 Pine Street, Suite 701, San Francisco, California 94104, Verenigde Staten.",

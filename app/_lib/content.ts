@@ -103,6 +103,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
+        phone: "+32 494 37 90 99",
         instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",
@@ -214,6 +215,7 @@ export const content = {
       contact: {
         title: "Contact",
         email: "Kamanrobert@icloud.com",
+        phone: "+32 494 37 90 99",
         instagram: "https://www.instagram.com/espace.privatif",
       },
       legal: "© 2026 Aura Spa",

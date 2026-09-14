@@ -43,7 +43,7 @@ const localBusinessSchema = {
   description:
     "Espace bien-être privatif à Bruxelles. Bains à bulles et sérénité pour 2 à 10 personnes.",
   url: "https://aura-spa.be",
-  telephone: "",
+  telephone: "+32494379099",
   email: "Kamanrobert@icloud.com",
   address: {
     "@type": "PostalAddress",
