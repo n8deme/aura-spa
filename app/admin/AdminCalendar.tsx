@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, LogOut, Loader2 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { fr } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -156,6 +157,7 @@ export function AdminCalendar() {
             </div>
             <Calendar
               mode="single"
+              locale={fr}
               month={month}
               onMonthChange={setMonth}
               selected={selectedDay}

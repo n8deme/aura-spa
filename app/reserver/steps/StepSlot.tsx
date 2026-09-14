@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { fr, nlBE } from "date-fns/locale";
 import type { Lang } from "@/app/_lib/content";
 import { BOOKING_UI } from "@/lib/booking/i18n";
 import { formatDateLong, toDateKey } from "@/lib/booking/format";
@@ -68,6 +69,7 @@ export function StepSlot({
           selected={date}
           onSelect={(value) => onChange(value, null)}
           disabled={{ before: today }}
+          locale={lang === "nl" ? nlBE : fr}
           className="rounded-[4px] border border-[--color-border] bg-[--card] p-3"
         />
 
