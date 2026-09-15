@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { sendBookingConfirmationEmail } from "@/lib/email/booking-confirmation";
+import { sendMassageNotificationEmail } from "@/lib/email/massage-notification";
 import type { PackageType } from "@/lib/booking/types";
 import { lineItemsFromBooking } from "@/lib/booking/pricing";
 import type { Lang } from "@/app/_lib/content";
@@ -34,7 +35,9 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
     .update({ status: "confirmed", stripe_payment_id: paymentIntentId ?? session.id })
     .eq("id", bookingId)
     .eq("status", "pending")
-    .select("customer_name, customer_email, start_time, end_time, package_type, total_price, booking_extras(extra_id, quantity, unit_price)")
+    .select(
+      "customer_name, customer_email, customer_phone, start_time, end_time, package_type, guest_count, total_price, massage_included, massage_guest_count, massage_unit_price, booking_extras(extra_id, quantity, unit_price)"
+    )
     .single();
 
   if (error) {
@@ -45,6 +48,11 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
   }
 
   const lang = resolveLang(session.metadata?.lang);
+  const massage =
+    data.massage_included && data.massage_guest_count && data.massage_unit_price
+      ? { guestCount: data.massage_guest_count, unitPrice: data.massage_unit_price }
+      : null;
+
   await sendBookingConfirmationEmail({
     customerName: data.customer_name,
     customerEmail: data.customer_email,
@@ -58,10 +66,21 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
         startTime: data.start_time,
         endTime: data.end_time,
         extras: data.booking_extras ?? [],
+        massage,
       },
       lang
     ),
   });
+
+  if (massage) {
+    await sendMassageNotificationEmail({
+      startTime: data.start_time,
+      guestCount: data.guest_count,
+      massageGuestCount: massage.guestCount,
+      customerName: data.customer_name,
+      customerPhone: data.customer_phone,
+    });
+  }
 }
 
 async function cancelBooking(session: Stripe.Checkout.Session) {

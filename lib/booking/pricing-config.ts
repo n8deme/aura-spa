@@ -55,3 +55,25 @@ export const BOOKING_RULES = {
 
 // Annulation possible avec remboursement si faite au moins ce délai à l'avance.
 export const CANCELLATION_MIN_HOURS = 24;
+
+// "CJ Massage" (Catherine + Junarra) — confirmé par Kev le 2026-09-15.
+// Réservable uniquement avec une résa spa, jamais seul. Durée volontairement
+// absente d'ici : Catherine ne veut aucune mention de temps visible côté
+// client. `internalDurationMinutesPerPerson` ne sert qu'au calcul interne du
+// jour bloqué dans le planning des masseuses, jamais affiché dans l'UI.
+export const MASSAGE = {
+  pricePerPerson: 70,
+  minGuests: 2,
+  maxGuests: 6,
+  minAdvanceDays: 14,
+  internalDurationMinutesPerPerson: 45,
+};
+
+// Une seule résa massage à la fois : Catherine et Junarra ne servent jamais
+// deux groupes en parallèle, quelle que soit la taille de chacun.
+export const MASSAGE_ONE_PER_NIGHT = true;
+
+// Notifiées à chaque résa incluant un massage (Rob voit déjà tout dans
+// l'admin, ceci est un canal dédié à Catherine/Junarra).
+// TODO: ajouter l'email de Junarra dès qu'on l'a (attendu le 2026-09-16).
+export const MASSAGE_NOTIFICATION_EMAILS = ["Lapaglaicatherine@gmail.com"];

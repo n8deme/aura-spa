@@ -18,6 +18,12 @@ const bodySchema = z.object({
       })
     )
     .optional(),
+  massage: z
+    .object({
+      included: z.boolean(),
+      guestCount: z.number().int().min(1).optional(),
+    })
+    .optional(),
   lang: z.enum(["fr", "nl"]).default("fr"),
 });
 

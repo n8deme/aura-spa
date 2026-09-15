@@ -6,15 +6,16 @@ import { Check } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
 import type { Lang } from "@/app/_lib/content";
 import { BOOKING_UI } from "@/lib/booking/i18n";
-import { ALL_IN_PACKAGE, MIN_CAPACITY } from "@/lib/booking/pricing-config";
+import { ALL_IN_PACKAGE, MASSAGE, MIN_CAPACITY } from "@/lib/booking/pricing-config";
 import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
 import { StepSlot } from "./steps/StepSlot";
 import { StepGuests } from "./steps/StepGuests";
+import { StepMassage } from "./steps/StepMassage";
 import { StepFormule } from "./steps/StepFormule";
 import { StepExtras } from "./steps/StepExtras";
 import { StepRecap } from "./steps/StepRecap";
 
-type Step = "slot" | "guests" | "formule" | "extras" | "recap";
+type Step = "slot" | "guests" | "massage" | "formule" | "extras" | "recap";
 
 export function BookingFlow({ lang }: { lang: Lang }) {
   const stepLabels = BOOKING_UI[lang].stepLabels;
@@ -29,6 +30,8 @@ export function BookingFlow({ lang }: { lang: Lang }) {
   const [packageType, setPackageType] = useState<PackageType>("base");
   const [extraHours, setExtraHours] = useState(0);
   const [extras, setExtras] = useState<ExtraSelection[]>([]);
+  const [massageIncluded, setMassageIncluded] = useState(false);
+  const [massageGuestCount, setMassageGuestCount] = useState(MASSAGE.minGuests);
   const [customer, setCustomer] = useState<CustomerInfo>({ name: "", email: "", phone: "", notes: "" });
 
   // Si le groupe dépasse la capacité de l'All-in, l'option disparaît :
@@ -39,11 +42,21 @@ export function BookingFlow({ lang }: { lang: Lang }) {
     }
   }, [guestCount, packageType]);
 
+  // Le massage ne peut pas concerner plus de personnes que la résa elle-même.
+  useEffect(() => {
+    const maxMassageGuests = Math.min(MASSAGE.maxGuests, guestCount);
+    if (maxMassageGuests < MASSAGE.minGuests) {
+      setMassageIncluded(false);
+    } else if (massageGuestCount > maxMassageGuests) {
+      setMassageGuestCount(maxMassageGuests);
+    }
+  }, [guestCount, massageGuestCount]);
+
   const stepOrder: Step[] = useMemo(
     () =>
       packageType === "a_la_carte"
-        ? ["slot", "guests", "formule", "extras", "recap"]
-        : ["slot", "guests", "formule", "recap"],
+        ? ["slot", "guests", "massage", "formule", "extras", "recap"]
+        : ["slot", "guests", "massage", "formule", "recap"],
     [packageType]
   );
 
@@ -107,6 +120,20 @@ export function BookingFlow({ lang }: { lang: Lang }) {
           <StepGuests lang={lang} value={guestCount} onChange={setGuestCount} onNext={goNext} onBack={goBack} />
         )}
 
+        {step === "massage" && startTimeIso && (
+          <StepMassage
+            lang={lang}
+            startTime={startTimeIso}
+            guestCount={guestCount}
+            included={massageIncluded}
+            massageGuestCount={massageGuestCount}
+            onIncludedChange={setMassageIncluded}
+            onMassageGuestCountChange={setMassageGuestCount}
+            onNext={goNext}
+            onBack={goBack}
+          />
+        )}
+
         {step === "formule" && (
           <StepFormule
             lang={lang}
@@ -139,6 +166,7 @@ export function BookingFlow({ lang }: { lang: Lang }) {
             guestCount={guestCount}
             extraHours={packageType === "a_la_carte" ? extraHours : 0}
             extras={packageType === "a_la_carte" ? extras : []}
+            massage={massageIncluded ? { included: true, guestCount: massageGuestCount } : { included: false }}
             customer={customer}
             onCustomerChange={setCustomer}
             onBack={goBack}

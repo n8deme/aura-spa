@@ -13,7 +13,7 @@ import { BOOKING_UI } from "@/lib/booking/i18n";
 import { bookingNightKey } from "@/lib/booking/opening-hours";
 import { computePrice } from "@/lib/booking/pricing";
 import { formatDateLong, formatPrice, formatTime } from "@/lib/booking/format";
-import type { CustomerInfo, ExtraSelection, PackageType } from "@/lib/booking/types";
+import type { CustomerInfo, ExtraSelection, MassageSelection, PackageType } from "@/lib/booking/types";
 import { StepNav } from "./StepNav";
 
 type Slot = { time: string; startTime: string; available: boolean };
@@ -25,6 +25,7 @@ export function StepRecap({
   guestCount,
   extraHours,
   extras,
+  massage,
   customer,
   onCustomerChange,
   onBack,
@@ -36,6 +37,7 @@ export function StepRecap({
   guestCount: number;
   extraHours: number;
   extras: ExtraSelection[];
+  massage: MassageSelection;
   customer: CustomerInfo;
   onCustomerChange: (customer: CustomerInfo) => void;
   onBack: () => void;
@@ -47,7 +49,7 @@ export function StepRecap({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const breakdown = computePrice({ packageType, guestCount, extraHours, extras }, lang);
+  const breakdown = computePrice({ packageType, guestCount, extraHours, extras, massage }, lang);
   const start = new Date(startTime);
 
   useEffect(() => {
@@ -90,7 +92,7 @@ export function StepRecap({
       const res = await fetch("/api/booking/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startTime, packageType, guestCount, extraHours, extras, customer, lang }),
+        body: JSON.stringify({ startTime, packageType, guestCount, extraHours, extras, massage, customer, lang }),
       });
       const data = await res.json();
       if (!res.ok) {

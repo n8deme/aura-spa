@@ -28,6 +28,8 @@ type AdminBooking = {
   customer_phone: string | null;
   customer_notes: string | null;
   status: BookingStatus;
+  massage_included: boolean;
+  massage_guest_count: number | null;
   booking_extras: AdminBookingExtra[] | null;
 };
 
@@ -216,6 +218,11 @@ export function AdminCalendar() {
                     {packageTypeLabel(booking.package_type)} — {booking.guest_count} pers. —{" "}
                     {formatPrice(booking.total_price)}
                   </p>
+                  {booking.massage_included && (
+                    <Badge variant="outline" className="mt-2 border-[--color-accent] text-[--color-accent]">
+                      Massage CJ — {booking.massage_guest_count} pers.
+                    </Badge>
+                  )}
                   <Separator className="my-3 bg-[--color-border]" />
                   <p className="text-sm text-[--color-text]">{booking.customer_name}</p>
                   <p className="text-sm text-[--color-text]/70">{booking.customer_email}</p>

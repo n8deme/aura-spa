@@ -45,6 +45,7 @@ export const PRICING_TEXT: Record<
     extraHours: (hours: number) => string;
     withQuantity: (label: string, quantity: number) => string;
     comingSoon: string;
+    massage: (guestCount: number) => string;
   }
 > = {
   fr: {
@@ -53,6 +54,7 @@ export const PRICING_TEXT: Record<
     extraHours: (h) => `${h}h supplémentaire${h > 1 ? "s" : ""}`,
     withQuantity: (label, qty) => (qty > 1 ? `${label} x${qty}` : label),
     comingSoon: "Bientôt disponible",
+    massage: (n) => `Massage bien-être — CJ Massage (${n} pers.)`,
   },
   nl: {
     basePackage: (h) => `Basisformule (${h}u)`,
@@ -60,6 +62,7 @@ export const PRICING_TEXT: Record<
     extraHours: (h) => `${h}u extra`,
     withQuantity: (label, qty) => (qty > 1 ? `${label} x${qty}` : label),
     comingSoon: "Binnenkort beschikbaar",
+    massage: (n) => `Wellnessmassage — CJ Massage (${n} pers.)`,
   },
 };
 
@@ -79,6 +82,10 @@ export const ERRORS: Record<
     outsideOpeningHours: (start: string, end: string) => string;
     endsAfterClosing: (time: string) => string;
     slotConflict: string;
+    massageGuestRange: (min: number, max: number) => string;
+    massageExceedsGroup: string;
+    massageMinAdvance: (days: number) => string;
+    massageAlreadyBooked: string;
   }
 > = {
   fr: {
@@ -95,6 +102,12 @@ export const ERRORS: Record<
     outsideOpeningHours: (start, end) => `Le créneau doit démarrer entre ${start} et ${end}.`,
     endsAfterClosing: (time) => `La séance doit se terminer au plus tard à ${time}.`,
     slotConflict: "Ce créneau chevauche une réservation existante (temps de battement compris).",
+    massageGuestRange: (min, max) => `Le massage se réserve pour ${min} à ${max} personnes.`,
+    massageExceedsGroup:
+      "Le nombre de personnes au massage ne peut pas dépasser le nombre de personnes de la réservation.",
+    massageMinAdvance: (days) => `Le massage doit être réservé au moins ${days} jours à l'avance.`,
+    massageAlreadyBooked:
+      "Un massage est déjà réservé ce jour-là. Une seule réservation massage est possible par jour.",
   },
   nl: {
     guestCountRange: (min, max) => `Het aantal personen moet tussen ${min} en ${max} liggen.`,
@@ -110,6 +123,10 @@ export const ERRORS: Record<
     outsideOpeningHours: (start, end) => `Het tijdslot moet starten tussen ${start} en ${end}.`,
     endsAfterClosing: (time) => `De sessie moet uiterlijk om ${time} eindigen.`,
     slotConflict: "Dit tijdslot overlapt met een bestaande reservering (inclusief buffertijd).",
+    massageGuestRange: (min, max) => `De massage is boekbaar voor ${min} tot ${max} personen.`,
+    massageExceedsGroup: "Het aantal personen voor de massage mag het aantal personen van de reservering niet overschrijden.",
+    massageMinAdvance: (days) => `De massage moet minstens ${days} dagen op voorhand geboekt worden.`,
+    massageAlreadyBooked: "Er is die dag al een massage geboekt. Slechts één massagereservering per dag is mogelijk.",
   },
 };
 
@@ -118,6 +135,7 @@ export const BOOKING_UI = {
     stepLabels: {
       slot: "Créneau",
       guests: "Personnes",
+      massage: "Massage",
       formule: "Formule",
       extras: "Extras",
       recap: "Récapitulatif",
@@ -138,6 +156,15 @@ export const BOOKING_UI = {
       title: "Combien serez-vous ?",
       subtitle: (min: number, max: number) => `L'espace privatif accueille de ${min} à ${max} personnes.`,
       allInLimit: (n: number) => `Le forfait All-in est réservé aux groupes de ${n} personnes.`,
+    },
+    massage: {
+      title: "Un massage avec CJ Massage ?",
+      subtitle: "En option, réservé aux groupes qui réservent le spa au moins 2 semaines à l'avance.",
+      notEligible: "Le massage doit être réservé au moins 2 semaines à l'avance. Non disponible pour cette date.",
+      addLabel: "J'ajoute un massage bien-être",
+      description: "Massage détente à l'huile essentielle, par les masseuses de CJ Massage (Catherine & Junarra).",
+      guestsLabel: (n: number) => `${n} personne${n > 1 ? "s" : ""}`,
+      rangeHint: (min: number, max: number) => `De ${min} à ${max} personnes.`,
     },
     formule: {
       title: "Choisissez votre formule",
@@ -196,6 +223,7 @@ export const BOOKING_UI = {
     stepLabels: {
       slot: "Tijdslot",
       guests: "Personen",
+      massage: "Massage",
       formule: "Formule",
       extras: "Extras",
       recap: "Overzicht",
@@ -216,6 +244,15 @@ export const BOOKING_UI = {
       title: "Met hoeveel bent u?",
       subtitle: (min: number, max: number) => `De privéruimte biedt plaats aan ${min} tot ${max} personen.`,
       allInLimit: (n: number) => `De All-in formule is voorbehouden aan groepen van ${n} personen.`,
+    },
+    massage: {
+      title: "Een massage bij CJ Massage?",
+      subtitle: "Optioneel, voorbehouden aan groepen die de spa minstens 2 weken op voorhand boeken.",
+      notEligible: "De massage moet minstens 2 weken op voorhand geboekt worden. Niet beschikbaar voor deze datum.",
+      addLabel: "Ik voeg een wellnessmassage toe",
+      description: "Ontspanningsmassage met etherische olie, door de masseuses van CJ Massage (Catherine & Junarra).",
+      guestsLabel: (n: number) => `${n} perso${n > 1 ? "nen" : "on"}`,
+      rangeHint: (min: number, max: number) => `Van ${min} tot ${max} personen.`,
     },
     formule: {
       title: "Kies uw formule",

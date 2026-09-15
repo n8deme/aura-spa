@@ -16,11 +16,17 @@ export type CustomerInfo = {
   notes?: string; // allergies, halal, sans alcool, goût de chicha, etc.
 };
 
+export type MassageSelection = {
+  included: boolean;
+  guestCount?: number; // requis si included=true, borné par MASSAGE.minGuests/maxGuests et par guestCount
+};
+
 export type PricingSelection = {
   packageType: PackageType;
   guestCount: number;
   extraHours?: number; // "à la carte" uniquement, heures au-delà des 2h de base
   extras?: ExtraSelection[]; // "à la carte" uniquement
+  massage?: MassageSelection; // disponible quel que soit le forfait
 };
 
 export type BookingSelection = PricingSelection & {

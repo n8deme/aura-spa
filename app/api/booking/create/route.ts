@@ -21,6 +21,12 @@ const bodySchema = z.object({
       })
     )
     .optional(),
+  massage: z
+    .object({
+      included: z.boolean(),
+      guestCount: z.number().int().min(1).optional(),
+    })
+    .optional(),
   customer: z.object({
     name: z.string().trim().min(1),
     email: z.email(),

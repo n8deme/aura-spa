@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   const { data, error } = await supabase
     .from("bookings")
     .select(
-      "id, start_time, end_time, package_type, guest_count, total_price, customer_name, customer_email, customer_phone, customer_notes, status, booking_extras(extra_id, quantity, unit_price)"
+      "id, start_time, end_time, package_type, guest_count, total_price, customer_name, customer_email, customer_phone, customer_notes, status, massage_included, massage_guest_count, booking_extras(extra_id, quantity, unit_price)"
     )
     .gte("start_time", rangeStart.toISOString())
     .lt("start_time", rangeEnd.toISOString())

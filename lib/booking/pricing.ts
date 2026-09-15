@@ -5,11 +5,12 @@ import {
   BOOKING_RULES,
   EXTRAS_CATALOG,
   EXTRA_HOUR_PRICE,
+  MASSAGE,
   MAX_CAPACITY,
   MIN_CAPACITY,
 } from "./pricing-config";
 import { EXTRAS_LABELS, ERRORS, PRICING_TEXT } from "./i18n";
-import type { ExtraId, PackageType, PriceBreakdown, PricingSelection } from "./types";
+import type { ExtraId, PackageType, PriceBreakdown, PriceLineItem, PricingSelection } from "./types";
 
 export class BookingValidationError extends Error {}
 
@@ -36,7 +37,7 @@ export function resolveDurationHours(
 }
 
 export function computePrice(selection: PricingSelection, lang: Lang = "fr"): PriceBreakdown {
-  const { packageType, guestCount } = selection;
+  const { packageType, guestCount, massage } = selection;
   const errors = ERRORS[lang];
   const pricingText = PRICING_TEXT[lang];
   const extrasLabels = EXTRAS_LABELS[lang];
@@ -49,58 +50,74 @@ export function computePrice(selection: PricingSelection, lang: Lang = "fr"): Pr
     throw new BookingValidationError(errors.allInMaxGuests(ALL_IN_PACKAGE.maxGuests));
   }
 
+  let durationHours: number;
+  const lineItems: PriceLineItem[] = [];
+
   if (packageType === "base") {
     if (selection.extraHours || selection.extras?.length) {
       throw new BookingValidationError(errors.baseNoExtras);
     }
-    return {
-      durationHours: BASE_PACKAGE.durationHours,
-      lineItems: [{ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price }],
-      total: BASE_PACKAGE.price,
-    };
-  }
-
-  if (packageType === "all_in") {
+    durationHours = BASE_PACKAGE.durationHours;
+    lineItems.push({ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price });
+  } else if (packageType === "all_in") {
     if (selection.extraHours || selection.extras?.length) {
       throw new BookingValidationError(errors.allInNoExtras);
     }
-    return {
-      durationHours: ALL_IN_PACKAGE.durationHours,
-      lineItems: [{ label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price }],
-      total: ALL_IN_PACKAGE.price,
-    };
+    durationHours = ALL_IN_PACKAGE.durationHours;
+    lineItems.push({ label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price });
+  } else {
+    // À la carte
+    const extraHours = selection.extraHours ?? 0;
+    durationHours = resolveDurationHours(selection, lang);
+    lineItems.push({ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price });
+
+    if (extraHours > 0) {
+      lineItems.push({
+        label: pricingText.extraHours(extraHours),
+        amount: extraHours * EXTRA_HOUR_PRICE,
+      });
+    }
+
+    for (const { extraId, quantity } of selection.extras ?? []) {
+      const extra = EXTRAS_BY_ID.get(extraId);
+      if (!extra) {
+        throw new BookingValidationError(errors.unknownExtra(extraId));
+      }
+      const label = extrasLabels[extraId];
+      if (quantity < 1 || !Number.isInteger(quantity)) {
+        throw new BookingValidationError(errors.invalidQuantity(label));
+      }
+      lineItems.push({
+        label: pricingText.withQuantity(label, quantity),
+        amount: extra.price * quantity,
+      });
+    }
   }
 
-  // À la carte
-  const extraHours = selection.extraHours ?? 0;
-  const totalHours = resolveDurationHours(selection, lang);
-
-  const lineItems = [{ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price }];
-
-  if (extraHours > 0) {
-    lineItems.push({
-      label: pricingText.extraHours(extraHours),
-      amount: extraHours * EXTRA_HOUR_PRICE,
-    });
-  }
-
-  for (const { extraId, quantity } of selection.extras ?? []) {
-    const extra = EXTRAS_BY_ID.get(extraId);
-    if (!extra) {
-      throw new BookingValidationError(errors.unknownExtra(extraId));
+  // Massage "CJ Massage" — disponible quel que soit le forfait, mais
+  // l'éligibilité au délai de 14 jours se vérifie côté appelant (celui-ci ne
+  // reçoit pas startTime). Voir lib/booking/massage-availability.ts.
+  if (massage?.included) {
+    const massageGuestCount = massage.guestCount;
+    if (
+      !Number.isInteger(massageGuestCount) ||
+      massageGuestCount === undefined ||
+      massageGuestCount < MASSAGE.minGuests ||
+      massageGuestCount > MASSAGE.maxGuests
+    ) {
+      throw new BookingValidationError(errors.massageGuestRange(MASSAGE.minGuests, MASSAGE.maxGuests));
     }
-    const label = extrasLabels[extraId];
-    if (quantity < 1 || !Number.isInteger(quantity)) {
-      throw new BookingValidationError(errors.invalidQuantity(label));
+    if (massageGuestCount > guestCount) {
+      throw new BookingValidationError(errors.massageExceedsGroup);
     }
     lineItems.push({
-      label: pricingText.withQuantity(label, quantity),
-      amount: extra.price * quantity,
+      label: pricingText.massage(massageGuestCount),
+      amount: MASSAGE.pricePerPerson * massageGuestCount,
     });
   }
 
   return {
-    durationHours: totalHours,
+    durationHours,
     lineItems,
     total: lineItems.reduce((sum, item) => sum + item.amount, 0),
   };
@@ -118,43 +135,52 @@ export type PersistedExtra = { extra_id: string; quantity: number; unit_price: n
  * - les heures supplémentaires se déduisent de la durée, la table `bookings`
  *   ne les stocke pas.
  */
+export type PersistedMassage = { guestCount: number; unitPrice: number };
+
 export function lineItemsFromBooking(
   booking: {
     packageType: PackageType;
     startTime: string;
     endTime: string;
     extras: PersistedExtra[];
+    massage?: PersistedMassage | null;
   },
   lang: Lang = "fr"
 ): { label: string; amount: number }[] {
   const pricingText = PRICING_TEXT[lang];
   const extrasLabels = EXTRAS_LABELS[lang];
 
+  const lines: PriceLineItem[] = [];
+
   if (booking.packageType === "all_in") {
-    return [
-      { label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price },
-    ];
+    lines.push({ label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price });
+  } else {
+    lines.push({ label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price });
+
+    if (booking.packageType === "a_la_carte") {
+      const dureeHeures = Math.round(
+        (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / 3_600_000
+      );
+      const heuresSup = Math.max(0, dureeHeures - BASE_PACKAGE.durationHours);
+      if (heuresSup > 0) {
+        lines.push({ label: pricingText.extraHours(heuresSup), amount: heuresSup * EXTRA_HOUR_PRICE });
+      }
+
+      for (const extra of booking.extras) {
+        const connu = extra.extra_id in extrasLabels;
+        const libelle = connu ? extrasLabels[extra.extra_id as ExtraId] : extra.extra_id;
+        lines.push({
+          label: pricingText.withQuantity(libelle, extra.quantity),
+          amount: extra.unit_price * extra.quantity,
+        });
+      }
+    }
   }
 
-  const lines = [
-    { label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price },
-  ];
-  if (booking.packageType === "base") return lines;
-
-  const dureeHeures = Math.round(
-    (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / 3_600_000
-  );
-  const heuresSup = Math.max(0, dureeHeures - BASE_PACKAGE.durationHours);
-  if (heuresSup > 0) {
-    lines.push({ label: pricingText.extraHours(heuresSup), amount: heuresSup * EXTRA_HOUR_PRICE });
-  }
-
-  for (const extra of booking.extras) {
-    const connu = extra.extra_id in extrasLabels;
-    const libelle = connu ? extrasLabels[extra.extra_id as ExtraId] : extra.extra_id;
+  if (booking.massage) {
     lines.push({
-      label: pricingText.withQuantity(libelle, extra.quantity),
-      amount: extra.unit_price * extra.quantity,
+      label: pricingText.massage(booking.massage.guestCount),
+      amount: booking.massage.unitPrice * booking.massage.guestCount,
     });
   }
   return lines;

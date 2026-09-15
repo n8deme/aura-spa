@@ -3,6 +3,9 @@ import type { Lang } from "@/app/_lib/content";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { checkAvailability } from "./availability";
+import { isMassageEligible, isMassageNightTaken } from "./massage-availability";
+import { ERRORS } from "./i18n";
+import { MASSAGE } from "./pricing-config";
 import { BookingValidationError, EXTRAS_BY_ID, computePrice, resolveDurationHours } from "./pricing";
 import type { BookingSelection, CustomerInfo } from "./types";
 
@@ -36,6 +39,16 @@ export async function createBookingCheckout(
     throw new BookingValidationError(availability.reason);
   }
 
+  if (selection.massage?.included) {
+    const errors = ERRORS[lang];
+    if (!isMassageEligible(startTime)) {
+      throw new BookingValidationError(errors.massageMinAdvance(MASSAGE.minAdvanceDays));
+    }
+    if (await isMassageNightTaken(startTime)) {
+      throw new BookingValidationError(errors.massageAlreadyBooked);
+    }
+  }
+
   const breakdown = computePrice(selection, lang);
 
   const supabase = getSupabaseAdmin();
@@ -52,6 +65,9 @@ export async function createBookingCheckout(
       customer_phone: customer.phone ?? null,
       customer_notes: customer.notes ?? null,
       status: "pending",
+      massage_included: selection.massage?.included ?? false,
+      massage_guest_count: selection.massage?.included ? selection.massage.guestCount : null,
+      massage_unit_price: selection.massage?.included ? MASSAGE.pricePerPerson : null,
     })
     .select("id")
     .single();
