@@ -85,7 +85,6 @@ export const ERRORS: Record<
     massageGuestRange: (min: number, max: number) => string;
     massageExceedsGroup: string;
     massageMinAdvance: (days: number) => string;
-    massageAlreadyBooked: string;
   }
 > = {
   fr: {
@@ -106,7 +105,6 @@ export const ERRORS: Record<
     massageExceedsGroup:
       "Le nombre de personnes au massage ne peut pas dépasser le nombre de personnes de la réservation.",
     massageMinAdvance: (days) => `Le massage doit être réservé au moins ${days} jours à l'avance.`,
-    massageAlreadyBooked: "Ce créneau chevauche une réservation massage existante.",
   },
   nl: {
     guestCountRange: (min, max) => `Het aantal personen moet tussen ${min} en ${max} liggen.`,
@@ -125,7 +123,6 @@ export const ERRORS: Record<
     massageGuestRange: (min, max) => `De massage is boekbaar voor ${min} tot ${max} personen.`,
     massageExceedsGroup: "Het aantal personen voor de massage mag het aantal personen van de reservering niet overschrijden.",
     massageMinAdvance: (days) => `De massage moet minstens ${days} dagen op voorhand geboekt worden.`,
-    massageAlreadyBooked: "Dit tijdslot overlapt met een bestaande massagereservering.",
   },
 };
 
