@@ -22,6 +22,8 @@ export type ConfirmationEmailBooking = {
   // Langue choisie par le client pendant la réservation, transportée jusqu'ici
   // via les métadonnées de la session Stripe.
   lang: Lang;
+  // Détail ligne par ligne, reconstruit depuis la base par lineItemsFromBooking.
+  lineItems: { label: string; amount: number }[];
 };
 
 export async function sendBookingConfirmationEmail(booking: ConfirmationEmailBooking): Promise<void> {
@@ -36,6 +38,18 @@ export async function sendBookingConfirmationEmail(booking: ConfirmationEmailBoo
 
   const start = new Date(booking.startTime);
   const t = EMAIL_I18N[booking.lang];
+
+  // Le détail est reconstruit à partir de la base, le total vient de la colonne
+  // `total_price`. Les deux doivent concorder : un écart signifie que la
+  // reconstruction a dérivé, et le client recevrait un récapitulatif qui ne
+  // correspond pas à ce qu'il a payé. On envoie quand même — mieux vaut un
+  // détail imparfait qu'aucune confirmation — mais ça doit se voir dans les logs.
+  const sommeLignes = booking.lineItems.reduce((total, item) => total + item.amount, 0);
+  if (Math.abs(sommeLignes - booking.totalPrice) > 0.01) {
+    console.error(
+      `Email de confirmation : le détail (${sommeLignes}) ne correspond pas au montant payé (${booking.totalPrice}) pour ${booking.customerEmail}`
+    );
+  }
   const { error } = await resend.emails.send({
     from: `Aura Spa <${FROM_EMAIL}>`,
     to: booking.customerEmail,
@@ -71,9 +85,16 @@ export function renderConfirmationHtml(booking: ConfirmationEmailBooking, start:
           <td style="padding: 8px 0; text-align: right;">${formatTime(start, lang)}</td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; color: #8C7565;">${t.packageLabel}</td>
-          <td style="padding: 8px 0; text-align: right;">${packageTypeLabel(booking.packageType, lang)}</td>
+          <td colspan="2" style="padding: 14px 0 6px; border-top: 1px solid #EDE0D4;"></td>
         </tr>
+        ${booking.lineItems
+          .map(
+            (item) => `<tr>
+          <td style="padding: 6px 0; color: #5C4638;">${escapeHtml(item.label)}</td>
+          <td style="padding: 6px 0; text-align: right; color: #5C4638;">${formatPrice(item.amount, lang)}</td>
+        </tr>`
+          )
+          .join("")}
         <tr>
           <td style="padding: 8px 0; border-top: 1px solid #D4BBA8; font-weight: 600;">${t.totalLabel}</td>
           <td style="padding: 8px 0; border-top: 1px solid #D4BBA8; text-align: right; font-weight: 600;">${formatPrice(booking.totalPrice, lang)}</td>

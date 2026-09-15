@@ -9,7 +9,7 @@ import {
   MIN_CAPACITY,
 } from "./pricing-config";
 import { EXTRAS_LABELS, ERRORS, PRICING_TEXT } from "./i18n";
-import type { PriceBreakdown, PricingSelection } from "./types";
+import type { ExtraId, PackageType, PriceBreakdown, PricingSelection } from "./types";
 
 export class BookingValidationError extends Error {}
 
@@ -104,4 +104,58 @@ export function computePrice(selection: PricingSelection, lang: Lang = "fr"): Pr
     lineItems,
     total: lineItems.reduce((sum, item) => sum + item.amount, 0),
   };
+}
+
+export type PersistedExtra = { extra_id: string; quantity: number; unit_price: number };
+
+/**
+ * Reconstruit le détail d'une réservation à partir de ce qui est EN BASE.
+ *
+ * Deux partis pris :
+ * - les montants viennent de `unit_price` stocké au moment de la réservation,
+ *   pas du catalogue actuel : une résa passée doit montrer ce qui a réellement
+ *   été facturé, même si Rob change un prix ensuite ;
+ * - les heures supplémentaires se déduisent de la durée, la table `bookings`
+ *   ne les stocke pas.
+ */
+export function lineItemsFromBooking(
+  booking: {
+    packageType: PackageType;
+    startTime: string;
+    endTime: string;
+    extras: PersistedExtra[];
+  },
+  lang: Lang = "fr"
+): { label: string; amount: number }[] {
+  const pricingText = PRICING_TEXT[lang];
+  const extrasLabels = EXTRAS_LABELS[lang];
+
+  if (booking.packageType === "all_in") {
+    return [
+      { label: pricingText.allInPackage(ALL_IN_PACKAGE.durationHours), amount: ALL_IN_PACKAGE.price },
+    ];
+  }
+
+  const lines = [
+    { label: pricingText.basePackage(BASE_PACKAGE.durationHours), amount: BASE_PACKAGE.price },
+  ];
+  if (booking.packageType === "base") return lines;
+
+  const dureeHeures = Math.round(
+    (new Date(booking.endTime).getTime() - new Date(booking.startTime).getTime()) / 3_600_000
+  );
+  const heuresSup = Math.max(0, dureeHeures - BASE_PACKAGE.durationHours);
+  if (heuresSup > 0) {
+    lines.push({ label: pricingText.extraHours(heuresSup), amount: heuresSup * EXTRA_HOUR_PRICE });
+  }
+
+  for (const extra of booking.extras) {
+    const connu = extra.extra_id in extrasLabels;
+    const libelle = connu ? extrasLabels[extra.extra_id as ExtraId] : extra.extra_id;
+    lines.push({
+      label: pricingText.withQuantity(libelle, extra.quantity),
+      amount: extra.unit_price * extra.quantity,
+    });
+  }
+  return lines;
 }
