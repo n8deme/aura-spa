@@ -25,21 +25,13 @@ export function isPastMinAdvance(startTime: Date, now = new Date()): boolean {
   return startTime >= minStart;
 }
 
-// Le massage démarre à l'heure du spa mais peut durer plus longtemps que la
-// formule réservée (45 min par personne massée, voir MASSAGE). Tout se passe
-// dans le même espace : la fin réellement occupée est donc la plus tardive
-// des deux, pas seulement la fin du forfait spa.
-export function occupiedEndTime(
-  startTime: Date,
-  endTime: Date,
-  massageIncluded: boolean,
-  massageGuestCount: number | null
-): Date {
+// Le massage a lieu APRÈS le forfait spa, dans le même espace : il prolonge
+// l'occupation de 45 min par personne massée (voir MASSAGE) à partir de la
+// fin du forfait, pas de son début. Ex : spa 8h-10h + massage 2 pers → occupé
+// jusqu'à 11h30 (10h + 1h30), pas 9h30 (8h + 1h30).
+export function occupiedEndTime(endTime: Date, massageIncluded: boolean, massageGuestCount: number | null): Date {
   if (!massageIncluded || !massageGuestCount) return endTime;
-  const massageEnd = new Date(
-    startTime.getTime() + MASSAGE.internalDurationMinutesPerPerson * massageGuestCount * 60 * 1000
-  );
-  return massageEnd > endTime ? massageEnd : endTime;
+  return new Date(endTime.getTime() + MASSAGE.internalDurationMinutesPerPerson * massageGuestCount * 60 * 1000);
 }
 
 // Chevauchement entre [candidateStart, candidateOccupiedEnd] et une résa
@@ -56,7 +48,6 @@ export function overlapsWithBuffer(
   const bufferedEnd = candidateOccupiedEnd.getTime() + bufferMs;
   const existingStart = new Date(existing.start_time).getTime();
   const existingOccupiedEnd = occupiedEndTime(
-    new Date(existing.start_time),
     new Date(existing.end_time),
     existing.massage_included,
     existing.massage_guest_count
@@ -124,12 +115,7 @@ export async function checkAvailability(
     };
   }
 
-  const candidateOccupiedEnd = occupiedEndTime(
-    startTime,
-    endTime,
-    massage?.included ?? false,
-    massage?.guestCount ?? null
-  );
+  const candidateOccupiedEnd = occupiedEndTime(endTime, massage?.included ?? false, massage?.guestCount ?? null);
 
   const bufferMs = BOOKING_RULES.bufferMinutes * 60 * 1000;
   const existingBookings = await fetchBookingsInRange(
