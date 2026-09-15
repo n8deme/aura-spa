@@ -71,5 +71,4 @@ export const MASSAGE = {
 
 // Notifiées à chaque résa incluant un massage (Rob voit déjà tout dans
 // l'admin, ceci est un canal dédié à Catherine/Junarra).
-// TODO: ajouter l'email de Junarra dès qu'on l'a (attendu le 2026-09-16).
-export const MASSAGE_NOTIFICATION_EMAILS = ["Lapaglaicatherine@gmail.com"];
+export const MASSAGE_NOTIFICATION_EMAILS = ["Lapaglaicatherine@gmail.com", "junarra.asilo@hotmail.com"];
