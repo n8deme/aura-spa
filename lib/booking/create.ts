@@ -3,7 +3,7 @@ import type { Lang } from "@/app/_lib/content";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { checkAvailability } from "./availability";
-import { isMassageEligible, isMassageNightTaken } from "./massage-availability";
+import { isMassageConflict, isMassageEligible } from "./massage-availability";
 import { ERRORS } from "./i18n";
 import { MASSAGE } from "./pricing-config";
 import { BookingValidationError, EXTRAS_BY_ID, computePrice, resolveDurationHours } from "./pricing";
@@ -39,17 +39,19 @@ export async function createBookingCheckout(
     throw new BookingValidationError(availability.reason);
   }
 
+  // computePrice valide le nombre de personnes au massage (2 à 6, ≤ guestCount)
+  // avant qu'on s'en serve pour vérifier les chevauchements ci-dessous.
+  const breakdown = computePrice(selection, lang);
+
   if (selection.massage?.included) {
     const errors = ERRORS[lang];
     if (!isMassageEligible(startTime)) {
       throw new BookingValidationError(errors.massageMinAdvance(MASSAGE.minAdvanceDays));
     }
-    if (await isMassageNightTaken(startTime)) {
+    if (await isMassageConflict(startTime, selection.massage.guestCount as number)) {
       throw new BookingValidationError(errors.massageAlreadyBooked);
     }
   }
-
-  const breakdown = computePrice(selection, lang);
 
   const supabase = getSupabaseAdmin();
   const { data: booking, error: insertError } = await supabase

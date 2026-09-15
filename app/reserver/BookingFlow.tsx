@@ -62,6 +62,10 @@ export function BookingFlow({ lang }: { lang: Lang }) {
 
   const currentIndex = stepOrder.indexOf(step);
 
+  const massageSelection = massageIncluded
+    ? { included: true as const, guestCount: massageGuestCount }
+    : { included: false as const };
+
   function goNext() {
     const next = stepOrder[currentIndex + 1];
     if (next) setStep(next);
@@ -153,6 +157,7 @@ export function BookingFlow({ lang }: { lang: Lang }) {
             onExtraHoursChange={setExtraHours}
             extras={extras}
             onExtrasChange={setExtras}
+            massage={massageSelection}
             onNext={goNext}
             onBack={goBack}
           />
@@ -166,7 +171,7 @@ export function BookingFlow({ lang }: { lang: Lang }) {
             guestCount={guestCount}
             extraHours={packageType === "a_la_carte" ? extraHours : 0}
             extras={packageType === "a_la_carte" ? extras : []}
-            massage={massageIncluded ? { included: true, guestCount: massageGuestCount } : { included: false }}
+            massage={massageSelection}
             customer={customer}
             onCustomerChange={setCustomer}
             onBack={goBack}

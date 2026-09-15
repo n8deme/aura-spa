@@ -10,7 +10,7 @@ import { BOOKING_UI, EXTRAS_LABELS } from "@/lib/booking/i18n";
 import { BASE_PACKAGE, BOOKING_RULES, EXTRAS_CATALOG, EXTRA_HOUR_PRICE } from "@/lib/booking/pricing-config";
 import { computePrice } from "@/lib/booking/pricing";
 import { formatPrice, isPriced } from "@/lib/booking/format";
-import type { ExtraId, ExtraSelection } from "@/lib/booking/types";
+import type { ExtraId, ExtraSelection, MassageSelection } from "@/lib/booking/types";
 import { StepNav } from "./StepNav";
 
 const MAX_EXTRA_HOURS = BOOKING_RULES.maxHours - BASE_PACKAGE.durationHours;
@@ -22,6 +22,7 @@ export function StepExtras({
   onExtraHoursChange,
   extras,
   onExtrasChange,
+  massage,
   onNext,
   onBack,
 }: {
@@ -31,6 +32,7 @@ export function StepExtras({
   onExtraHoursChange: (value: number) => void;
   extras: ExtraSelection[];
   onExtrasChange: (value: ExtraSelection[]) => void;
+  massage: MassageSelection;
   onNext: () => void;
   onBack: () => void;
 }) {
@@ -48,7 +50,7 @@ export function StepExtras({
     onExtrasChange(extras.map((e) => (e.extraId === id ? { ...e, quantity } : e)));
   }
 
-  const breakdown = computePrice({ packageType: "a_la_carte", guestCount, extraHours, extras }, lang);
+  const breakdown = computePrice({ packageType: "a_la_carte", guestCount, extraHours, extras, massage }, lang);
 
   return (
     <div>

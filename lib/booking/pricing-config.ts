@@ -69,10 +69,6 @@ export const MASSAGE = {
   internalDurationMinutesPerPerson: 45,
 };
 
-// Une seule résa massage à la fois : Catherine et Junarra ne servent jamais
-// deux groupes en parallèle, quelle que soit la taille de chacun.
-export const MASSAGE_ONE_PER_NIGHT = true;
-
 // Notifiées à chaque résa incluant un massage (Rob voit déjà tout dans
 // l'admin, ceci est un canal dédié à Catherine/Junarra).
 // TODO: ajouter l'email de Junarra dès qu'on l'a (attendu le 2026-09-16).
