@@ -4,6 +4,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getStripe } from "@/lib/stripe/client";
 import { sendBookingConfirmationEmail } from "@/lib/email/booking-confirmation";
 import type { PackageType } from "@/lib/booking/types";
+import { lineItemsFromBooking } from "@/lib/booking/pricing";
 import type { Lang } from "@/app/_lib/content";
 
 export const dynamic = "force-dynamic";
@@ -33,7 +34,7 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
     .update({ status: "confirmed", stripe_payment_id: paymentIntentId ?? session.id })
     .eq("id", bookingId)
     .eq("status", "pending")
-    .select("customer_name, customer_email, start_time, package_type, total_price")
+    .select("customer_name, customer_email, start_time, end_time, package_type, total_price, booking_extras(extra_id, quantity, unit_price)")
     .single();
 
   if (error) {
@@ -43,13 +44,23 @@ async function fulfillBooking(session: Stripe.Checkout.Session) {
     return;
   }
 
+  const lang = resolveLang(session.metadata?.lang);
   await sendBookingConfirmationEmail({
     customerName: data.customer_name,
     customerEmail: data.customer_email,
     startTime: data.start_time,
     packageType: data.package_type as PackageType,
     totalPrice: data.total_price,
-    lang: resolveLang(session.metadata?.lang),
+    lang,
+    lineItems: lineItemsFromBooking(
+      {
+        packageType: data.package_type as PackageType,
+        startTime: data.start_time,
+        endTime: data.end_time,
+        extras: data.booking_extras ?? [],
+      },
+      lang
+    ),
   });
 }
 
